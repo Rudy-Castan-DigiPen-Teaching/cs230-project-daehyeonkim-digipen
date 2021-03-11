@@ -15,12 +15,12 @@ CS230::InputKey::InputKey(Keyboard button) : button(button) {}
 
 bool CS230::InputKey::IsKeyDown() const
 {
-	return Engine::Instance().GetInput().IsKeyDown(button);
+	return Engine::GetInput().IsKeyDown(button);
 }
 
 bool CS230::InputKey::IsKeyReleased() const
 {
-	return Engine::Instance().GetInput().IsKeyReleased(button);
+	return Engine::GetInput().IsKeyReleased(button);
 }
 
 CS230::Input::Input()

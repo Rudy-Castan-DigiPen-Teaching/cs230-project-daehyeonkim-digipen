@@ -5,8 +5,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 File Name: Engine.h
 Purpose: This is the service provider for our games engine services
 Project: CS230
-Author: Daehyeon Kim
-Creation date: 03/08/2021
+Author: Kevin Wright
+Creation date: 2/10/2021
 -----------------------------------------------------------------*/
 #pragma once
 
