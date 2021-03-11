@@ -57,11 +57,11 @@ void on_key_pressed(doodle::KeyboardButtons doodleButton) {
 void on_key_released(doodle::KeyboardButtons doodleButton) {
 	CS230::InputKey::Keyboard button = DoodleKeyToCS230Key(doodleButton);
 	if (button != CS230::InputKey::Keyboard::None) {
-		Engine::GetLogger().LogDebug("on_key_released");
+		Engine::GetLogger().LogDebug("Pressed a non recognized key");
 		Engine::GetInput().SetKeyDown(button, false);
 	} else
 	{
-		Engine::GetLogger().LogDebug("on_key_released");
+		Engine::GetLogger().LogDebug("Released a non recognized key");
 	}
 }
 
