@@ -16,7 +16,7 @@ Splash::Splash() : levelNext(CS230::InputKey::Keyboard::Enter) {}
 void Splash::Load() {
 }
 void Splash::Update() {
-	if (levelNext.IsKeyReleased()) {
+	if (levelNext.IsKeyReleased() == true) {
 		Engine::GetGameStateManager().SetNextState(static_cast<int>(Screens::Level1));
 	}
 }

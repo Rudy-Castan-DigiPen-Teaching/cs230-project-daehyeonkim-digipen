@@ -39,9 +39,9 @@ void CS230::GameStateManager::Update()
 		break;
 	case State::LOAD:
 		currGameState = nextGameState;
-		Engine::Instance().GetLogger().LogEvent("Load " + currGameState->GetName());
+		Engine::GetLogger().LogEvent("Load " + currGameState->GetName());
 		currGameState->Load();
-		Engine::Instance().GetLogger().LogEvent("Load Complete");
+		Engine::GetLogger().LogEvent("Load Complete");
 		state = State::UPDATE;
 		break;
 	case State::UPDATE:
@@ -53,7 +53,7 @@ void CS230::GameStateManager::Update()
 		break;
 	case State::UNLOAD:
 		currGameState->Unload();
-		Engine::Instance().GetLogger().LogEvent("Unload " + currGameState->GetName());
+		Engine::GetLogger().LogEvent("Unload " + currGameState->GetName());
 		currGameState = nullptr;
 		if (nextGameState == nullptr)
 		{
@@ -66,7 +66,7 @@ void CS230::GameStateManager::Update()
 		break;
 
 	case State::SHUTDOWN:
-		Engine::Instance().GetLogger().LogEvent("Engine Shutdown");
+		Engine::GetLogger().LogEvent("Engine Shutdown");
 		state = State::EXIT;
 		break;
 	case State::EXIT:

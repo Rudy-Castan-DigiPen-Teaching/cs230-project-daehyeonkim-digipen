@@ -36,7 +36,7 @@ bool CS230::Input::IsKeyDown(InputKey::Keyboard key) const
 
 bool CS230::Input::IsKeyReleased(InputKey::Keyboard key) const
 {
-	return !keyDown[static_cast<int>(key)] && wasKeyDown[static_cast<int>(key)];
+	return keyDown[static_cast<int>(key)] == false && wasKeyDown[static_cast<int>(key)] == true;
 }
 
 void CS230::Input::SetKeyDown(InputKey::Keyboard key, bool value)
