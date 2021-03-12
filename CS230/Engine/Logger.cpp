@@ -24,19 +24,38 @@ CS230::Logger::~Logger() {
 void CS230::Logger::Log(CS230::Logger::Severity severity, std::string message) {
 	switch(severity)
 	{
-		case Severity::Debug:
-			std::cout << "Debug" << '\t' << message << std::endl;
-			break;
 		case Severity::Error:
 			std::cout << "Error" << '\t' << message << std::endl;
 			break;
 		case Severity::Event:
-			std::cout << "Event" << '\t' << message << std::endl;
+			switch (minLevel)
+			{
+			case Severity::Error: break;
+				default:
+					std::cout << "Event" << '\t' << message << std::endl;
+					break;
+			}
+			break;
+		case Severity::Debug:
+			switch (minLevel)
+			{
+			case Severity::Error: break;
+			case Severity::Event: break;
+			default:
+				std::cout << "Debug" << '\t' << message << std::endl;
+				break;
+			}
 			break;
 		case Severity::Verbose:
-			std::cout << "Verb" << '\t' << message << std::endl;
+			switch (minLevel)
+			{
+			case Severity::Verbose: 
+				std::cout << "Verb" << '\t' << message << std::endl;
+				break;
+			default:
+				break;
+			}
 			break;
-		
 	}
 }
 

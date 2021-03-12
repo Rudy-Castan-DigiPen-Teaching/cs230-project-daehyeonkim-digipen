@@ -29,6 +29,7 @@ void CS230::GameStateManager::Update()
 	case State::START:
 		if (gameStates.empty() == true)
 		{
+			Engine::GetLogger().LogError("Error");
 			state = State::SHUTDOWN;
 		}
 		else
@@ -45,10 +46,13 @@ void CS230::GameStateManager::Update()
 		state = State::UPDATE;
 		break;
 	case State::UPDATE:
-		currGameState->Update();
 		if(nextGameState != currGameState)
 		{
 			state = State::UNLOAD;
+		} else
+		{
+			Engine::GetLogger().LogVerbose("Update " + currGameState->GetName());
+			currGameState->Update();
 		}
 		break;
 	case State::UNLOAD:
