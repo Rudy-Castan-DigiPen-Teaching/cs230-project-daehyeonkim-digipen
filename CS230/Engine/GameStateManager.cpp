@@ -7,7 +7,6 @@ Project: CS230
 Author: Daehyeon Kim
 Creation date: 03/08/2021
 -----------------------------------------------------------------*/
-#pragma once
 #include "GameStateManager.h"
 #include "Engine.h"
 CS230::GameStateManager::GameStateManager()
@@ -29,7 +28,7 @@ void CS230::GameStateManager::Update()
 	case State::START:
 		if (gameStates.empty() == true)
 		{
-			Engine::GetLogger().LogError("Error");
+			Engine::GetLogger().LogError("Error: The gameStates is empty");
 			state = State::SHUTDOWN;
 		}
 		else
@@ -70,7 +69,7 @@ void CS230::GameStateManager::Update()
 		break;
 
 	case State::SHUTDOWN:
-		Engine::GetLogger().LogEvent("Engine Shutdown");
+
 		state = State::EXIT;
 		break;
 	case State::EXIT:

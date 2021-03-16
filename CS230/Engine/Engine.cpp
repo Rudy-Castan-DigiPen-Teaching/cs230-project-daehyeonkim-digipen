@@ -19,13 +19,17 @@ void Engine::Init(std::string windowName)
 void Engine::Shutdown()
 {
 	gameStateManager.Shutdown();
+	logger.LogEvent("Engine Shutdown");
 }
 
 void Engine::Update()
 {
-	window.Update();
 	gameStateManager.Update();
+	logger.LogVerbose("GameStateManager Update");
 	input.Update();
+	logger.LogVerbose("Input Update");
+	window.Update();
+	logger.LogVerbose("Window Update");
 }
 
 bool Engine::HasGameEnded()
