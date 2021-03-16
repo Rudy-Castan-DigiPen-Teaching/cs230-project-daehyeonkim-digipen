@@ -17,7 +17,7 @@ void Level2::Load() {
 }
 void Level2::Update() {
 	if (levelNext.IsKeyReleased() == true) {
-		Engine::Instance().Shutdown();
+		Engine::GetGameStateManager().Shutdown();
 	}
 #if _DEBUG
 	if (levelReload.IsKeyReleased() == true)

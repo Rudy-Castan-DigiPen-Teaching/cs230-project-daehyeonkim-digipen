@@ -18,7 +18,6 @@ void Engine::Init(std::string windowName)
 
 void Engine::Shutdown()
 {
-	gameStateManager.Shutdown();
 	logger.LogEvent("Engine Shutdown");
 }
 
