@@ -7,7 +7,6 @@ Project: CS230
 Author: Daehyeon Kim
 Creation date: 03/08/2021
 -----------------------------------------------------------------*/
-#pragma once
 #include "Engine.h"	
 #include "Input.h"
 
