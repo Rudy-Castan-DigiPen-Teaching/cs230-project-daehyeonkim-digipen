@@ -10,6 +10,7 @@ Creation date: 2/10/2021
 #pragma once
 #include <string>
 #include <fstream>
+#include <chrono>
 
 namespace CS230 {
 	class Logger {
@@ -20,7 +21,7 @@ namespace CS230 {
 			Event,			// These are general events, such as key press, exit state, enter state, enter state finish
 			Error,			// This is for an error, such as an asset is not found
 		};
-		Logger(Severity severity, bool useConsole);
+		Logger(Severity severity, bool useConsole, std::chrono::system_clock::time_point tick);
 		~Logger();
 		void LogError(std::string text) { Log(Severity::Error, text); }
 		void LogEvent(std::string text) { Log(Severity::Event, text); }
@@ -30,5 +31,7 @@ namespace CS230 {
 		void Log(Severity, std::string displayText);
 		std::ofstream outStream;
 		Severity minLevel;
+		std::chrono::system_clock::time_point startTime;
+		double GetSecondsSinceStart();
 	};
 }

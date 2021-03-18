@@ -1,24 +1,27 @@
+
 /*--------------------------------------------------------------
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
-File Name: GameState.h
-Purpose: Base class for different game states
+File Name: Texture.h
+Purpose: Wrapper class for doodle::Image
 Project: CS230
 Author: Kevin Wright
-Creation date: 2/10/2021
+Creation date: 2/11/2021
 -----------------------------------------------------------------*/
 #pragma once
-#include <string>
+#include <doodle/image.hpp>    //doodle::Image
+#include "Vec2.h"
 
 namespace CS230 {
-	class GameState {
-	public:
-		virtual void Load() = 0;
-		virtual void Update(double) = 0;
-		virtual void Unload() = 0;
-		virtual std::string GetName() = 0;
-		virtual void Draw() = 0;
-	private:
-	};
+    class Texture {
+    public:
+        Texture();
+        void Load(const std::filesystem::path& filePath);
+        void Draw(math::vec2 location);
+        math::ivec2 GetSize();
+    private:
+        doodle::Image image;
+    };
 }
+

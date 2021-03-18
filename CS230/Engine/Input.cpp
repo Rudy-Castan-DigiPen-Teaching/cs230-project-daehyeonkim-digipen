@@ -45,5 +45,5 @@ void CS230::Input::SetKeyDown(InputKey::Keyboard key, bool value)
 
 void CS230::Input::Update()
 {
-	wasKeyDown = keyDown;
+		wasKeyDown = keyDown;
 }

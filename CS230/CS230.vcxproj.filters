@@ -2,14 +2,13 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Engine">
-      <UniqueIdentifier>{3edf4815-a7d4-4e00-a851-2ff4940097c5}</UniqueIdentifier>
+      <UniqueIdentifier>{7c01a80d-171a-4f18-b1ec-20d3c052a0dd}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game">
-      <UniqueIdentifier>{761281b1-c51f-47ef-81e7-a180a7c74aca}</UniqueIdentifier>
+      <UniqueIdentifier>{3b2560af-12b6-4a7d-a4f9-c8299bfa2782}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\Engine.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
@@ -35,6 +34,22 @@
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Game\Splash.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Engine\Window_Doodle.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Texture.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Sprite.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Hero.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Ship.cpp">
       <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
@@ -69,5 +84,25 @@
     <ClInclude Include="Game\Splash.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Vec2.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Texture.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Sprite.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Hero.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Ship.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Engine\Vec2.inl">
+      <Filter>Engine</Filter>
+    </None>
   </ItemGroup>
 </Project>

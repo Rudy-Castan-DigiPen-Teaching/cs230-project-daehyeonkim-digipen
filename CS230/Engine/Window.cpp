@@ -8,11 +8,29 @@ Author: Kevin Wright
 Creation date: 2/10/2021
 -----------------------------------------------------------------*/
 #include <doodle/window.hpp>
-#include "Window.h"
+#include "Window.h"			
+#include <doodle/drawing.hpp>     // set_frame_of_reference, clear_background
+#include "Engine.h"			// GetWindow
 
 void CS230::Window::Init(std::string windowName) {
     doodle::create_window(windowName, 1440, 810);
+	doodle::set_frame_of_reference(doodle::FrameOfReference::RightHanded_OriginBottomLeft);
 }
 void CS230::Window::Update() {
     doodle::update_window();
 }
+
+void CS230::Window::Resize(int newWidth, int newHeight)
+{
+	windowSize = { newWidth, newHeight };
+}
+
+math::ivec2 CS230::Window::GetSize()
+{
+	return windowSize;
+}
+
+void CS230::Window::Clear(unsigned int color) {
+	doodle::clear_background(doodle::HexColor{ color });
+}
+

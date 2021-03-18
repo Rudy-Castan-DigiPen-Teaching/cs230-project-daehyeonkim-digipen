@@ -6,8 +6,9 @@ File Name: Splash.h
 Project: CS230
 Author: Kevin Wright
 Creation date: 2/10/2021
------------------------------------------------------------------*/
+---------------------------------- -------------------------------*/
 #pragma once
+#include "..\Engine\Texture.h"
 #include "..\Engine\GameState.h"
 #include "..\Engine\Input.h"
 
@@ -15,10 +16,12 @@ class Splash : public CS230::GameState {
 public:
 	Splash();
 	void Load() override;
-	void Update() override;
+	void Update(double) override;
 	void Unload() override;
-
+	void Draw() override;
 	std::string GetName() override { return "Splash"; }
 private:
-	CS230::InputKey levelNext;
+	double timer = 0;
+	static constexpr double splash_time = 3.0;
+	CS230::Texture texture;
 };

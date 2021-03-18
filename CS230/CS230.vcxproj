@@ -18,34 +18,10 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Engine\Engine.cpp" />
-    <ClCompile Include="Engine\GameStateManager.cpp" />
-    <ClCompile Include="Engine\Input.cpp" />
-    <ClCompile Include="Engine\Input_Doodle.cpp" />
-    <ClCompile Include="Engine\Logger.cpp" />
-    <ClCompile Include="Engine\Window.cpp" />
-    <ClCompile Include="Game\Level1.cpp" />
-    <ClCompile Include="Game\Level2.cpp" />
-    <ClCompile Include="Game\Splash.cpp" />
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Engine\Engine.h" />
-    <ClInclude Include="Engine\GameState.h" />
-    <ClInclude Include="Engine\GameStateManager.h" />
-    <ClInclude Include="Engine\Input.h" />
-    <ClInclude Include="Engine\Logger.h" />
-    <ClInclude Include="Engine\Window.h" />
-    <ClInclude Include="Game\Level1.h" />
-    <ClInclude Include="Game\Level2.h" />
-    <ClInclude Include="Game\Screens.h" />
-    <ClInclude Include="Game\Splash.h" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{68a61eb3-0764-4508-999c-6f6e60900c6f}</ProjectGuid>
+    <ProjectGuid>{4c1c2e64-f5fc-4157-bb5a-9b5c660031ae}</ProjectGuid>
     <RootNamespace>CS230</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -117,6 +93,10 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>if not exist "$(OutputPath)Assets" mkdir "$(OutputPath)Assets"
+xcopy /d /y Assets\* "$(OutputPath)Assets"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -162,6 +142,43 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Engine\Engine.cpp" />
+    <ClCompile Include="Engine\GameStateManager.cpp" />
+    <ClCompile Include="Engine\Input.cpp" />
+    <ClCompile Include="Engine\Input_Doodle.cpp" />
+    <ClCompile Include="Engine\Logger.cpp" />
+    <ClCompile Include="Engine\Sprite.cpp" />
+    <ClCompile Include="Engine\Texture.cpp" />
+    <ClCompile Include="Engine\Window.cpp" />
+    <ClCompile Include="Engine\Window_Doodle.cpp" />
+    <ClCompile Include="Game\Hero.cpp" />
+    <ClCompile Include="Game\Level1.cpp" />
+    <ClCompile Include="Game\Level2.cpp" />
+    <ClCompile Include="Game\Ship.cpp" />
+    <ClCompile Include="Game\Splash.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine\Engine.h" />
+    <ClInclude Include="Engine\GameState.h" />
+    <ClInclude Include="Engine\GameStateManager.h" />
+    <ClInclude Include="Engine\Sprite.h" />
+    <ClInclude Include="Engine\Texture.h" />
+    <ClInclude Include="Engine\Input.h" />
+    <ClInclude Include="Engine\Logger.h" />
+    <ClInclude Include="Engine\Vec2.h" />
+    <ClInclude Include="Engine\Window.h" />
+    <ClInclude Include="Game\Hero.h" />
+    <ClInclude Include="Game\Level1.h" />
+    <ClInclude Include="Game\Level2.h" />
+    <ClInclude Include="Game\Screens.h" />
+    <ClInclude Include="Game\Ship.h" />
+    <ClInclude Include="Game\Splash.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Engine\Vec2.inl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -1,27 +1,27 @@
-#pragma once
 /*--------------------------------------------------------------
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
-File Name: Window.h
+File Name: Sprite.h
 Project: CS230
 Author: Kevin Wright
-Creation date: 2/10/2021
+Creation date: 2/11/2021
 -----------------------------------------------------------------*/
 #pragma once
 #include <string>
 #include "Vec2.h"
+#include "Texture.h"
 
 namespace CS230 {
-    class Window {
+    class Sprite {
     public:
-        void Init(std::string windowName);
-        void Update();
-    	
-        void Resize(int newWidth, int newHeight);
-        math::ivec2 GetSize();
-        void Clear(unsigned int color);
+        Sprite();
+        void Load(const std::filesystem::path& texturePath);
+        void Load(const std::filesystem::path& texturePath, math::ivec2 hotSpotPosition);
+        void Draw(math::vec2 position);
+        math::ivec2 GetTextureSize();
     private:
-        math::ivec2 windowSize;
+        Texture texture;
+        math::ivec2 hotSpot;
     };
 }

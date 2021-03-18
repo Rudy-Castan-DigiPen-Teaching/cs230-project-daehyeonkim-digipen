@@ -11,11 +11,13 @@ Creation date: 03/08/2021
 #include "Screens.h"
 #include "Level2.h"
 
-Level2::Level2() : levelNext(CS230::InputKey::Keyboard::Enter), levelReload(CS230::InputKey::Keyboard::R){}
+Level2::Level2() : levelNext(CS230::InputKey::Keyboard::Enter), levelReload(CS230::InputKey::Keyboard::R), ship(Engine::GetWindow().GetSize()/2) {}
 
 void Level2::Load() {
+	ship.Load();
 }
-void Level2::Update() {
+void Level2::Update([[maybe_unused]] double dt) {
+	ship.Update();
 	if (levelNext.IsKeyReleased() == true) {
 		Engine::GetGameStateManager().Shutdown();
 	}
@@ -28,3 +30,10 @@ void Level2::Update() {
 }
 void Level2::Unload() {
 }
+
+void Level2::Draw()
+{
+	Engine::GetWindow().Clear(0x000000FF);
+	ship.Draw();
+}
+

@@ -10,16 +10,17 @@ Creation date: 03/08/2021
 #pragma once
 #include "..\Engine\GameState.h"
 #include "..\Engine\Input.h"
-
+#include "Ship.h"
 class Level2 : public CS230::GameState {
 public:
 	Level2();
 	void Load() override;
-	void Update() override;
+	void Update(double) override;
 	void Unload() override;
-
+	void Draw() override;
 	std::string GetName() override { return "Level 2"; }
 private:
 	CS230::InputKey levelNext;
 	CS230::InputKey levelReload;
+	Ship ship;
 };

@@ -12,8 +12,6 @@ Creation date: 03/08/2021
 #include "Input.h"
 #include "Engine.h"			// GetLogger, GetInput
 
-
-
 CS230::InputKey::Keyboard DoodleKeyToCS230Key(doodle::KeyboardButtons button) {
 	if (button == doodle::KeyboardButtons::Enter) {
 		return CS230::InputKey::Keyboard::Enter;
@@ -64,4 +62,3 @@ void on_key_released(doodle::KeyboardButtons doodleButton) {
 		Engine::GetLogger().LogDebug("Released a non recognized key");
 	}
 }
-

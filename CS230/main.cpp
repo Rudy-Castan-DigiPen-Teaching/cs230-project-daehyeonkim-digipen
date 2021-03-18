@@ -1,4 +1,3 @@
-
 /*--------------------------------------------------------------
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
@@ -21,7 +20,7 @@ Creation date: 2/10/2021
 int main(void) {
 	try {
 		Engine& engine = Engine::Instance();
-		engine.Init("Week 1");
+		engine.Init("Week 2");
 		Splash splash;
 		Level1 level1;
 		Level2 level2;

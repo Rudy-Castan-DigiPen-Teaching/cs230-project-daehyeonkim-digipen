@@ -21,14 +21,14 @@ void CS230::GameStateManager::AddGameState(GameState& gameState)
 	gameStates.push_back(&gameState);
 }
 
-void CS230::GameStateManager::Update()
+void CS230::GameStateManager::Update(double dt)
 {
 	switch (state)
 	{
 	case State::START:
 		if (gameStates.empty() == true)
 		{
-			Engine::GetLogger().LogError("Cannot call the gameState");
+			Engine::GetLogger().LogError("Error: Cannot load the GameState");
 			state = State::SHUTDOWN;
 		}
 		else
@@ -50,8 +50,9 @@ void CS230::GameStateManager::Update()
 			state = State::UNLOAD;
 		} else
 		{
+			currGameState->Update(dt);
 			Engine::GetLogger().LogVerbose("Update " + currGameState->GetName());
-			currGameState->Update();
+			currGameState->Draw();
 		}
 		break;
 	case State::UNLOAD:
@@ -69,7 +70,6 @@ void CS230::GameStateManager::Update()
 		break;
 
 	case State::SHUTDOWN:
-
 		state = State::EXIT;
 		break;
 	case State::EXIT:
