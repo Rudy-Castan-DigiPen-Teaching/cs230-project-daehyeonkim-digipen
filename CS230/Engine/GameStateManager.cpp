@@ -28,7 +28,7 @@ void CS230::GameStateManager::Update()
 	case State::START:
 		if (gameStates.empty() == true)
 		{
-			Engine::GetLogger().LogError("Error: The gameStates is empty");
+			Engine::GetLogger().LogError("Cannot call the gameState");
 			state = State::SHUTDOWN;
 		}
 		else
