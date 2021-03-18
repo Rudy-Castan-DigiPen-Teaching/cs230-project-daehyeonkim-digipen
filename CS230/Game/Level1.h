@@ -17,7 +17,7 @@ public:
 
 	Level1();
 	void Load() override;
-	void Update(double) override;
+	void Update(double dt) override;
 	void Unload() override;
     void Draw() override;
 	

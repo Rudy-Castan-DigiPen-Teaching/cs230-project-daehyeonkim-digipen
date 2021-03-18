@@ -34,3 +34,7 @@ void CS230::Window::Clear(unsigned int color) {
 	doodle::clear_background(doodle::HexColor{ color });
 }
 
+void on_window_resized(int new_width, int new_height) {
+	Engine::GetWindow().Resize(new_width, new_height);
+	Engine::GetLogger().LogEvent("Window Resized");
+}

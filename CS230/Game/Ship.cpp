@@ -23,19 +23,19 @@ void Ship::Update()
 {
 	if(moveLeftKey.IsKeyDown() == true)
 	{
-		position.x -= 5;
+		position.x -= speed;
 	}
 	if (moveRightKey.IsKeyDown() == true)
 	{
-		position.x += 5;
+		position.x += speed;
 	}
 	if (moveUpKey.IsKeyDown() == true)
 	{
-		position.y += 5;
+		position.y += speed;
 	}
 	if (moveDownKey.IsKeyDown() == true)
 	{
-		position.y -= 5;
+		position.y -= speed;
 	}
 }
 
