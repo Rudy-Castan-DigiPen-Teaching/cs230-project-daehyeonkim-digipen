@@ -23,12 +23,10 @@ void Engine::Shutdown()
 
 void Engine::Update()
 {
+	logger.LogVerbose("Engine Update");
 	gameStateManager.Update();
-	logger.LogVerbose("GameStateManager Update");
 	input.Update();
-	logger.LogVerbose("Input Update");
 	window.Update();
-	logger.LogVerbose("Window Update");
 }
 
 bool Engine::HasGameEnded()
