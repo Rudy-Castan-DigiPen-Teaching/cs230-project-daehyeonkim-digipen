@@ -28,6 +28,5 @@ private:
     CS230::InputKey moveRightKey;
 
     static constexpr int feetX = 56, feetY = 14;
-    static constexpr int speed = 5;
 };
 

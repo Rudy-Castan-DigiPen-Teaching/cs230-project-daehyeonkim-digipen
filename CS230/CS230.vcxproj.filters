@@ -37,6 +37,9 @@
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Engine\Window_Doodle.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
     <ClCompile Include="Engine\Texture.cpp">
       <Filter>Engine</Filter>
     </ClCompile>

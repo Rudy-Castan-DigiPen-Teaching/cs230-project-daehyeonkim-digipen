@@ -28,7 +28,5 @@ private:
     CS230::InputKey moveRightKey;
     CS230::InputKey moveUpKey;
     CS230::InputKey moveDownKey;
-
-    static constexpr int speed = 5;
 };
 

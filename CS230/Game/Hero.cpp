@@ -23,10 +23,10 @@ void Hero::Update()
 {
 	if(moveRightKey.IsKeyDown() == true)
 	{
-		position.x += speed;
+		position.x += 5;
 	} else if (moveLeftKey.IsKeyDown() == true)
 	{
-		position.x -= speed;
+		position.x -= 5;
 	}
 }
 
