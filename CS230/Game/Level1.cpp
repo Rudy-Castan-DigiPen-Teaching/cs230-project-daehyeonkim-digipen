@@ -11,14 +11,14 @@ Creation date: 03/08/2021
 #include "Screens.h"
 #include "Level1.h"
 
-Level1::Level1() : levelNext(CS230::InputKey::Keyboard::Enter), levelReload(CS230::InputKey::Keyboard::R), hero({0, floor}){}
+Level1::Level1() : levelNext(CS230::InputKey::Keyboard::Enter), levelReload(CS230::InputKey::Keyboard::R), hero({Engine::GetWindow().GetSize().x / 2.0, floor}){}
 
 void Level1::Load() {
 	background.Load("assets/Background.png");
 	hero.Load();
 }
-void Level1::Update([[maybe_unused]] double dt) {
-	hero.Update();
+void Level1::Update(double dt) {
+	hero.Update(dt);
 	if (levelNext.IsKeyReleased() == true) {
 		Engine::GetGameStateManager().SetNextState(static_cast<int>(Screens::Level2));
 	}

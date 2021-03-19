@@ -151,7 +151,6 @@ xcopy /d /y Assets\* "$(OutputPath)Assets"</Command>
     <ClCompile Include="Engine\Sprite.cpp" />
     <ClCompile Include="Engine\Texture.cpp" />
     <ClCompile Include="Engine\Window.cpp" />
-    <ClCompile Include="Engine\Window_Doodle.cpp" />
     <ClCompile Include="Game\Hero.cpp" />
     <ClCompile Include="Game\Level1.cpp" />
     <ClCompile Include="Game\Level2.cpp" />
@@ -163,10 +162,10 @@ xcopy /d /y Assets\* "$(OutputPath)Assets"</Command>
     <ClInclude Include="Engine\Engine.h" />
     <ClInclude Include="Engine\GameState.h" />
     <ClInclude Include="Engine\GameStateManager.h" />
-    <ClInclude Include="Engine\Sprite.h" />
-    <ClInclude Include="Engine\Texture.h" />
     <ClInclude Include="Engine\Input.h" />
     <ClInclude Include="Engine\Logger.h" />
+    <ClInclude Include="Engine\Sprite.h" />
+    <ClInclude Include="Engine\Texture.h" />
     <ClInclude Include="Engine\Vec2.h" />
     <ClInclude Include="Engine\Window.h" />
     <ClInclude Include="Game\Hero.h" />

@@ -19,14 +19,14 @@ void Hero::Load()
 	position = startPos;
 }
 
-void Hero::Update()
+void Hero::Update(double dt)
 {
 	if(moveRightKey.IsKeyDown() == true)
 	{
-		position.x += 5;
+		position.x += speed;
 	} else if (moveLeftKey.IsKeyDown() == true)
 	{
-		position.x -= 5;
+		position.x -= speed;
 	}
 }
 

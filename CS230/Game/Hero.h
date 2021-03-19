@@ -16,7 +16,7 @@ class Hero {
 public:
     Hero(math::vec2 startPos);
     void Load();
-    void Update();
+    void Update(double dt);
     void Draw();
 
 private:
@@ -28,5 +28,6 @@ private:
     CS230::InputKey moveRightKey;
 
     static constexpr int feetX = 56, feetY = 14;
+    static constexpr int speed = 5;
 };
 

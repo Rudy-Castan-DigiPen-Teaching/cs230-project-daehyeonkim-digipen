@@ -56,6 +56,13 @@ namespace math
 		return vec2(returnX, returnY);
 	}
 
+	[[nodiscard]] constexpr vec2 operator*(const vec2 left, const vec2 right) noexcept
+	{
+		const double returnX = left.x * right.x;
+		const double returnY = left.y * right.y;
+		return vec2(returnX, returnY);
+	}
+	
 	constexpr vec2& vec2::operator*=(const double input) noexcept
 	{
 		*this = *this * input;

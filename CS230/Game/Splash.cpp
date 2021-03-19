@@ -19,7 +19,6 @@ void Splash::Load() {
 	texture.Load("assets/DigiPen_BLACK_1024px.png");
 }
 void Splash::Update([[maybe_unused]]double dt) {
-
 	if (timer > splash_time) {
 		Engine::GetGameStateManager().SetNextState(static_cast<int>(Screens::Level1));
 	} else

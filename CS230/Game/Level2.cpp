@@ -16,7 +16,7 @@ Level2::Level2() : levelNext(CS230::InputKey::Keyboard::Enter), levelReload(CS23
 void Level2::Load() {
 	ship.Load();
 }
-void Level2::Update([[maybe_unused]] double dt) {
+void Level2::Update(double dt) {
 	ship.Update();
 	if (levelNext.IsKeyReleased() == true) {
 		Engine::GetGameStateManager().Shutdown();

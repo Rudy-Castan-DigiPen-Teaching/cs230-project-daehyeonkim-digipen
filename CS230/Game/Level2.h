@@ -15,7 +15,7 @@ class Level2 : public CS230::GameState {
 public:
 	Level2();
 	void Load() override;
-	void Update(double) override;
+	void Update(double dt) override;
 	void Unload() override;
 	void Draw() override;
 	std::string GetName() override { return "Level 2"; }

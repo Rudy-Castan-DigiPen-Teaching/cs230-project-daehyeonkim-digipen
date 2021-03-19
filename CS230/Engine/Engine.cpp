@@ -18,29 +18,29 @@ void Engine::Init(std::string windowName)
 }
 
 void Engine::Shutdown()
-{
+{										
 	logger.LogEvent("Engine Shutdown");
 }
 
 void Engine::Update()
 {
+	const std::chrono::time_point now = std::chrono::system_clock::now();
+	const double deltaTime = std::chrono::duration<double>(std::chrono::system_clock::now() - lastTick).count();
+	if (deltaTime >= 1 / Target_FPS)
+	{
+		logger.LogVerbose("Engine Update");
+		frameCount++;
+		gameStateManager.Update(deltaTime);
+		input.Update();
+		window.Update();
+		lastTick = now;
+	}
 	if(frameCount >= FPS_IntervalFrameCount)
 	{
 		const double averageFrameRate = frameCount / std::chrono::duration<double>(lastTick - fpsCalcTime).count();
 		logger.LogEvent("FPS:\t" + std::to_string(averageFrameRate));
 		frameCount = 0;
 		fpsCalcTime = lastTick;
-	}
-	if (std::chrono::duration<double>(std::chrono::system_clock::now() - lastTick).count() >= 1 / Target_FPS)
-	{
-		frameCount++;
-		gameStateManager.Update(std::chrono::duration<double>(std::chrono::system_clock::now() - lastTick).count());
-		logger.LogVerbose("Update GameStateManager");
-		input.Update();
-		logger.LogVerbose("Update Input");
-		window.Update();
-		logger.LogVerbose("Update Window");
-		lastTick = std::chrono::system_clock::now();
 	}
 }
 
