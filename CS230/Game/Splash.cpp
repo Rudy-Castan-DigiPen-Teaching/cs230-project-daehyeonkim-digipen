@@ -11,8 +11,6 @@ Creation date: 2/10/2021
 #include "Screens.h"
 #include "Splash.h"
 
-#include <iostream>
-
 Splash::Splash(){}
 
 void Splash::Load() {

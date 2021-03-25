@@ -17,8 +17,8 @@ void Level1::Load() {
 	background.Load("assets/Background.png");
 	hero.Load();
 }
-void Level1::Update(double dt) {
-	hero.Update(dt);
+void Level1::Update([[maybe_unused]] double dt) {
+	hero.Update();
 	if (levelNext.IsKeyReleased() == true) {
 		Engine::GetGameStateManager().SetNextState(static_cast<int>(Screens::Level2));
 	}

@@ -9,7 +9,7 @@ Creation date: 3/17/2021
 -----------------------------------------------------------------*/
 #include "Ship.h"
 
-Ship::Ship(math::vec2 startPos) : startPos(startPos), moveLeftKey(CS230::InputKey::Keyboard::Left), moveRightKey(CS230::InputKey::Keyboard::Right), moveUpKey(CS230::InputKey::Keyboard::Up), moveDownKey(CS230::InputKey::Keyboard::Down)
+Ship::Ship(math::vec2 startPos) : startPos(startPos), moveLeftKey(CS230::InputKey::Keyboard::A), moveRightKey(CS230::InputKey::Keyboard::D), moveUpKey(CS230::InputKey::Keyboard::W), moveDownKey(CS230::InputKey::Keyboard::S)
 {
 }
 

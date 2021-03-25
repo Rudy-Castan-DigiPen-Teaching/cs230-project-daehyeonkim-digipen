@@ -16,7 +16,7 @@ class Hero {
 public:
     Hero(math::vec2 startPos);
     void Load();
-    void Update(double dt);
+    void Update();
     void Draw();
 
 private:

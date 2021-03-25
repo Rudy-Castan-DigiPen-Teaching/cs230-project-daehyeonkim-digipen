@@ -19,7 +19,7 @@ void Hero::Load()
 	position = startPos;
 }
 
-void Hero::Update(double dt)
+void Hero::Update()
 {
 	if(moveRightKey.IsKeyDown() == true)
 	{

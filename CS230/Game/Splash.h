@@ -10,7 +10,6 @@ Creation date: 2/10/2021
 #pragma once
 #include "..\Engine\Texture.h"
 #include "..\Engine\GameState.h"
-#include "..\Engine\Input.h"
 
 class Splash : public CS230::GameState {
 public:
