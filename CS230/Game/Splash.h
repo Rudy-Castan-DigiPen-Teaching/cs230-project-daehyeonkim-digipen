@@ -11,6 +11,7 @@ Creation date: 2/10/2021
 #include "..\Engine\Texture.h"
 #include "..\Engine\GameState.h"
 
+
 class Splash : public CS230::GameState {
 public:
 	Splash();

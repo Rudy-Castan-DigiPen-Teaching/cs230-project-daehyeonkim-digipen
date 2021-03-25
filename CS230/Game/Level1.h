@@ -11,9 +11,11 @@ Creation date: 03/08/2021
 #include "..\Engine\GameState.h"
 #include "..\Engine\Input.h"
 #include "Hero.h"
+#include "Ball.h"
 class Level1 : public CS230::GameState {
 public:
 	static constexpr double floor = 126.0f;
+	static constexpr math::vec2 gravity{ 0, 2000 };
 
 	Level1();
 	void Load() override;
@@ -26,5 +28,6 @@ private:
 	CS230::InputKey levelNext;
 	CS230::InputKey levelReload;
 	Hero hero;
+	Ball ball;
 	CS230::Texture background;
 };

@@ -10,6 +10,7 @@ Creation date: 03/08/2021
 #include <iostream>    // cout.rdbuf
 #include "Logger.h"
 
+
 CS230::Logger::Logger(Logger::Severity severity, bool useConsole, std::chrono::system_clock::time_point tick) : minLevel(severity), outStream("Trace.log"), startTime(tick) {
 	if (useConsole == true) {
 		outStream.set_rdbuf(std::cout.rdbuf());

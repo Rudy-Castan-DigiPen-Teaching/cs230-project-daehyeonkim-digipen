@@ -8,6 +8,7 @@ Author: Daehyeon Kim
 Creation date: 3/17/2021
 -----------------------------------------------------------------*/
 #include "Ship.h"
+#include "..\Engine\Engine.h"
 
 Ship::Ship(math::vec2 startPos) : startPos(startPos), moveLeftKey(CS230::InputKey::Keyboard::A), moveRightKey(CS230::InputKey::Keyboard::D), moveUpKey(CS230::InputKey::Keyboard::W), moveDownKey(CS230::InputKey::Keyboard::S)
 {
@@ -19,27 +20,55 @@ void Ship::Load()
 	position = startPos;
 }
 
-void Ship::Update()
+void Ship::Update(double dt)
 {
 	if(moveLeftKey.IsKeyDown() == true)
 	{
-		position.x -= speed;
+		velocity.x -= accel * dt;
 	}
 	if (moveRightKey.IsKeyDown() == true)
 	{
-		position.x += speed;
+		velocity.x += accel * dt;
 	}
 	if (moveUpKey.IsKeyDown() == true)
 	{
-		position.y += speed;
+		velocity.y += accel * dt;
 	}
 	if (moveDownKey.IsKeyDown() == true)
 	{
-		position.y -= speed;
+		velocity.y -= accel * dt;
 	}
+	velocity -= velocity * drag * dt;
+	Engine::GetLogger().LogDebug("Velocity = [" + std::to_string(velocity.x) + "],[" + std::to_string(velocity.y) + "]");
+	position += velocity * dt;
+	TestForWrap();
 }
 
 void Ship::Draw()
 {
 	sprite.Draw(position);
+}
+
+void Ship::TestForWrap()
+{
+	const int x_limit = Engine::GetWindow().GetSize().x + sprite.GetTextureSize().x / 2;
+	const int x_warp = Engine::GetWindow().GetSize().x + sprite.GetTextureSize().x;
+	const int y_limit = Engine::GetWindow().GetSize().y + sprite.GetTextureSize().y / 2;
+	const int y_warp = Engine::GetWindow().GetSize().y + sprite.GetTextureSize().y;
+	if(position.x > x_limit)
+	{
+		position.x -= x_warp;
+	}
+	else if(position.x < -sprite.GetTextureSize().x / 2)
+	{
+		position.x += x_warp;
+	}
+	if (position.y > y_limit)
+	{
+		position.y -= y_warp;
+	}
+	else if (position.y < -sprite.GetTextureSize().y / 2)
+	{
+		position.y += y_warp;
+	}
 }
