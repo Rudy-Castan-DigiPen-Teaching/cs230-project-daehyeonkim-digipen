@@ -95,7 +95,8 @@
     </Link>
     <PostBuildEvent>
       <Command>if not exist "$(OutputPath)Assets" mkdir "$(OutputPath)Assets"
-xcopy /d /y Assets\* "$(OutputPath)Assets"</Command>
+xcopy /d /y Assets\* "$(OutputPath)Assets"
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -113,6 +114,11 @@ xcopy /d /y Assets\* "$(OutputPath)Assets"</Command>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>if not exist "$(OutputPath)Assets" mkdir "$(OutputPath)Assets"
+xcopy /d /y Assets\* "$(OutputPath)Assets"
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -125,6 +131,11 @@ xcopy /d /y Assets\* "$(OutputPath)Assets"</Command>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>if not exist "$(OutputPath)Assets" mkdir "$(OutputPath)Assets"
+xcopy /d /y Assets\* "$(OutputPath)Assets"
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -141,6 +152,11 @@ xcopy /d /y Assets\* "$(OutputPath)Assets"</Command>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>if not exist "$(OutputPath)Assets" mkdir "$(OutputPath)Assets"
+xcopy /d /y Assets\* "$(OutputPath)Assets"
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Engine.cpp" />
