@@ -9,7 +9,6 @@ Creation date: 03/16/2021
 -----------------------------------------------------------------*/
 #include "Hero.h"
 #include "Level1.h"
-#include "Ship.h"
 #include "..\Engine\Engine.h"
 
 Hero::Hero(math::vec2 startPos) :startPos(startPos), moveLeftKey(CS230::InputKey::Keyboard::Left), moveRightKey(CS230::InputKey::Keyboard::Right), jumpKey(CS230::InputKey::Keyboard::Up)
@@ -29,38 +28,42 @@ void Hero::Update(double dt)
 	const math::vec2 stop{ 0,0 };
 	const math::vec2 skidding = x_drag * 2;
 	position += velocity * dt;
-	if (moveRightKey.IsKeyDown() == true && velocity.x <= x_max_speed.x)
+	if (moveRightKey.IsKeyDown() == true)
 	{
-		if (velocity.x >= x_max_speed.x)
-		{
-			Engine::GetLogger().LogDebug("+Max Velocity");
-		}
-		else if (velocity.x < -stop.x)
+		if (velocity.x < -stop.x)
 		{
 			velocity += skidding * dt;
 			Engine::GetLogger().LogDebug("+Skidding");
 		}
 		else
 		{
-			velocity += x_accel * dt;
-			Engine::GetLogger().LogDebug("+Accelerating");
+			if (velocity.x >= x_max_speed.x)
+			{
+				Engine::GetLogger().LogDebug("+Max Velocity");
+			} else
+			{
+				velocity += x_accel * dt;
+				Engine::GetLogger().LogDebug("+Accelerating");
+			}
 		}
 	}
-	else if (moveLeftKey.IsKeyDown() == true && velocity.x >= -x_max_speed.x)
+	else if (moveLeftKey.IsKeyDown() == true)
 	{
-		if (velocity.x <= -x_max_speed.x)
-		{
-			Engine::GetLogger().LogDebug("-Max Velocity");
-		}
-		else if (velocity.x > stop.x)
+		if (velocity.x > stop.x)
 		{
 			velocity -= skidding * dt;
 			Engine::GetLogger().LogDebug("-Skidding");
 		}
 		else
 		{
-			velocity -= x_accel * dt;
-			Engine::GetLogger().LogDebug("-Accelerating");
+			if (velocity.x <= -x_max_speed.x)
+			{
+				Engine::GetLogger().LogDebug("-Max Velocity");
+			} else
+			{
+				velocity -= x_accel * dt;
+				Engine::GetLogger().LogDebug("-Accelerating");
+			}
 		}
 	} else if (moveRightKey.IsKeyDown() == false && moveLeftKey.IsKeyDown() == false)
 	{
