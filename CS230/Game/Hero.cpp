@@ -28,7 +28,6 @@ void Hero::Update(double dt)
 {
 	const math::vec2 stop{ 0,0 };
 	const math::vec2 skidding = x_drag * 2;
-	position += velocity * dt;
 	if (moveRightKey.IsKeyDown() == true)
 	{
 		if (velocity.x < -stop.x)
@@ -122,6 +121,7 @@ void Hero::Update(double dt)
 		isJumping = false;
 		Engine::GetLogger().LogDebug("Ending Jump - YPos" + std::to_string(position.y));
 	}
+	position += velocity * dt;
 }
 
 void Hero::Draw()
