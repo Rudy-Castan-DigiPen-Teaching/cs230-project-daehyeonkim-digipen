@@ -19,6 +19,7 @@ void Hero::Load()
 {
 	sprite.Load("assets/Hero.png", { feetX, feetY });
 	position = startPos;
+	velocity = { 0, 0 };
 	isJumping = false;
 	isRising = false;
 }
@@ -67,7 +68,7 @@ void Hero::Update(double dt)
 		}
 	} else if (moveRightKey.IsKeyDown() == false && moveLeftKey.IsKeyDown() == false)
 	{
-		const double drag = -velocity.Normalize().x * x_drag.x;
+		const double drag = -(velocity.x / sqrt(velocity.x * velocity.x)) * x_drag.x;
 		if (drag > stop.x)
 		{
 			velocity.x += drag * dt;

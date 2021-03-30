@@ -52,23 +52,21 @@ void Ship::Draw()
 void Ship::TestForWrap()
 {
 	const int x_limit = Engine::GetWindow().GetSize().x + sprite.GetTextureSize().x / 2;
-	const int x_warp = Engine::GetWindow().GetSize().x + sprite.GetTextureSize().x;
 	const int y_limit = Engine::GetWindow().GetSize().y + sprite.GetTextureSize().y / 2;
-	const int y_warp = Engine::GetWindow().GetSize().y + sprite.GetTextureSize().y;
 	if(position.x > x_limit)
 	{
-		position.x -= x_warp;
+		position.x = -sprite.GetTextureSize().x / 2;
 	}
 	else if(position.x < -sprite.GetTextureSize().x / 2)
 	{
-		position.x += x_warp;
+		position.x = x_limit;
 	}
 	if (position.y > y_limit)
 	{
-		position.y -= y_warp;
+		position.y = -sprite.GetTextureSize().y / 2;
 	}
 	else if (position.y < -sprite.GetTextureSize().y / 2)
 	{
-		position.y += y_warp;
+		position.y = y_limit;
 	}
 }

@@ -23,6 +23,6 @@ private:
     math::vec2 initPosition;
     math::vec2 position;
     math::vec2 velocity;
-
+    static constexpr int ballCenterX = 44;
     static constexpr double bounceVelocity = 750 ;
 };

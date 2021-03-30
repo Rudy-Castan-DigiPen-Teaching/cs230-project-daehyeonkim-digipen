@@ -15,21 +15,20 @@ Ball::Ball(math::vec2 startPos) : initPosition(startPos)
 
 void Ball::Load()
 {
-	sprite.Load("assets/Ball.png");
-	sprite.Load("assets/Ball.png", { sprite.GetTextureSize().x / 2, 0 });
+	sprite.Load("assets/Ball.png", { ballCenterX, 0 });
 	position = initPosition;
-	velocity = { 0, bounceVelocity };
+	velocity = { 0, 0 };
 }
 
 void Ball::Update(double dt)
 {
-	position += velocity * dt;
 	velocity -= Level1::gravity * dt;
 	if (position.y < Level1::floor)
 	{
 		velocity.y = bounceVelocity;
 		position.y = Level1::floor;
 	}
+	position += velocity * dt;
 }
 
 void Ball::Draw()
