@@ -9,6 +9,7 @@ Creation date: 3/26/2021
 -----------------------------------------------------------------*/
 #include "Ball.h"
 #include "Level1.h"
+#include "../Engine/TransformMatrix.h"
 Ball::Ball(math::vec2 startPos) : initPosition(startPos)
 {
 }
@@ -31,7 +32,7 @@ void Ball::Update(double dt)
 	position += velocity * dt;
 }
 
-void Ball::Draw()
+void Ball::Draw(math::TransformMatrix cameraMatrix)
 {
-	sprite.Draw(position);
+	sprite.Draw(math::TranslateMatrix(position) * cameraMatrix);
 }

@@ -8,7 +8,6 @@ Author: Kevin Wright
 Creation date: 2/11/2021
 -----------------------------------------------------------------*/
 #pragma once
-#include <string>
 #include "Vec2.h"
 #include "Texture.h"
 
@@ -18,7 +17,7 @@ namespace CS230 {
         Sprite();
         void Load(const std::filesystem::path& texturePath);
         void Load(const std::filesystem::path& texturePath, math::ivec2 hotSpotPosition);
-        void Draw(math::vec2 position);
+        void Draw(math::TransformMatrix displayMatrix);
         math::ivec2 GetTextureSize();
     private:
         Texture texture;

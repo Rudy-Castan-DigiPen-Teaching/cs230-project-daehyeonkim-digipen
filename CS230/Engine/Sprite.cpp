@@ -8,7 +8,7 @@ Author: Daehyeon Kim
 Creation date: 03/16/2021
 -----------------------------------------------------------------*/
 #include "Sprite.h"
-
+#include "TransformMatrix.h"
 CS230::Sprite::Sprite()
 = default;
 
@@ -24,9 +24,8 @@ void CS230::Sprite::Load(const std::filesystem::path& texturePath, math::ivec2 h
 	hotSpot = hotSpotPosition;
 }
 
-void CS230::Sprite::Draw(math::vec2 position)
-{
-	texture.Draw(position - hotSpot);
+void CS230::Sprite::Draw(math::TransformMatrix displayMatrix) {
+	texture.Draw(displayMatrix * math::TranslateMatrix(-hotSpot));
 }
 
 math::ivec2 CS230::Sprite::GetTextureSize()

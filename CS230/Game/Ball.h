@@ -10,13 +10,12 @@ Creation date: 2/14/2021
 #pragma once
 #include "..\Engine\Sprite.h"
 #include "..\Engine\Vec2.h"
-
 class Ball {
 public:
     Ball(math::vec2 startPos);
     void Load();
     void Update(double dt);
-    void Draw();
+    void Draw(math::TransformMatrix cameraMatrix);
 
 private:
     CS230::Sprite sprite;

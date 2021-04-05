@@ -8,10 +8,13 @@ Author: Daehyeon Kim
 Creation date: 03/08/2021
 -----------------------------------------------------------------*/
 #pragma once
+#include "Background.h"
 #include "..\Engine\GameState.h"
 #include "..\Engine\Input.h"
 #include "Hero.h"
 #include "Ball.h"
+#include "../Engine/Camera.h"
+
 class Level1 : public CS230::GameState {
 public:
 	static constexpr double floor = 126.0f;
@@ -27,7 +30,10 @@ public:
 private:
 	CS230::InputKey levelNext;
 	CS230::InputKey levelReload;
+	CS230::Camera camera;
 	Hero hero;
-	Ball ball;
-	CS230::Texture background;
+	Ball ball1;
+	Ball ball2;
+	Ball ball3;
+	Background background;
 };

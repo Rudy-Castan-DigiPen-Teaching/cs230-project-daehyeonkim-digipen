@@ -10,8 +10,9 @@ Creation date: 03/16/2021
 #include "Hero.h"
 #include "Level1.h"
 #include "..\Engine\Engine.h"
-
-Hero::Hero(math::vec2 startPos) :startPos(startPos), moveLeftKey(CS230::InputKey::Keyboard::Left), moveRightKey(CS230::InputKey::Keyboard::Right), jumpKey(CS230::InputKey::Keyboard::Up)
+#include "..\Engine\Camera.h"
+#include "../Engine/TransformMatrix.h"
+Hero::Hero(math::vec2 startPos, const CS230::Camera& camera) : startPos(startPos), camera(camera), moveLeftKey(CS230::InputKey::Keyboard::Left), moveRightKey(CS230::InputKey::Keyboard::Right), jumpKey(CS230::InputKey::Keyboard::Up)
 {
 }
 
@@ -28,6 +29,8 @@ void Hero::Update(double dt)
 {
 	const math::vec2 stop{ 0,0 };
 	const math::vec2 skidding = x_drag * 2;
+	const double collisionOffset = sprite.GetTextureSize().x / 2;
+	const double screenPositionX = position.x - camera.GetPosition().x;
 	if (moveRightKey.IsKeyDown() == true)
 	{
 		if (velocity.x < -stop.x)
@@ -89,6 +92,15 @@ void Hero::Update(double dt)
 			}
 		}
 	}
+	if (screenPositionX - collisionOffset < 0)
+	{
+		velocity.x = 0;
+		position.x = collisionOffset;
+	} else if(screenPositionX + collisionOffset > Engine::GetWindow().GetSize().x)
+	{
+		velocity.x = 0;
+		position.x = camera.GetPosition().x + Engine::GetWindow().GetSize().x - collisionOffset;
+	}
 	if(jumpKey.IsKeyDown() == true && isJumping == false)
 	{
 		isJumping = true;
@@ -124,7 +136,12 @@ void Hero::Update(double dt)
 	position += velocity * dt;
 }
 
-void Hero::Draw()
+void Hero::Draw(math::TransformMatrix cameraMatrix)
 {
-	sprite.Draw(position);
+	sprite.Draw(math::TranslateMatrix(position) * cameraMatrix);
+}
+
+math::vec2 Hero::GetPosition()
+{
+	return position;
 }

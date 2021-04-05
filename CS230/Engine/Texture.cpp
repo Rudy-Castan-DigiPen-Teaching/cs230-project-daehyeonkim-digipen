@@ -11,15 +11,20 @@ Creation date: 2/11/2021
 -----------------------------------------------------------------*/
 #include <doodle/drawing.hpp>	//draw_image
 #include "Texture.h"
-
+#include "TransformMatrix.h"
 CS230::Texture::Texture() {}
+
+CS230::Texture::Texture(const std::filesystem::path& filePath) : image(doodle::Image{ filePath }) {}
 
 void CS230::Texture::Load(const std::filesystem::path& filePath) {
 	image = doodle::Image{ filePath };
 }
 
-void CS230::Texture::Draw(math::vec2 location) {
-	doodle::draw_image(image, location.x, location.y);
+void CS230::Texture::Draw(math::TransformMatrix displayMatrix) {
+    doodle::push_settings();
+    doodle::apply_matrix(displayMatrix[0][0], displayMatrix[1][0], displayMatrix[0][1], displayMatrix[1][1], displayMatrix[0][2], displayMatrix[1][2]);
+    doodle::draw_image(image, 0, 0);
+    doodle::pop_settings();
 }
 
 math::ivec2 CS230::Texture::GetSize()

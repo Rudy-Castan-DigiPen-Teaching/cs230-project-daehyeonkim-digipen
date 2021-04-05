@@ -9,7 +9,7 @@ Creation date: 3/17/2021
 -----------------------------------------------------------------*/
 #include "Ship.h"
 #include "..\Engine\Engine.h"
-
+#include "../Engine/TransformMatrix.h"
 Ship::Ship(math::vec2 startPos) : startPos(startPos), moveLeftKey(CS230::InputKey::Keyboard::A), moveRightKey(CS230::InputKey::Keyboard::D), moveUpKey(CS230::InputKey::Keyboard::W), moveDownKey(CS230::InputKey::Keyboard::S)
 {
 }
@@ -18,6 +18,7 @@ void Ship::Load()
 {
 	sprite.Load("assets/Ship.png");
 	position = startPos;
+	velocity = { 0, 0 };
 }
 
 void Ship::Update(double dt)
@@ -46,18 +47,18 @@ void Ship::Update(double dt)
 
 void Ship::Draw()
 {
-	sprite.Draw(position);
+	sprite.Draw(math::TranslateMatrix(position));
 }
 
 void Ship::TestForWrap()
 {
 	const int x_limit = Engine::GetWindow().GetSize().x + sprite.GetTextureSize().x / 2;
 	const int y_limit = Engine::GetWindow().GetSize().y + sprite.GetTextureSize().y / 2;
-	if(position.x > x_limit)
+	if (position.x > x_limit)
 	{
 		position.x = -sprite.GetTextureSize().x / 2;
 	}
-	else if(position.x < -sprite.GetTextureSize().x / 2)
+	else if (position.x < -sprite.GetTextureSize().x / 2)
 	{
 		position.x = x_limit;
 	}

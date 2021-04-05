@@ -10,6 +10,7 @@ Creation date: 2/10/2021
 #include "../Engine/Engine.h"	//GetGameStateManager
 #include "Screens.h"
 #include "Splash.h"
+#include "../Engine/TransformMatrix.h"
 
 Splash::Splash(){}
 
@@ -30,5 +31,5 @@ void Splash::Unload() {
 void Splash::Draw()
 {
 	Engine::GetWindow().Clear(0xFFFFFFFF);
-	texture.Draw(Engine::GetWindow().GetSize()/2 - texture.GetSize()/ 2);
+	texture.Draw(math::TranslateMatrix(Engine::GetWindow().GetSize() / 2 - texture.GetSize() / 2));
 }

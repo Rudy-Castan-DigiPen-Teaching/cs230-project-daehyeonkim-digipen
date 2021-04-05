@@ -159,6 +159,7 @@ xcopy /d /y Assets\* "$(OutputPath)Assets"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\Camera.cpp" />
     <ClCompile Include="Engine\Engine.cpp" />
     <ClCompile Include="Engine\GameStateManager.cpp" />
     <ClCompile Include="Engine\Input.cpp" />
@@ -166,7 +167,9 @@ xcopy /d /y Assets\* "$(OutputPath)Assets"
     <ClCompile Include="Engine\Logger.cpp" />
     <ClCompile Include="Engine\Sprite.cpp" />
     <ClCompile Include="Engine\Texture.cpp" />
+    <ClCompile Include="Engine\TransformMatrix.cpp" />
     <ClCompile Include="Engine\Window.cpp" />
+    <ClCompile Include="Game\Background.cpp" />
     <ClCompile Include="Game\Ball.cpp" />
     <ClCompile Include="Game\Hero.cpp" />
     <ClCompile Include="Game\Level1.cpp" />
@@ -176,16 +179,20 @@ xcopy /d /y Assets\* "$(OutputPath)Assets"
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Camera.h" />
     <ClInclude Include="Engine\Engine.h" />
     <ClInclude Include="Engine\GameState.h" />
     <ClInclude Include="Engine\GameStateManager.h" />
+    <ClInclude Include="Engine\Rect.h" />
     <ClInclude Include="Engine\Sprite.h" />
     <ClInclude Include="Engine\Texture.h" />
     <ClInclude Include="Engine\Input.h" />
     <ClInclude Include="Engine\Logger.h" />
+    <ClInclude Include="Engine\TransformMatrix.h" />
     <ClInclude Include="Engine\Vec2.h" />
     <ClInclude Include="Engine\Window.h" />
     <ClInclude Include="Game\Ball.h" />
+    <ClInclude Include="Game\Background.h" />
     <ClInclude Include="Game\Hero.h" />
     <ClInclude Include="Game\Level1.h" />
     <ClInclude Include="Game\Level2.h" />

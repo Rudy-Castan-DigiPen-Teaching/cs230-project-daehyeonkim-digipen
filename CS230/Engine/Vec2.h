@@ -7,7 +7,6 @@ Author: Daehyeon Kim
 Creation date: 03.15.2021
 -----------------------------------------------------------------*/
 #pragma once
-#include <cmath>
 #include <limits>
 
 namespace math

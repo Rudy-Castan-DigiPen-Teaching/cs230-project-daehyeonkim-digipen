@@ -12,14 +12,18 @@ Creation date: 2/11/2021
 #include "..\Engine\Input.h"
 #include "..\Engine\Vec2.h"
 
+namespace CS230 {
+    class Camera;
+}
 class Hero {
 public:
-    Hero(math::vec2 startPos);
+    Hero(math::vec2 startPos, const CS230::Camera& camera);
     void Load();
     void Update(double dt);
-    void Draw();
-
+    void Draw(math::TransformMatrix cameraMatrix);
+    math::vec2 GetPosition();
 private:
+    const CS230::Camera& camera;
     CS230::Sprite sprite;
     math::vec2 startPos;
     math::vec2 position;
