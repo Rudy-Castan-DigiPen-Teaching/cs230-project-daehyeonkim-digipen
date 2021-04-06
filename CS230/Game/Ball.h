@@ -10,6 +10,7 @@ Creation date: 2/14/2021
 #pragma once
 #include "..\Engine\Sprite.h"
 #include "..\Engine\Vec2.h"
+#include "../Engine/TransformMatrix.h"
 class Ball {
 public:
     Ball(math::vec2 startPos);
@@ -22,6 +23,7 @@ private:
     math::vec2 initPosition;
     math::vec2 position;
     math::vec2 velocity;
+    math::TransformMatrix objectMatrix;
     static constexpr int ballCenterX = 44;
     static constexpr double bounceVelocity = 750 ;
 };

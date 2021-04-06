@@ -11,7 +11,7 @@ Creation date: 3/17/2021
 #include "..\Engine\Sprite.h"
 #include "..\Engine\Input.h"
 #include "..\Engine\Vec2.h"
-
+#include "../Engine/TransformMatrix.h"
 class Ship {
 public:
     Ship(math::vec2 startPos);
@@ -24,7 +24,7 @@ private:
     math::vec2 startPos;
     math::vec2 position;
     math::vec2 velocity;
-	
+    math::TransformMatrix objectMatrix;
     CS230::InputKey moveLeftKey;
     CS230::InputKey moveRightKey;
     CS230::InputKey moveUpKey;

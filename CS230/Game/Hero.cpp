@@ -11,7 +11,7 @@ Creation date: 03/16/2021
 #include "Level1.h"
 #include "..\Engine\Engine.h"
 #include "..\Engine\Camera.h"
-#include "../Engine/TransformMatrix.h"
+
 Hero::Hero(math::vec2 startPos, const CS230::Camera& camera) : startPos(startPos), camera(camera), moveLeftKey(CS230::InputKey::Keyboard::Left), moveRightKey(CS230::InputKey::Keyboard::Right), jumpKey(CS230::InputKey::Keyboard::Up)
 {
 }
@@ -70,10 +70,9 @@ void Hero::Update(double dt)
 		}
 	} else if (moveRightKey.IsKeyDown() == false && moveLeftKey.IsKeyDown() == false)
 	{
-		const double drag = -(velocity.x / sqrt(velocity.x * velocity.x)) * x_drag.x;
-		if (drag > stop.x)
+		if (-velocity.x > stop.x)
 		{
-			velocity.x += drag * dt;
+			velocity.x += x_drag.x * dt;
 			Engine::GetLogger().LogDebug("+Dragging");
 			if (velocity.x > stop.x)
 			{
@@ -81,9 +80,9 @@ void Hero::Update(double dt)
 				velocity.x = 0;
 			}
 		}
-		else if (drag < -stop.x)
+		else if (-velocity.x < -stop.x)
 		{
-			velocity.x += drag * dt;
+			velocity.x -= x_drag.x * dt;
 			Engine::GetLogger().LogDebug("-Dragging");
 			if (velocity.x < stop.x)
 			{
@@ -126,19 +125,20 @@ void Hero::Update(double dt)
 			Engine::GetLogger().LogDebug("Top of jump(Early) - YPos" + std::to_string(position.y));
 		}
 	}
-	if(position.y < Level1::floor)
+	position += velocity * dt;
+	if (position.y < Level1::floor)
 	{
 		velocity.y = 0;
 		position.y = Level1::floor;
 		isJumping = false;
 		Engine::GetLogger().LogDebug("Ending Jump - YPos" + std::to_string(position.y));
 	}
-	position += velocity * dt;
+	objectMatrix = math::TranslateMatrix(position);
 }
 
 void Hero::Draw(math::TransformMatrix cameraMatrix)
 {
-	sprite.Draw(math::TranslateMatrix(position) * cameraMatrix);
+	sprite.Draw(cameraMatrix * objectMatrix);
 }
 
 math::vec2 Hero::GetPosition()

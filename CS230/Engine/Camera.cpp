@@ -10,7 +10,7 @@ Creation date: 3/28/2021
 #include "Camera.h"
 #include "TransformMatrix.h"
 
-CS230::Camera::Camera(math::rect2 movableRange) : movableRange(movableRange)
+CS230::Camera::Camera(math::rect2 movableRange) : movableRange(movableRange), extent({ {0,0},{0,0} }), position({ 0,0})
 {
 }
 
@@ -44,6 +44,14 @@ void CS230::Camera::Update(const math::vec2& followObjPos)
 	} else if(position.x < extent.bottom_left.x)
 	{
 		position.x = extent.bottom_left.x;
+	}
+	if (position.y > extent.top_right.y)
+	{
+		position.y = extent.top_right.y;
+	}
+	else if (position.y < extent.bottom_left.y)
+	{
+		position.y = extent.bottom_left.y;
 	}
 }
 

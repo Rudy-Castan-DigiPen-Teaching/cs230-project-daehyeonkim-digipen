@@ -9,7 +9,7 @@ Creation date: 3/26/2021
 -----------------------------------------------------------------*/
 #include "Ball.h"
 #include "Level1.h"
-#include "../Engine/TransformMatrix.h"
+
 Ball::Ball(math::vec2 startPos) : initPosition(startPos)
 {
 }
@@ -24,15 +24,16 @@ void Ball::Load()
 void Ball::Update(double dt)
 {
 	velocity -= Level1::gravity * dt;
+	position += velocity * dt;
 	if (position.y < Level1::floor)
 	{
 		velocity.y = bounceVelocity;
 		position.y = Level1::floor;
 	}
-	position += velocity * dt;
+	objectMatrix = math::TranslateMatrix(position);
 }
 
 void Ball::Draw(math::TransformMatrix cameraMatrix)
 {
-	sprite.Draw(math::TranslateMatrix(position) * cameraMatrix);
+	sprite.Draw(cameraMatrix * objectMatrix);
 }

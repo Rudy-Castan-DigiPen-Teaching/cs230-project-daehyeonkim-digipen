@@ -9,7 +9,7 @@ Creation date: 3/17/2021
 -----------------------------------------------------------------*/
 #include "Ship.h"
 #include "..\Engine\Engine.h"
-#include "../Engine/TransformMatrix.h"
+
 Ship::Ship(math::vec2 startPos) : startPos(startPos), moveLeftKey(CS230::InputKey::Keyboard::A), moveRightKey(CS230::InputKey::Keyboard::D), moveUpKey(CS230::InputKey::Keyboard::W), moveDownKey(CS230::InputKey::Keyboard::S)
 {
 }
@@ -43,11 +43,12 @@ void Ship::Update(double dt)
 	Engine::GetLogger().LogDebug("Velocity = [" + std::to_string(velocity.x) + "],[" + std::to_string(velocity.y) + "]");
 	position += velocity * dt;
 	TestForWrap();
+	objectMatrix = math::TranslateMatrix(position);
 }
 
 void Ship::Draw()
 {
-	sprite.Draw(math::TranslateMatrix(position));
+	sprite.Draw(objectMatrix);
 }
 
 void Ship::TestForWrap()
