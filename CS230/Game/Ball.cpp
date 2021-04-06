@@ -23,12 +23,12 @@ void Ball::Load()
 void Ball::Update(double dt)
 {
 	velocity -= Level1::gravity * dt;
+	position += velocity * dt;
 	if (position.y < Level1::floor)
 	{
 		velocity.y = bounceVelocity;
 		position.y = Level1::floor;
 	}
-	position += velocity * dt;
 }
 
 void Ball::Draw()
