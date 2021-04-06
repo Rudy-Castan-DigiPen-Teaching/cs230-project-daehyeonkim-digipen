@@ -67,10 +67,9 @@ void Hero::Update(double dt)
 		}
 	} else if (moveRightKey.IsKeyDown() == false && moveLeftKey.IsKeyDown() == false)
 	{
-		const double drag = -(velocity.x / sqrt(velocity.x * velocity.x)) * x_drag.x;
-		if (drag > stop.x)
+		if (-velocity.x > stop.x)
 		{
-			velocity.x += drag * dt;
+			velocity.x += x_drag.x * dt;
 			Engine::GetLogger().LogDebug("+Dragging");
 			if (velocity.x > stop.x)
 			{
@@ -78,9 +77,9 @@ void Hero::Update(double dt)
 				velocity.x = 0;
 			}
 		}
-		else if (drag < -stop.x)
+		else if (-velocity.x < -stop.x)
 		{
-			velocity.x += drag * dt;
+			velocity.x -= x_drag.x * dt;
 			Engine::GetLogger().LogDebug("-Dragging");
 			if (velocity.x < stop.x)
 			{
@@ -114,6 +113,7 @@ void Hero::Update(double dt)
 			Engine::GetLogger().LogDebug("Top of jump(Early) - YPos" + std::to_string(position.y));
 		}
 	}
+	position += velocity * dt;
 	if(position.y < Level1::floor)
 	{
 		velocity.y = 0;
@@ -121,7 +121,6 @@ void Hero::Update(double dt)
 		isJumping = false;
 		Engine::GetLogger().LogDebug("Ending Jump - YPos" + std::to_string(position.y));
 	}
-	position += velocity * dt;
 }
 
 void Hero::Draw()
