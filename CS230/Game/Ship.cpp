@@ -17,6 +17,7 @@ Ship::Ship(math::vec2 startPos) : startPos(startPos), moveLeftKey(CS230::InputKe
 void Ship::Load()
 {
 	sprite.Load("assets/Ship.png");
+	velocity = {0,0};
 	position = startPos;
 }
 
