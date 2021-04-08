@@ -14,6 +14,13 @@ math::TransformMatrix::TransformMatrix()
 	Reset();
 }
 
+math::vec2 math::TransformMatrix::operator * (math::vec2 rhs) const {
+    math::vec2 result;
+    result.x = matrix[0][0] * rhs.x + matrix[0][1] * rhs.y + matrix[0][2];
+    result.y = matrix[1][0] * rhs.x + matrix[1][1] * rhs.y + matrix[1][2];
+    return result;
+}
+
 math::TransformMatrix math::TransformMatrix::operator* (TransformMatrix rhs) const
 {
     TransformMatrix result;
@@ -64,4 +71,18 @@ math::TranslateMatrix::TranslateMatrix(vec2 translate) : TransformMatrix()
 {
     matrix[0][2] = translate.x;
     matrix[1][2] = translate.y;
+}
+
+math::RotateMatrix::RotateMatrix(double radians)
+{
+    matrix[0][0] = cos(radians);
+    matrix[0][1] = -sin(radians);
+    matrix[1][0] = sin(radians);
+    matrix[1][1] = cos(radians);
+}
+
+math::ScaleMatrix::ScaleMatrix(vec2 scale)
+{
+    matrix[0][0] = scale.x;
+    matrix[1][1] = scale.y;
 }

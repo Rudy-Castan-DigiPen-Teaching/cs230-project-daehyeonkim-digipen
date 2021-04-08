@@ -12,6 +12,33 @@ Creation date: 2/14/2021
 #include "..\Engine\Vec2.h"
 #include "../Engine/TransformMatrix.h"
 class Ball {
+private:
+    class State {
+    public:
+        virtual void Enter(Ball* ball) = 0;
+        virtual void Update(Ball* ball, double dt) = 0;
+        virtual void TestForExit(Ball* ball) = 0;
+        virtual std::string GetName() = 0;
+    };
+    class State_Bounce : public State {
+    public:
+        virtual void Enter(Ball* ball) override;
+        virtual void Update(Ball* ball, double dt) override;
+        virtual void TestForExit(Ball* ball) override;
+        std::string GetName() override { return "Bounce"; }
+    };
+    class State_Land : public State {
+    public:
+        virtual void Enter(Ball* ball) override;
+        virtual void Update(Ball* ball, double dt) override;
+        virtual void TestForExit(Ball* ball) override;
+        std::string GetName() override { return "Land"; }
+    };
+    State_Bounce stateBounce;
+    State_Land stateLand;
+    State* currState;
+
+    void ChangeState(State* newState);
 public:
     Ball(math::vec2 startPos);
     void Load();

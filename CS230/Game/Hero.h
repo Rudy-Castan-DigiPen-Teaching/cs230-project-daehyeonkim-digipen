@@ -16,6 +16,60 @@ namespace CS230 {
     class Camera;
 }
 class Hero {
+private:
+    class State {
+    public:
+        virtual void Enter(Hero* hero) = 0;
+        virtual void Update(Hero* hero, double dt) = 0;
+        virtual void TestForExit(Hero* hero) = 0;
+        virtual std::string GetName() = 0;
+    };
+    class State_Idle : public State {
+    public:
+        virtual void Enter(Hero* hero) override;
+        virtual void Update(Hero* hero, double dt) override;
+        virtual void TestForExit(Hero* hero) override;
+        std::string GetName() override { return "Idle"; }
+    };
+    class State_Running : public State {
+    public:
+        virtual void Enter(Hero* hero) override;
+        virtual void Update(Hero* hero, double dt) override;
+        virtual void TestForExit(Hero* hero) override;
+        std::string GetName() override { return "Running"; }
+    };
+    class State_Skidding : public State {
+    public:
+        virtual void Enter(Hero* hero) override;
+        virtual void Update(Hero* hero, double dt) override;
+        virtual void TestForExit(Hero* hero) override;
+        std::string GetName() override { return "Skidding"; }
+    };
+    class State_Jumping : public State {
+    public:
+        virtual void Enter(Hero* hero) override;
+        virtual void Update(Hero* hero, double dt) override;
+        virtual void TestForExit(Hero* hero) override;
+        std::string GetName() override { return "Jumping"; }
+    };
+    class State_Falling : public State {
+    public:
+        virtual void Enter(Hero* hero) override;
+        virtual void Update(Hero* hero, double dt) override;
+        virtual void TestForExit(Hero* hero) override;
+        std::string GetName() override { return "Falling"; }
+    };
+    State_Idle stateIdle;
+    State_Running stateRunning;
+    State_Skidding stateSkidding;
+    State_Jumping stateJumping;
+    State_Falling stateFalling;
+
+    void UpdateXVelocity(double dt);     //Change X velocity stuff
+    void ChangeState(State* newState);
+
+    State* currState;
+
 public:
     Hero(math::vec2 startPos, const CS230::Camera& camera);
     void Load();
@@ -41,5 +95,6 @@ private:
 
     bool isJumping = false;
     bool isRising = false;
+    bool isFlipped = false;
 };
 

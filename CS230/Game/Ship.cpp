@@ -10,64 +10,79 @@ Creation date: 3/17/2021
 #include "Ship.h"
 #include "..\Engine\Engine.h"
 
-Ship::Ship(math::vec2 startPos) : startPos(startPos), moveLeftKey(CS230::InputKey::Keyboard::A), moveRightKey(CS230::InputKey::Keyboard::D), moveUpKey(CS230::InputKey::Keyboard::W), moveDownKey(CS230::InputKey::Keyboard::S)
+
+Ship::Ship(math::vec2 startPos) : startPos(startPos), rotateCounterKey(CS230::InputKey::Keyboard::A), rotateClockKey(CS230::InputKey::Keyboard::D), accelerateKey(CS230::InputKey::Keyboard::W)
 {
 }
 
 void Ship::Load()
 {
-	sprite.Load("assets/Ship.png");
+	shipSprite.Load("assets/Ship.png", { {50,41},{-15,41},{15,41} });
+	flameSpriteL.Load("assets/flame.png", { math::ivec2{shipSprite.GetHotSpot(1)} + flameHotspot });
+	flameSpriteR.Load("assets/flame.png", { math::ivec2{shipSprite.GetHotSpot(2)} + flameHotspot });
 	position = startPos;
 	velocity = { 0, 0 };
+	rotation = 0;
+	wasAccel = false;
 }
 
 void Ship::Update(double dt)
 {
-	if(moveLeftKey.IsKeyDown() == true)
+	constexpr double rotateSpeed = 0.03;
+	if(rotateCounterKey.IsKeyDown() == true)
 	{
-		velocity.x -= accel * dt;
+		rotation += rotateSpeed;
 	}
-	if (moveRightKey.IsKeyDown() == true)
+	if (rotateClockKey.IsKeyDown() == true)
 	{
-		velocity.x += accel * dt;
+		rotation -= rotateSpeed;
 	}
-	if (moveUpKey.IsKeyDown() == true)
+	if (accelerateKey.IsKeyDown() == true)
 	{
-		velocity.y += accel * dt;
-	}
-	if (moveDownKey.IsKeyDown() == true)
+		if(wasAccel == false)
+		{
+			Engine::GetLogger().LogDebug("Accelerating");
+			wasAccel = true;
+		}
+		velocity += math::RotateMatrix(rotation) * math::vec2{ 0, accel * dt };
+	} else
 	{
-		velocity.y -= accel * dt;
+		if(wasAccel == true)
+		{
+			Engine::GetLogger().LogDebug("Stopped Accelerating");
+			wasAccel = false;
+		}
 	}
 	velocity -= velocity * drag * dt;
-	Engine::GetLogger().LogDebug("Velocity = [" + std::to_string(velocity.x) + "],[" + std::to_string(velocity.y) + "]");
 	position += velocity * dt;
 	TestForWrap();
-	objectMatrix = math::TranslateMatrix(position);
+	objectMatrix = math::TranslateMatrix(position) * math::RotateMatrix(rotation) * math::ScaleMatrix({ 0.75, 0.75 });
 }
 
 void Ship::Draw()
 {
-	sprite.Draw(objectMatrix);
+	flameSpriteL.Draw(objectMatrix);
+	flameSpriteR.Draw(objectMatrix);
+	shipSprite.Draw(objectMatrix);
 }
 
 void Ship::TestForWrap()
 {
-	const int x_limit = Engine::GetWindow().GetSize().x + sprite.GetTextureSize().x / 2;
-	const int y_limit = Engine::GetWindow().GetSize().y + sprite.GetTextureSize().y / 2;
+	const int x_limit = Engine::GetWindow().GetSize().x + shipSprite.GetTextureSize().x / 2;
+	const int y_limit = Engine::GetWindow().GetSize().y + shipSprite.GetTextureSize().y / 2;
 	if (position.x > x_limit)
 	{
-		position.x = -sprite.GetTextureSize().x / 2;
+		position.x = -shipSprite.GetTextureSize().x / 2;
 	}
-	else if (position.x < -sprite.GetTextureSize().x / 2)
+	else if (position.x < -shipSprite.GetTextureSize().x / 2)
 	{
 		position.x = x_limit;
 	}
 	if (position.y > y_limit)
 	{
-		position.y = -sprite.GetTextureSize().y / 2;
+		position.y = -shipSprite.GetTextureSize().y / 2;
 	}
-	else if (position.y < -sprite.GetTextureSize().y / 2)
+	else if (position.y < -shipSprite.GetTextureSize().y / 2)
 	{
 		position.y = y_limit;
 	}

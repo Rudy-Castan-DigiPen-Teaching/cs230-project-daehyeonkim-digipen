@@ -12,7 +12,7 @@ Creation date: 03/08/2021
 #include "Level1.h"
 #include "../Engine/TransformMatrix.h"
 
-Level1::Level1() : camera(math::rect2{ math::vec2{Engine::GetWindow().GetSize().x * 0.15, 0}, math::vec2{ Engine::GetWindow().GetSize().x * 0.35, static_cast<double>(Engine::GetWindow().GetSize().y) } }), levelNext(CS230::InputKey::Keyboard::Enter), levelReload(CS230::InputKey::Keyboard::R), hero({ Engine::GetWindow().GetSize().x / 2.0, floor }, camera), ball1({ 600, floor }), ball2({ 2700, floor }), ball3({ 4800, floor })
+Level1::Level1() : camera(math::rect2{ math::vec2{Engine::GetWindow().GetSize().x * 0.15, 0}, math::vec2{ Engine::GetWindow().GetSize().x * 0.35, static_cast<double>(Engine::GetWindow().GetSize().y) } }), levelNext(CS230::InputKey::Keyboard::Enter), levelReload(CS230::InputKey::Keyboard::R), hero({ 150, floor }, camera), ball1({ 600, floor }), ball2({ 2700, floor }), ball3({ 4800, floor })
 {}
 
 void Level1::Load() {
@@ -32,7 +32,6 @@ void Level1::Update(double dt) {
 	ball2.Update(dt);
 	ball3.Update(dt);
 	camera.Update(hero.GetPosition());
-	Engine::GetLogger().LogDebug(std::to_string(camera.GetPosition().x));
 	if (levelNext.IsKeyReleased() == true) {
 		Engine::GetGameStateManager().SetNextState(static_cast<int>(Screens::Level2));
 	}

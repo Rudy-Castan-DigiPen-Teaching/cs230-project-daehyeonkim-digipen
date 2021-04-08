@@ -9,26 +9,31 @@ Creation date: 03/16/2021
 -----------------------------------------------------------------*/
 #include "Sprite.h"
 #include "TransformMatrix.h"
+#include "../Engine/Engine.h"
 CS230::Sprite::Sprite()
 = default;
 
-void CS230::Sprite::Load(const std::filesystem::path& texturePath)
-{
-	texture.Load(texturePath);
-	hotSpot = { texture.GetSize()/2};
-}
 
-void CS230::Sprite::Load(const std::filesystem::path& texturePath, math::ivec2 hotSpotPosition)
+void CS230::Sprite::Load(const std::filesystem::path& texturePath, std::initializer_list<math::ivec2> hotspots)
 {
 	texture.Load(texturePath);
-	hotSpot = hotSpotPosition;
+	hotSpotList = hotspots;
 }
 
 void CS230::Sprite::Draw(math::TransformMatrix displayMatrix) {
-	texture.Draw(displayMatrix * math::TranslateMatrix(-hotSpot));
+	texture.Draw(displayMatrix * math::TranslateMatrix(-GetHotSpot(0)));
 }
 
 math::ivec2 CS230::Sprite::GetTextureSize()
 {
 	return texture.GetSize();
+}
+
+math::ivec2 CS230::Sprite::GetHotSpot(int index)
+{
+	if(index >= hotSpotList.size())
+	{
+		Engine::GetLogger().LogError("Errr: No hotspot in that index!");
+	}
+	return hotSpotList[index];
 }

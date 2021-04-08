@@ -20,16 +20,21 @@ public:
     void Draw();
 
 private:
-    CS230::Sprite sprite;
+    CS230::Sprite shipSprite;
+    CS230::Sprite flameSpriteL;
+    CS230::Sprite flameSpriteR;
     math::vec2 startPos;
     math::vec2 position;
     math::vec2 velocity;
+    double rotation = 0;
+    bool wasAccel = false;
+	
+    CS230::InputKey rotateCounterKey;
+    CS230::InputKey rotateClockKey;
+    CS230::InputKey accelerateKey;
     math::TransformMatrix objectMatrix;
-    CS230::InputKey moveLeftKey;
-    CS230::InputKey moveRightKey;
-    CS230::InputKey moveUpKey;
-    CS230::InputKey moveDownKey;
 
+    static constexpr math::ivec2 flameHotspot{ 8, 16 };
     static constexpr double accel = 400;
     static constexpr double drag = 1.0f;
     void TestForWrap();

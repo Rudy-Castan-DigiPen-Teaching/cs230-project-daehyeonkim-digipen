@@ -57,6 +57,7 @@ namespace math
 			x = inputX;
 			y = inputY;
 		}
+		explicit constexpr operator vec2() { return vec2{ static_cast<double>(x),static_cast<double>(y) }; }
 		constexpr ivec2& operator+=(ivec2) noexcept;
 		constexpr ivec2& operator-=(ivec2) noexcept;
 		constexpr ivec2& operator*=(int) noexcept;
