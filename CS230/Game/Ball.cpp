@@ -39,7 +39,7 @@ void Ball::State_Land::Enter(Ball* ball)
 	ball->position.y = Level1::floor;
 }
 
-void Ball::State_Land::Update(Ball* ball, double dt)
+void Ball::State_Land::Update([[maybe_unused]] Ball* ball, [[maybe_unused]] double dt)
 {
 }
 

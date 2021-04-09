@@ -57,11 +57,11 @@ void Hero::ChangeState(State* newState) {
 	currState->Enter(this);
 }
 
-void Hero::State_Idle::Enter(Hero* hero)
+void Hero::State_Idle::Enter([[maybe_unused]] Hero* hero)
 {
 }
 
-void Hero::State_Idle::Update(Hero* hero, double dt)
+void Hero::State_Idle::Update([[maybe_unused]] Hero* hero, [[maybe_unused]] double dt)
 {
 }
 
@@ -109,7 +109,7 @@ void Hero::State_Running::TestForExit(Hero* hero)
 	}
 }
 
-void Hero::State_Skidding::Enter(Hero* hero)
+void Hero::State_Skidding::Enter([[maybe_unused]] Hero* hero)
 {
 	
 }
@@ -154,7 +154,7 @@ void Hero::State_Jumping::TestForExit(Hero* hero) {
 	}
 }
 
-void Hero::State_Falling::Enter(Hero* hero)
+void Hero::State_Falling::Enter([[maybe_unused]] Hero* hero)
 {
 }
 
@@ -227,42 +227,6 @@ void Hero::Update(double dt)
 		velocity.x = 0;
 		position.x = camera.GetPosition().x + Engine::GetWindow().GetSize().x - collisionOffset;
 	}
-	/*
-
-
-
-	if(jumpKey.IsKeyDown() == true && isJumping == false)
-	{
-		isJumping = true;
-		isRising = true;
-		velocity += jump_accel;
-		Engine::GetLogger().LogDebug("Starting Jump - YPos" + std::to_string(position.y));
-	}
-	if(isJumping == true)
-	{
-		velocity -= Level1::gravity * dt;
-	}
-	if(isRising == true)
-	{
-		if(velocity.y <= 0)
-		{
-			isRising = false;
-			Engine::GetLogger().LogDebug("Top of jump - YPos" + std::to_string(position.y));
-		}
-		if(jumpKey.IsKeyReleased() == true)
-		{
-			velocity.y = 0;
-			isRising = false;
-			Engine::GetLogger().LogDebug("Top of jump(Early) - YPos" + std::to_string(position.y));
-		}
-	}
-	position += velocity * dt;
-	if (position.y < Level1::floor)
-	{
-
-		isJumping = false;
-		Engine::GetLogger().LogDebug("Ending Jump - YPos" + std::to_string(position.y));
-	}*/
 	
 	objectMatrix = math::TranslateMatrix(position);
 	if (isFlipped == true) {

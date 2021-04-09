@@ -31,9 +31,9 @@ math::ivec2 CS230::Sprite::GetTextureSize()
 
 math::ivec2 CS230::Sprite::GetHotSpot(int index)
 {
-	if(index >= hotSpotList.size())
+	if(static_cast<size_t>(index) >= hotSpotList.size())
 	{
-		Engine::GetLogger().LogError("Errr: No hotspot in that index!");
+		Engine::GetLogger().LogError("Error: No hotspot in that index!");
 	}
 	return hotSpotList[index];
 }
