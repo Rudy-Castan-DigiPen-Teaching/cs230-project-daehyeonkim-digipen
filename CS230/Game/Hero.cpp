@@ -15,17 +15,16 @@ Creation date: 03/16/2021
 void Hero::UpdateXVelocity(double dt)
 {
 	const math::vec2 stop{ 0,0 };
-	const math::vec2 skidding = x_drag * 2;
 	if (moveRightKey.IsKeyDown() == true)
 	{
-		if (velocity.x <= x_max_speed.x)
+		if (velocity.x < x_max_speed.x)
 		{
 			velocity += x_accel * dt;
 		}
 	}
 	else if (moveLeftKey.IsKeyDown() == true)
 	{
-		if (velocity.x >= -x_max_speed.x)
+		if (velocity.x > -x_max_speed.x)
 		{
 			velocity -= x_accel * dt;
 		}
@@ -117,10 +116,10 @@ void Hero::State_Skidding::Enter([[maybe_unused]] Hero* hero)
 void Hero::State_Skidding::Update(Hero* hero, double dt)
 {
 	const math::vec2 skidding = x_drag * 2;
-	if (hero->moveLeftKey.IsKeyDown() == true && hero->velocity.x > 0)
+	if ( hero->velocity.x > 0)
 	{
 		hero->velocity -= skidding * dt;
-	} else if(hero->moveRightKey.IsKeyDown() == true && hero->velocity.x < 0)
+	} else if(hero->velocity.x < 0)
 	{
 		hero->velocity += skidding * dt;
 	}
@@ -206,8 +205,7 @@ void Hero::Load()
 	currState->Enter(this);
 	position = startPos;
 	velocity = { 0, 0 };
-	isJumping = false;
-	isRising = false;
+	isFlipped = false;
 }
 
 void Hero::Update(double dt)

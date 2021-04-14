@@ -34,6 +34,7 @@ math::ivec2 CS230::Sprite::GetHotSpot(int index)
 	if(static_cast<size_t>(index) >= hotSpotList.size())
 	{
 		Engine::GetLogger().LogError("Error: No hotspot in that index!");
+		return { 0,0 };
 	}
 	return hotSpotList[index];
 }

@@ -11,7 +11,7 @@ Creation date: 3/26/2021
 #include "Level1.h"
 #include "..\Engine\Engine.h"
 void Ball::ChangeState(State* newState) {
-	Engine::GetLogger().LogDebug("Leaving State: " + currState->GetName() + " Entering State: " + newState->GetName());
+	//Engine::GetLogger().LogDebug("Leaving State: " + currState->GetName() + " Entering State: " + newState->GetName());
 	currState = newState;
 	currState->Enter(this);
 }

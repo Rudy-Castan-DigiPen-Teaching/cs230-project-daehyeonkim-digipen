@@ -28,14 +28,14 @@ void Ship::Load()
 
 void Ship::Update(double dt)
 {
-	constexpr double rotateSpeed = 0.03;
+	constexpr double rotateSpeed = 3.14;
 	if(rotateCounterKey.IsKeyDown() == true)
 	{
-		rotation += rotateSpeed;
+		rotation += rotateSpeed * dt;
 	}
 	if (rotateClockKey.IsKeyDown() == true)
 	{
-		rotation -= rotateSpeed;
+		rotation -= rotateSpeed * dt;
 	}
 	if (accelerateKey.IsKeyDown() == true)
 	{
