@@ -11,6 +11,7 @@ Creation date: 03/16/2021
 #include "Level1.h"
 #include "..\Engine\Engine.h"
 #include "..\Engine\Camera.h"
+#include "Hero_Anims.h"
 
 void Hero::UpdateXVelocity(double dt)
 {
@@ -56,8 +57,9 @@ void Hero::ChangeState(State* newState) {
 	currState->Enter(this);
 }
 
-void Hero::State_Idle::Enter([[maybe_unused]] Hero* hero)
+void Hero::State_Idle::Enter(Hero* hero)
 {
+	hero->sprite.PlayAnimation(static_cast<int>(Hero_Anim::Hero_Idle_Anim));
 }
 
 void Hero::State_Idle::Update([[maybe_unused]] Hero* hero, [[maybe_unused]] double dt)
@@ -77,6 +79,7 @@ void Hero::State_Idle::TestForExit(Hero* hero)
 
 void Hero::State_Running::Enter(Hero* hero)
 {
+	hero->sprite.PlayAnimation(static_cast<int>(Hero_Anim::Hero_Run_Anim));
 	if (hero->moveLeftKey.IsKeyDown() == true)
 	{
 		hero->isFlipped = true;
@@ -108,15 +111,15 @@ void Hero::State_Running::TestForExit(Hero* hero)
 	}
 }
 
-void Hero::State_Skidding::Enter([[maybe_unused]] Hero* hero)
+void Hero::State_Skidding::Enter(Hero* hero)
 {
-	
+	hero->sprite.PlayAnimation(static_cast<int>(Hero_Anim::Hero_Skid_Anim));
 }
 
 void Hero::State_Skidding::Update(Hero* hero, double dt)
 {
 	const math::vec2 skidding = x_drag * 2;
-	if ( hero->velocity.x > 0)
+	if (hero->velocity.x > 0)
 	{
 		hero->velocity -= skidding * dt;
 	} else if(hero->velocity.x < 0)
@@ -138,6 +141,7 @@ void Hero::State_Skidding::TestForExit(Hero* hero)
 }
 
 void Hero::State_Jumping::Enter(Hero* hero) {
+	hero->sprite.PlayAnimation(static_cast<int>(Hero_Anim::Hero_Jump_Anim));
 	hero->velocity.y = Hero::jump_accel.y;   //Set the velocity.y
 }
 void Hero::State_Jumping::Update(Hero* hero, double dt) {
@@ -153,8 +157,9 @@ void Hero::State_Jumping::TestForExit(Hero* hero) {
 	}
 }
 
-void Hero::State_Falling::Enter([[maybe_unused]] Hero* hero)
+void Hero::State_Falling::Enter(Hero* hero)
 {
+	hero->sprite.PlayAnimation(static_cast<int>(Hero_Anim::Hero_Fall_Anim));
 }
 
 void Hero::State_Falling::Update(Hero* hero, double dt)
@@ -200,7 +205,7 @@ Hero::Hero(math::vec2 startPos, const CS230::Camera& camera) : startPos(startPos
 
 void Hero::Load()
 {
-	sprite.Load("assets/Hero.png", { {feetX, feetY} });
+	sprite.Load("assets/Hero.spt");
 	currState = &stateIdle;
 	currState->Enter(this);
 	position = startPos;
@@ -213,7 +218,7 @@ void Hero::Update(double dt)
 	currState->Update(this, dt);
 	position += velocity * dt;
 	currState->TestForExit(this);
-	const double collisionOffset = sprite.GetTextureSize().x / 2;
+	const double collisionOffset = sprite.GetFrameSize().x / 2;
 	const double screenPositionX = position.x - camera.GetPosition().x;
 	if (screenPositionX - collisionOffset < 0)
 	{
@@ -230,6 +235,7 @@ void Hero::Update(double dt)
 	if (isFlipped == true) {
 		objectMatrix *= math::ScaleMatrix{ {-1.0, 1.0} };
 	}
+	sprite.Update(dt);
 }
 
 void Hero::Draw(math::TransformMatrix cameraMatrix)

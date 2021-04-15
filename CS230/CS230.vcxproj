@@ -159,6 +159,7 @@ xcopy /d /y Assets\* "$(OutputPath)Assets"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\Animation.cpp" />
     <ClCompile Include="Engine\Camera.cpp" />
     <ClCompile Include="Engine\Engine.cpp" />
     <ClCompile Include="Engine\GameStateManager.cpp" />
@@ -179,6 +180,7 @@ xcopy /d /y Assets\* "$(OutputPath)Assets"
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Animation.h" />
     <ClInclude Include="Engine\Camera.h" />
     <ClInclude Include="Engine\Engine.h" />
     <ClInclude Include="Engine\GameState.h" />
@@ -193,7 +195,10 @@ xcopy /d /y Assets\* "$(OutputPath)Assets"
     <ClInclude Include="Engine\Window.h" />
     <ClInclude Include="Game\Ball.h" />
     <ClInclude Include="Game\Background.h" />
+    <ClInclude Include="Game\Ball_Anims.h" />
+    <ClInclude Include="Game\Flame_Anims.h" />
     <ClInclude Include="Game\Hero.h" />
+    <ClInclude Include="Game\Hero_Anims.h" />
     <ClInclude Include="Game\Level1.h" />
     <ClInclude Include="Game\Level2.h" />
     <ClInclude Include="Game\Screens.h" />

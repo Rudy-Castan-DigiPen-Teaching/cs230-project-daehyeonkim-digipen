@@ -1,0 +1,21 @@
+PlayFrame 0 3
+PlayFrame 1 1
+PlayFrame 2 .1
+PlayFrame 1 1
+PlayFrame 2 .1
+PlayFrame 1 1
+PlayFrame 0 3
+PlayFrame 1 1
+PlayFrame 2 .2
+PlayFrame 1 .9
+PlayFrame 2 .2
+PlayFrame 1 .9
+PlayFrame 0 3
+PlayFrame 1 1
+PlayFrame 2 .3
+PlayFrame 1 1
+PlayFrame 2 1
+PlayFrame 3 .5
+PlayFrame 4 .5
+PlayFrame 5 .5
+Loop 16

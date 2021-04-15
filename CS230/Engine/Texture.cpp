@@ -26,7 +26,12 @@ void CS230::Texture::Draw(math::TransformMatrix displayMatrix) {
     doodle::draw_image(image, 0, 0);
     doodle::pop_settings();
 }
-
+void CS230::Texture::Draw(math::TransformMatrix displayMatrix, math::ivec2 texelPos, math::ivec2 frameSize) {
+	doodle::push_settings();
+	doodle::apply_matrix(displayMatrix[0][0], displayMatrix[1][0], displayMatrix[0][1], displayMatrix[1][1], displayMatrix[0][2], displayMatrix[1][2]);
+	doodle::draw_image(image, 0, 0, static_cast<double>(frameSize.x), static_cast<double>(frameSize.y), texelPos.x, texelPos.y);
+	doodle::pop_settings();
+}
 math::ivec2 CS230::Texture::GetSize()
 {
 	return {image.GetWidth(), image.GetHeight()};

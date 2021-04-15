@@ -23,6 +23,7 @@ namespace CS230 {
         Texture(const std::filesystem::path& filePath);
         void Load(const std::filesystem::path& filePath);
         void Draw(math::TransformMatrix displayMatrix);
+        void Draw(math::TransformMatrix displayMatrix, math::ivec2 texelPos, math::ivec2 frameSize);
         math::ivec2 GetSize();
     private:
         doodle::Image image;

@@ -61,6 +61,9 @@
     <ClCompile Include="Engine\TransformMatrix.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Animation.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Engine.h">
@@ -122,6 +125,18 @@
     </ClInclude>
     <ClInclude Include="Engine\TransformMatrix.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Animation.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Ball_Anims.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Hero_Anims.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Flame_Anims.h">
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
