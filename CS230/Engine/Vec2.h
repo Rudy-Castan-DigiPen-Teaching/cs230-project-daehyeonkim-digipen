@@ -25,10 +25,6 @@ namespace math
 		double x = 0;
 		double y = 0;
 		[[nodiscard]] constexpr vec2() noexcept = default;
-		[[nodiscard]] constexpr vec2(const double input) noexcept : vec2()
-		{
-			x = y = input;
-		}
 		[[nodiscard]] constexpr vec2(const double inputX, const double inputY) noexcept : vec2()
 		{
 			x = inputX, y = inputY;
@@ -48,10 +44,6 @@ namespace math
 		int x = 0;
 		int y = 0;
 		[[nodiscard]] constexpr ivec2() noexcept = default;
-		[[nodiscard]] constexpr ivec2(const int input) noexcept : ivec2()
-		{
-			x = y = input;
-		}
 		[[nodiscard]] constexpr ivec2(const int inputX, const int inputY) noexcept : ivec2()
 		{
 			x = inputX;
