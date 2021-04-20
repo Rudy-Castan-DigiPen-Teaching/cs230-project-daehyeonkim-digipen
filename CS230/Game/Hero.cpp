@@ -170,29 +170,33 @@ void Hero::State_Falling::Update(Hero* hero, double dt)
 
 void Hero::State_Falling::TestForExit(Hero* hero)
 {
-	if(hero->position.y <= Level1::floor)
+	if (hero->position.y <= Level1::floor)
 	{
 		hero->velocity.y = 0;
 		hero->position.y = Level1::floor;
-		if (hero->moveLeftKey.IsKeyDown() == true)
+		if (hero->velocity.x > 0)
 		{
-			if(hero->velocity.x > 0)
+			if (hero->moveLeftKey.IsKeyDown() == true)
 			{
 				hero->ChangeState(&hero->stateSkidding);
-			} else
+			}
+			else
 			{
 				hero->ChangeState(&hero->stateRunning);
 			}
-		} else if (hero->moveRightKey.IsKeyDown() == true)
+		}
+		else if (hero->velocity.x < 0)
 		{
-			if(hero->velocity.x < 0)
+			if (hero->moveRightKey.IsKeyDown() == true)
 			{
 				hero->ChangeState(&hero->stateSkidding);
-			} else
+			}
+			else
 			{
 				hero->ChangeState(&hero->stateRunning);
 			}
-		} else
+		}
+		else
 		{
 			hero->ChangeState(&hero->stateIdle);
 		}

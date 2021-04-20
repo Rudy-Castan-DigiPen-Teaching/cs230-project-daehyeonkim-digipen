@@ -117,6 +117,10 @@ bool CS230::Sprite::IsAnimationDone()
 
 math::ivec2 CS230::Sprite::GetFrameTexel(int frameNum) const
 {
+	if (static_cast<size_t>(frameNum) >= frameTexel.size())
+	{
+		return { 0,0 };
+	}
 	return frameTexel[frameNum];
 }
 
