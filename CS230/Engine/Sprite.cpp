@@ -35,8 +35,8 @@ void CS230::Sprite::Load(const std::filesystem::path & spriteInfoFile) {
 
 	std::string text;
 	inFile >> text;
-	texture.Load(text);
-	frameSize = texture.GetSize();
+	texturePtr = Engine::GetTextureManager().Load(text);
+	frameSize = texturePtr->GetSize();
 
 	inFile >> text;
 	while (inFile.eof() == false) {
@@ -85,7 +85,7 @@ void CS230::Sprite::Load(const std::filesystem::path & spriteInfoFile) {
 }
 
 void CS230::Sprite::Draw(math::TransformMatrix displayMatrix) {
-	texture.Draw(displayMatrix * math::TranslateMatrix(-GetHotSpot(0)), frameTexel[animations[currAnim]->GetDisplayFrame()], frameSize);
+	texturePtr->Draw(displayMatrix * math::TranslateMatrix(-GetHotSpot(0)), frameTexel[animations[currAnim]->GetDisplayFrame()], frameSize);
 }
 
 
@@ -101,8 +101,8 @@ void CS230::Sprite::PlayAnimation(int anim)
 		Engine::GetLogger().LogError("Error: Animation has nothing for that input!");
 		currAnim = 0;
 	}
-	animations[currAnim]->ResetAnimation();
 	currAnim = anim;
+	animations[currAnim]->ResetAnimation();
 }
 
 void CS230::Sprite::Update(double dt)

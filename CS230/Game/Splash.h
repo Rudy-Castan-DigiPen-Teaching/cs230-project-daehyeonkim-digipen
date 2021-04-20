@@ -23,5 +23,5 @@ public:
 private:
 	double timer = 0;
 	static constexpr double splash_time = 3.0;
-	CS230::Texture texture;
+	CS230::Texture* texturePtr;
 };

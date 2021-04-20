@@ -18,14 +18,13 @@ namespace math
 }
 namespace CS230 {
     class Texture {
+        friend class TextureManager;
     public:
-        Texture();
-        Texture(const std::filesystem::path& filePath);
-        void Load(const std::filesystem::path& filePath);
         void Draw(math::TransformMatrix displayMatrix);
         void Draw(math::TransformMatrix displayMatrix, math::ivec2 texelPos, math::ivec2 frameSize);
         math::ivec2 GetSize();
     private:
+        Texture(const std::filesystem::path& filePath);
         doodle::Image image;
     };
 }

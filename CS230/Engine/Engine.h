@@ -11,10 +11,11 @@ Creation date: 2/10/2021
 #pragma once
 #include <chrono>   
 #include "GameStateManager.h"
+#include "TextureManager.h"
 #include "Input.h"
 #include "Window.h"
 #include "Logger.h"
-
+#include <random>
 class Engine {
 public:
 	static Engine& Instance() {
@@ -25,7 +26,7 @@ public:
     static CS230::Input& GetInput() { return Instance().input; }
     static CS230::Window& GetWindow() { return Instance().window; }
     static CS230::GameStateManager& GetGameStateManager() { return Instance().gameStateManager; }
-
+    static CS230::TextureManager& GetTextureManager() { return Instance().textureManager; }
     void Init(std::string windowName);
     void Shutdown();
     void Update();
@@ -33,13 +34,13 @@ public:
 private:
     Engine();
     ~Engine();
-
     std::chrono::system_clock::time_point lastTick;
     std::chrono::system_clock::time_point fpsCalcTime;
     int frameCount;
 	
     CS230::Logger logger;
     CS230::GameStateManager gameStateManager;
+    CS230::TextureManager textureManager;
     CS230::Input input;
     CS230::Window window;
 

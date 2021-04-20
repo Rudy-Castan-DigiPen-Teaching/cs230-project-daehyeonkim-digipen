@@ -12,13 +12,7 @@ Creation date: 2/11/2021
 #include <doodle/drawing.hpp>	//draw_image
 #include "Texture.h"
 #include "TransformMatrix.h"
-CS230::Texture::Texture() {}
-
 CS230::Texture::Texture(const std::filesystem::path& filePath) : image(doodle::Image{ filePath }) {}
-
-void CS230::Texture::Load(const std::filesystem::path& filePath) {
-	image = doodle::Image{ filePath };
-}
 
 void CS230::Texture::Draw(math::TransformMatrix displayMatrix) {
     doodle::push_settings();

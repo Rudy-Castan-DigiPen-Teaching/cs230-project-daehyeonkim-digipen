@@ -8,34 +8,25 @@ Author: Daehyeon Kim
 Creation date: 3/17/2021
 -----------------------------------------------------------------*/
 #pragma once
-#include "..\Engine\Sprite.h"
 #include "..\Engine\Input.h"
-#include "..\Engine\Vec2.h"
-#include "../Engine/TransformMatrix.h"
-class Ship {
+#include "../Engine/GameObject.h"
+namespace math { struct vec2; }
+class Ship : public CS230::GameObject {
 public:
     Ship(math::vec2 startPos);
-    void Load();
-    void Update(double dt);
-    void Draw();
+    void Update(double dt) override;
+    void Draw(math::TransformMatrix cameraMatrix) override;
 
 private:
-    CS230::Sprite shipSprite;
     CS230::Sprite flameSpriteL;
     CS230::Sprite flameSpriteR;
-    math::vec2 startPos;
-    math::vec2 position;
-    math::vec2 velocity;
-    double rotation = 0;
-    bool wasAccel = false;
+    bool wasAccel;
 	
     CS230::InputKey rotateCounterKey;
     CS230::InputKey rotateClockKey;
     CS230::InputKey accelerateKey;
-    math::TransformMatrix objectMatrix;
 
-    static constexpr math::ivec2 flameHotspot{ 8, 16 };
-    static constexpr double accel = 400;
+    static constexpr math::vec2 accel{ 0, 400 };
     static constexpr double drag = 1.0f;
     void TestForWrap();
 };

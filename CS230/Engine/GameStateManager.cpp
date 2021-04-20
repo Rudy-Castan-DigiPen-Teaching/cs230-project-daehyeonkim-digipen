@@ -47,6 +47,7 @@ void CS230::GameStateManager::Update(double dt)
 	case State::UPDATE:
 		if(nextGameState != currGameState)
 		{
+			Engine::GetTextureManager().Unload();
 			state = State::UNLOAD;
 		} else
 		{

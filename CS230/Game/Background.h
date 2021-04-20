@@ -22,7 +22,7 @@ public:
     math::ivec2 Size();
 private:
     struct ParallaxInfo {
-        CS230::Texture texture;
+        CS230::Texture* texturePtr;
         int level;
     };
     std::vector<ParallaxInfo> backgrounds;

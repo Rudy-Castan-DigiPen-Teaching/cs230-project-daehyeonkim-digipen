@@ -33,7 +33,6 @@ namespace math
 		constexpr vec2& operator-=(vec2) noexcept;
 		constexpr vec2& operator*=(double) noexcept;
 		constexpr vec2& operator/=(double) noexcept;
-
 		[[nodiscard]] constexpr double LengthSquared() const noexcept;
 		[[nodiscard]] constexpr vec2 Normalize() const noexcept;
 	};

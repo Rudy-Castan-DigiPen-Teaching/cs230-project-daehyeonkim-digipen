@@ -11,6 +11,13 @@ Creation date: 2/11/2021
 #include "Vec2.h"
 #include "Texture.h"
 #include "Animation.h"
+#include <filesystem>
+
+namespace CS230 {
+    class Texture;
+    class Animation;
+}
+
 namespace CS230 {
     class Sprite {
     public:
@@ -25,7 +32,7 @@ namespace CS230 {
         bool IsAnimationDone();
     private:
         math::ivec2 GetFrameTexel(int frameNum) const;
-        Texture texture;
+        Texture* texturePtr;
         math::ivec2 frameSize;
         std::vector<math::ivec2> frameTexel;
         std::vector<math::ivec2> hotSpotList;

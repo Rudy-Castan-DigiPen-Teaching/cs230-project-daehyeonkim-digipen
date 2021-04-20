@@ -10,6 +10,7 @@ Creation date: 03/08/2021
 #pragma once
 #include "..\Engine\GameState.h"
 #include "..\Engine\Input.h"
+#include "../Engine/GameObjectManager.h"
 #include "Ship.h"
 class Level2 : public CS230::GameState {
 public:
@@ -22,5 +23,6 @@ public:
 private:
 	CS230::InputKey levelNext;
 	CS230::InputKey levelReload;
-	Ship ship;
+	CS230::GameObjectManager gameObjectManager;
+	math::TransformMatrix noCamera;
 };

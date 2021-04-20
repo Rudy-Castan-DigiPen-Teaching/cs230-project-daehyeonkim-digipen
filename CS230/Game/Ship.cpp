@@ -12,19 +12,11 @@ Creation date: 3/17/2021
 #include "Flame_Anims.h"
 
 
-Ship::Ship(math::vec2 startPos) : startPos(startPos), rotateCounterKey(CS230::InputKey::Keyboard::A), rotateClockKey(CS230::InputKey::Keyboard::D), accelerateKey(CS230::InputKey::Keyboard::W)
+Ship::Ship(math::vec2 startPos) : GameObject(startPos), wasAccel(false), rotateCounterKey(CS230::InputKey::Keyboard::A), rotateClockKey(CS230::InputKey::Keyboard::D), accelerateKey(CS230::InputKey::Keyboard::W)
 {
-}
-
-void Ship::Load()
-{
-	shipSprite.Load("assets/Ship.spt");
+	sprite.Load("assets/Ship.spt");
 	flameSpriteL.Load("assets/Flame.spt");
 	flameSpriteR.Load("assets/Flame.spt");
-	position = startPos;
-	velocity = { 0, 0 };
-	rotation = 0;
-	wasAccel = false;
 }
 
 void Ship::Update(double dt)
@@ -32,11 +24,11 @@ void Ship::Update(double dt)
 	constexpr double rotateSpeed = 3.14;
 	if(rotateCounterKey.IsKeyDown() == true)
 	{
-		rotation += rotateSpeed * dt;
+		UpdateRotation(rotateSpeed * dt);
 	}
 	if (rotateClockKey.IsKeyDown() == true)
 	{
-		rotation -= rotateSpeed * dt;
+		UpdateRotation(-rotateSpeed * dt);
 	}
 	if (accelerateKey.IsKeyDown() == true)
 	{
@@ -46,7 +38,7 @@ void Ship::Update(double dt)
 			flameSpriteR.PlayAnimation(static_cast<int>(Flame_Anim::Flame_Anim));
 			wasAccel = true;
 		}
-		velocity += math::RotateMatrix(rotation) * math::vec2{ 0, accel * dt };
+		UpdateVelocity(math::RotateMatrix(GetRotation()) * accel * dt);
 	} else
 	{
 		if(wasAccel == true)
@@ -56,40 +48,40 @@ void Ship::Update(double dt)
 			wasAccel = false;
 		}
 	}
-	velocity -= velocity * drag * dt;
-	position += velocity * dt;
+	UpdateVelocity(-GetVelocity()*drag*dt);
+	UpdatePosition(GetVelocity() * dt);
+	SetScale({ 0.75, 0.75 });
 	TestForWrap();
-	objectMatrix = math::TranslateMatrix(position) * math::RotateMatrix(rotation) * math::ScaleMatrix({ 0.75, 0.75 });
 	flameSpriteL.Update(dt);
 	flameSpriteR.Update(dt);
-	shipSprite.Update(dt);
+	sprite.Update(dt);
 }
 
-void Ship::Draw()
+void Ship::Draw([[maybe_unused]] math::TransformMatrix cameraMatrix)
 {
-	flameSpriteL.Draw(objectMatrix * math::TranslateMatrix(-shipSprite.GetHotSpot(1)));
-	flameSpriteR.Draw(objectMatrix * math::TranslateMatrix(-shipSprite.GetHotSpot(2)));
-	shipSprite.Draw(objectMatrix);
+	flameSpriteL.Draw(GetMatrix() * math::TranslateMatrix(-sprite.GetHotSpot(1)));
+	flameSpriteR.Draw(GetMatrix() * math::TranslateMatrix(-sprite.GetHotSpot(2)));
+	sprite.Draw(GetMatrix());
 }
 
 void Ship::TestForWrap()
 {
-	const int x_limit = Engine::GetWindow().GetSize().x + shipSprite.GetFrameSize().x / 2;
-	const int y_limit = Engine::GetWindow().GetSize().y + shipSprite.GetFrameSize().y / 2;
-	if (position.x > x_limit)
+	const double x_limit = Engine::GetWindow().GetSize().x + sprite.GetFrameSize().x / 2;
+	const double y_limit = Engine::GetWindow().GetSize().y + sprite.GetFrameSize().y / 2;
+	if (GetPosition().x > x_limit)
 	{
-		position.x = -shipSprite.GetFrameSize().x / 2;
+		SetPosition({-sprite.GetFrameSize().x / 2.0 ,GetPosition().y});
 	}
-	else if (position.x < -shipSprite.GetFrameSize().x / 2)
+	else if (GetPosition().x < -sprite.GetFrameSize().x / 2)
 	{
-		position.x = x_limit;
+		SetPosition({ x_limit ,GetPosition().y });
 	}
-	if (position.y > y_limit)
+	if (GetPosition().y > y_limit)
 	{
-		position.y = -shipSprite.GetFrameSize().y / 2;
+		SetPosition({ GetPosition().x ,-sprite.GetFrameSize().y / 2.0 });
 	}
-	else if (position.y < -shipSprite.GetFrameSize().y / 2)
+	else if (GetPosition().y < -sprite.GetFrameSize().y / 2)
 	{
-		position.y = y_limit;
+		SetPosition({ GetPosition().x , y_limit });
 	}
 }

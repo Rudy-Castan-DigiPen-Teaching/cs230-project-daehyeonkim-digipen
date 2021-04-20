@@ -162,27 +162,35 @@ xcopy /d /y Assets\* "$(OutputPath)Assets"
     <ClCompile Include="Engine\Animation.cpp" />
     <ClCompile Include="Engine\Camera.cpp" />
     <ClCompile Include="Engine\Engine.cpp" />
+    <ClCompile Include="Engine\GameObject.cpp" />
+    <ClCompile Include="Engine\GameObjectManager.cpp" />
     <ClCompile Include="Engine\GameStateManager.cpp" />
     <ClCompile Include="Engine\Input.cpp" />
     <ClCompile Include="Engine\Input_Doodle.cpp" />
     <ClCompile Include="Engine\Logger.cpp" />
     <ClCompile Include="Engine\Sprite.cpp" />
     <ClCompile Include="Engine\Texture.cpp" />
+    <ClCompile Include="Engine\TextureManager.cpp" />
     <ClCompile Include="Engine\TransformMatrix.cpp" />
     <ClCompile Include="Engine\Window.cpp" />
     <ClCompile Include="Game\Background.cpp" />
     <ClCompile Include="Game\Ball.cpp" />
+    <ClCompile Include="Game\Bunny.cpp" />
     <ClCompile Include="Game\Hero.cpp" />
     <ClCompile Include="Game\Level1.cpp" />
     <ClCompile Include="Game\Level2.cpp" />
+    <ClCompile Include="Game\Meteor.cpp" />
     <ClCompile Include="Game\Ship.cpp" />
     <ClCompile Include="Game\Splash.cpp" />
+    <ClCompile Include="Game\TreeStump.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Animation.h" />
     <ClInclude Include="Engine\Camera.h" />
     <ClInclude Include="Engine\Engine.h" />
+    <ClInclude Include="Engine\GameObject.h" />
+    <ClInclude Include="Engine\GameObjectManager.h" />
     <ClInclude Include="Engine\GameState.h" />
     <ClInclude Include="Engine\GameStateManager.h" />
     <ClInclude Include="Engine\Rect.h" />
@@ -190,20 +198,24 @@ xcopy /d /y Assets\* "$(OutputPath)Assets"
     <ClInclude Include="Engine\Texture.h" />
     <ClInclude Include="Engine\Input.h" />
     <ClInclude Include="Engine\Logger.h" />
+    <ClInclude Include="Engine\TextureManager.h" />
     <ClInclude Include="Engine\TransformMatrix.h" />
     <ClInclude Include="Engine\Vec2.h" />
     <ClInclude Include="Engine\Window.h" />
     <ClInclude Include="Game\Ball.h" />
     <ClInclude Include="Game\Background.h" />
     <ClInclude Include="Game\Ball_Anims.h" />
+    <ClInclude Include="Game\Bunny.h" />
     <ClInclude Include="Game\Flame_Anims.h" />
     <ClInclude Include="Game\Hero.h" />
     <ClInclude Include="Game\Hero_Anims.h" />
     <ClInclude Include="Game\Level1.h" />
     <ClInclude Include="Game\Level2.h" />
+    <ClInclude Include="Game\Meteor.h" />
     <ClInclude Include="Game\Screens.h" />
     <ClInclude Include="Game\Ship.h" />
     <ClInclude Include="Game\Splash.h" />
+    <ClInclude Include="Game\TreeStump.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Vec2.inl" />

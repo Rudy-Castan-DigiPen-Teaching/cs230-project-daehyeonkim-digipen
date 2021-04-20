@@ -12,8 +12,8 @@ Creation date: 03/08/2021
 #include "..\Engine\GameState.h"
 #include "..\Engine\Input.h"
 #include "Hero.h"
-#include "Ball.h"
 #include "../Engine/Camera.h"
+#include "../Engine/GameObjectManager.h"
 
 class Level1 : public CS230::GameState {
 public:
@@ -31,9 +31,8 @@ private:
 	CS230::InputKey levelNext;
 	CS230::InputKey levelReload;
 	CS230::Camera camera;
-	Hero hero;
-	Ball ball1;
-	Ball ball2;
-	Ball ball3;
+	CS230::GameObjectManager gameObjectManager;
+	Hero* heroPtr;
 	Background background;
+
 };

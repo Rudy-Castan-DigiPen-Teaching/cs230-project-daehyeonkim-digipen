@@ -15,7 +15,7 @@ Creation date: 2/10/2021
 Splash::Splash(){}
 
 void Splash::Load() {
-	texture.Load("assets/DigiPen_BLACK_1024px.png");
+	texturePtr = Engine::GetTextureManager().Load("assets/DigiPen_BLACK_1024px.png");
 }
 void Splash::Update(double dt) {
 	if (timer > splash_time) {
@@ -31,5 +31,5 @@ void Splash::Unload() {
 void Splash::Draw()
 {
 	Engine::GetWindow().Clear(0xFFFFFFFF);
-	texture.Draw(math::TranslateMatrix(Engine::GetWindow().GetSize() / 2 - texture.GetSize() / 2));
+	texturePtr->Draw(math::TranslateMatrix(Engine::GetWindow().GetSize() / 2 - texturePtr->GetSize() / 2));
 }
