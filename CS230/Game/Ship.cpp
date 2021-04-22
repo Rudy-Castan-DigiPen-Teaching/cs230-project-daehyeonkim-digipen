@@ -66,8 +66,8 @@ void Ship::Draw([[maybe_unused]] math::TransformMatrix cameraMatrix)
 
 void Ship::TestForWrap()
 {
-	const double x_limit = Engine::GetWindow().GetSize().x + sprite.GetFrameSize().x / 2;
-	const double y_limit = Engine::GetWindow().GetSize().y + sprite.GetFrameSize().y / 2;
+	const double x_limit = Engine::GetWindow().GetSize().x + sprite.GetFrameSize().x / 2.0;
+	const double y_limit = Engine::GetWindow().GetSize().y + sprite.GetFrameSize().y / 2.0;
 	if (GetPosition().x > x_limit)
 	{
 		SetPosition({-sprite.GetFrameSize().x / 2.0 ,GetPosition().y});

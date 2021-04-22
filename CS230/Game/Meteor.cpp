@@ -10,13 +10,14 @@ Creation date: 4/19/2021
 #include "Meteor.h"
 #include "../Engine/Engine.h"
 
+
 Meteor::Meteor() : GameObject({ 0,0 }, 0, { 0, 0 }) {
 	constexpr double PI = 3.14;
 	sprite.Load("assets/Meteor.spt");
 	SetVelocity({(rand()%200) - 100.0,(rand() % 200) - 100.0 });
-	SetPosition({ (rand()%Engine::GetWindow().GetSize().x + sprite.GetFrameSize().x) - sprite.GetFrameSize().x / 2.0, (rand() % Engine::GetWindow().GetSize().y + sprite.GetFrameSize().y) - sprite.GetFrameSize().y / 2.0 });
-	SetRotation({(rand()%2*PI)});
-	SetScale({ ((rand() % 25) + 75) / 100.0,((rand() % 25) + 75) / 100.0 });
+	SetPosition({ (rand()%Engine::GetWindow().GetSize().x + static_cast<double>(sprite.GetFrameSize().x)) - sprite.GetFrameSize().x / 2.0, (rand() % Engine::GetWindow().GetSize().y + static_cast<double>(sprite.GetFrameSize().y)) - sprite.GetFrameSize().y / 2.0 });
+	SetRotation({(rand() / RAND_MAX * (2 * PI))});
+	SetScale({ ((rand() % 25) + 75.0) / 100.0,((rand() % 25) + 75.0) / 100.0 });
 }
 
 void Meteor::Update(double dt)
@@ -27,8 +28,8 @@ void Meteor::Update(double dt)
 
 void Meteor::TestForWrap()
 {
-	const double x_limit = Engine::GetWindow().GetSize().x + sprite.GetFrameSize().x / 2;
-	const double y_limit = Engine::GetWindow().GetSize().y + sprite.GetFrameSize().y / 2;
+	const double x_limit = Engine::GetWindow().GetSize().x + sprite.GetFrameSize().x / 2.0;
+	const double y_limit = Engine::GetWindow().GetSize().y + sprite.GetFrameSize().y / 2.0;
 	if (GetPosition().x > x_limit)
 	{
 		SetPosition({ -sprite.GetFrameSize().x / 2.0 ,GetPosition().y });
