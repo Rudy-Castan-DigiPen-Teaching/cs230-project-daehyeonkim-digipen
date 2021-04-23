@@ -76,13 +76,11 @@ double CS230::GameObject::GetRotation() const
 void CS230::GameObject::SetVelocity(math::vec2 newVelocity)
 {
     velocity = newVelocity;
-    updateMatrix = true;
 }
 
 void CS230::GameObject::UpdateVelocity(math::vec2 adjustVelocity)
 {
     velocity += adjustVelocity;
-    updateMatrix = true;
 }
 
 void CS230::GameObject::SetScale(math::vec2 newScale)

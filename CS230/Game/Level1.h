@@ -11,9 +11,10 @@ Creation date: 03/08/2021
 #include "Background.h"
 #include "..\Engine\GameState.h"
 #include "..\Engine\Input.h"
-#include "Hero.h"
 #include "../Engine/Camera.h"
 #include "../Engine/GameObjectManager.h"
+
+class Hero;
 
 class Level1 : public CS230::GameState {
 public:

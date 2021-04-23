@@ -9,9 +9,11 @@ Creation date: 2/11/2021
 -----------------------------------------------------------------*/
 #pragma once
 #include "Vec2.h"
-#include "Texture.h"
-#include "Animation.h"
 #include <filesystem>
+
+namespace math {
+	class TransformMatrix;
+}
 
 namespace CS230 {
     class Texture;

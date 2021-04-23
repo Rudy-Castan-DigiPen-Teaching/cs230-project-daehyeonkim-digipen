@@ -12,7 +12,7 @@ Creation date: 4/19/2021
 
 
 Meteor::Meteor() : GameObject({ 0,0 }, 0, { 0, 0 }) {
-	constexpr double PI = 3.14;
+	constexpr double PI = 3.141592;
 	sprite.Load("assets/Meteor.spt");
 	SetVelocity({(rand()%200) - 100.0,(rand() % 200) - 100.0 });
 	SetPosition({ (rand()%Engine::GetWindow().GetSize().x + static_cast<double>(sprite.GetFrameSize().x)) - sprite.GetFrameSize().x / 2.0, (rand() % Engine::GetWindow().GetSize().y + static_cast<double>(sprite.GetFrameSize().y)) - sprite.GetFrameSize().y / 2.0 });

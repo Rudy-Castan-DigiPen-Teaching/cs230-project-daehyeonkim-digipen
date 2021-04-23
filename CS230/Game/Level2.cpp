@@ -11,7 +11,7 @@ Creation date: 03/08/2021
 #include "Screens.h"
 #include "Level2.h"
 #include "Meteor.h"
-
+#include "Ship.h"
 Level2::Level2() : levelNext(CS230::InputKey::Keyboard::Enter), levelReload(CS230::InputKey::Keyboard::R) {}
 
 void Level2::Load() {
@@ -40,6 +40,7 @@ void Level2::Unload() {
 
 void Level2::Draw()
 {
+	math::TransformMatrix noCamera;
 	Engine::GetWindow().Clear(0x000000FF);
 	gameObjectManager.DrawAll(noCamera);
 }

@@ -11,7 +11,7 @@ Creation date: 03/08/2021
 #include "..\Engine\GameState.h"
 #include "..\Engine\Input.h"
 #include "../Engine/GameObjectManager.h"
-#include "Ship.h"
+
 class Level2 : public CS230::GameState {
 public:
 	Level2();
@@ -24,5 +24,4 @@ private:
 	CS230::InputKey levelNext;
 	CS230::InputKey levelReload;
 	CS230::GameObjectManager gameObjectManager;
-	math::TransformMatrix noCamera;
 };

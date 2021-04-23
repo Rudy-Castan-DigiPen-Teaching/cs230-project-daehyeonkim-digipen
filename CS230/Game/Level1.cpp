@@ -13,6 +13,7 @@ Creation date: 03/08/2021
 #include "Ball.h"
 #include "Bunny.h"
 #include "TreeStump.h"
+#include "Hero.h"
 
 Level1::Level1() : camera({ { 0.15 * Engine::GetWindow().GetSize().x, 0 }, {0.35 * Engine::GetWindow().GetSize().x, 0 } }),
                    levelReload(CS230::InputKey::Keyboard::R), levelNext(CS230::InputKey::Keyboard::Enter) {}

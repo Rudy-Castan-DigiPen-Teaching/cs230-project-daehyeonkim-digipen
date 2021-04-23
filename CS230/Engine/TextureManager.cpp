@@ -8,7 +8,6 @@ Author: Kevin Wright
 Creation date: 2/19/2021
 -----------------------------------------------------------------*/
 #include "TextureManager.h"
-
 #include "Engine.h"
 #include "Texture.h"
 
