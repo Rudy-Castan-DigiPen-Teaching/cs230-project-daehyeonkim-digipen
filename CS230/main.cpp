@@ -12,6 +12,7 @@ Creation date: 2/10/2021
 
 #include "Engine/Engine.h"
 #include "Game/Splash.h"
+#include "Game/MainMenu.h"
 #include "Game/Level1.h"
 #include "Game/Level2.h"
 #include "Game/Screens.h"
@@ -20,15 +21,17 @@ Creation date: 2/10/2021
 int main(void) {
 	try {
 		Engine& engine = Engine::Instance();
-		engine.Init("Week 7");
+		engine.Init("Week 8");
 		Splash splash;
+		MainMenu mainmenu;
 		Level1 level1;
 		Level2 level2;
-
 		engine.GetGameStateManager().AddGameState(splash);
+		engine.GetGameStateManager().AddGameState(mainmenu);
 		engine.GetGameStateManager().AddGameState(level1);
 		engine.GetGameStateManager().AddGameState(level2);
-
+		engine.AddSpriteFont("assets/font.png");
+		engine.AddSpriteFont("assets/font2.png");
 		while (engine.HasGameEnded() == false) {
 			engine.Update();
 		}

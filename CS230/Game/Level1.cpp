@@ -12,13 +12,21 @@ Creation date: 03/08/2021
 #include "Level1.h"
 #include "Ball.h"
 #include "Bunny.h"
+#include "Fonts.h"
 #include "TreeStump.h"
-#include "Hero.h"
 
-Level1::Level1() : camera({ { 0.15 * Engine::GetWindow().GetSize().x, 0 }, {0.35 * Engine::GetWindow().GetSize().x, 0 } }),
-                   levelReload(CS230::InputKey::Keyboard::R), levelNext(CS230::InputKey::Keyboard::Enter) {}
+Level1::Level1() : lives(3), camera({ { 0.15 * Engine::GetWindow().GetSize().x, 0 }, {0.35 * Engine::GetWindow().GetSize().x, 0 } }),
+                   levelReload(CS230::InputKey::Keyboard::R), mainMenu(CS230::InputKey::Keyboard::Escape) {}
 
 void Level1::Load() {
+	timer = 5;
+	score = 0;
+	std::string scoreString = "Score: " + std::to_string(score / 100) + std::to_string((score % 100) / 10) + std::to_string(score % 10);
+	scoreTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)).DrawTextToTexture(scoreString, 0xFFFFFFFF, true);
+	std::string livesString = "Lives: " + std::to_string(lives);
+	livesTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)).DrawTextToTexture(livesString, 0xFFFFFFFF, true);
+	std::string timerString = "Time: " + std::to_string(timer);
+	timerTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)).DrawTextToTexture(timerString, 0xFFFFFFFF, true);
 	heroPtr = new Hero({ 150, Level1::floor }, camera);
 	gameObjectManager.Add(heroPtr);
 	gameObjectManager.Add(new Ball({ 600, Level1::floor }));
@@ -42,10 +50,25 @@ void Level1::Load() {
 	camera.SetExtent({ { 0,0 }, { background.Size() - Engine::GetWindow().GetSize() } });
 }
 void Level1::Update(double dt) {
+	std::string timerString = "Time: " + std::to_string(std::floor(timer));
+	timerTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)).DrawTextToTexture(timerString, 0xFFFFFFFF, true);
+	if(timer <= 0)
+	{
+		lives--;
+		Engine::GetGameStateManager().ReloadState();
+		if(lives == 0)
+		{
+			lives = 3;
+			Engine::GetGameStateManager().SetNextState(static_cast<int>(Screens::MainMenu));
+		} else
+		{
+			Engine::GetGameStateManager().ReloadState();
+		}
+	}
 	gameObjectManager.UpdateAll(dt);
 	camera.Update(heroPtr->GetPosition());
-	if (levelNext.IsKeyReleased() == true) {
-		Engine::GetGameStateManager().SetNextState(static_cast<int>(Screens::Level2));
+	if (mainMenu.IsKeyReleased() == true) {
+		Engine::GetGameStateManager().SetNextState(static_cast<int>(Screens::MainMenu));
 	}
 #if _DEBUG
 	if(levelReload.IsKeyReleased() == true)
@@ -53,6 +76,7 @@ void Level1::Update(double dt) {
 		Engine::GetGameStateManager().ReloadState();
 	}
 #endif
+	timer-=dt;
 }
 void Level1::Unload() {
 	background.Unload();
@@ -64,6 +88,10 @@ void Level1::Draw()
 {
 	Engine::GetWindow().Clear(0x3399DAFF);
 	background.Draw(camera);
+	math::ivec2 winSize = Engine::GetWindow().GetSize();
+	scoreTexture.Draw(math::TranslateMatrix(math::ivec2{ 10, winSize.y - scoreTexture.GetSize().y - 5 }));
+	livesTexture.Draw(math::TranslateMatrix(math::ivec2{ 400, winSize.y - scoreTexture.GetSize().y - 5 }));
+	timerTexture.Draw(math::TranslateMatrix(math::ivec2{ 800, winSize.y - scoreTexture.GetSize().y - 5 }));
 	math::TransformMatrix cameraMatrix = camera.GetMatrix();
 	gameObjectManager.DrawAll(cameraMatrix);
 }

@@ -11,6 +11,7 @@ Creation date: 2/11/2021
 -----------------------------------------------------------------*/
 #pragma once
 #include <doodle/image.hpp>    //doodle::Image
+
 #include "Vec2.h"
 namespace math
 {
@@ -19,11 +20,15 @@ namespace math
 namespace CS230 {
     class Texture {
         friend class TextureManager;
+        friend class SpriteFont;
     public:
+        Texture() {}
+        unsigned int GetPixel(math::ivec2 texel);
         void Draw(math::TransformMatrix displayMatrix);
         void Draw(math::TransformMatrix displayMatrix, math::ivec2 texelPos, math::ivec2 frameSize);
         math::ivec2 GetSize();
     private:
+        Texture(doodle::Image&& doodleImage);
         Texture(const std::filesystem::path& filePath);
         doodle::Image image;
     };

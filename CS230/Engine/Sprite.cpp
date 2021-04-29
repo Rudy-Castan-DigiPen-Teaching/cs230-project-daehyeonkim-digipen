@@ -9,8 +9,6 @@ Creation date: 03/16/2021
 -----------------------------------------------------------------*/
 #include "Sprite.h"
 #include "TransformMatrix.h"
-#include "Texture.h"
-#include "Animation.h"
 #include "../Engine/Engine.h"
 CS230::Sprite::Sprite()
 = default;

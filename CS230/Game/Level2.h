@@ -11,7 +11,7 @@ Creation date: 03/08/2021
 #include "..\Engine\GameState.h"
 #include "..\Engine\Input.h"
 #include "../Engine/GameObjectManager.h"
-
+#include "Ship.h"
 class Level2 : public CS230::GameState {
 public:
 	Level2();
@@ -21,7 +21,11 @@ public:
 	void Draw() override;
 	std::string GetName() override { return "Level 2"; }
 private:
-	CS230::InputKey levelNext;
+	int score;
+	CS230::Texture scoreTexture;
+	
+	CS230::InputKey mainMenu;
 	CS230::InputKey levelReload;
 	CS230::GameObjectManager gameObjectManager;
+	math::TransformMatrix noCamera;
 };

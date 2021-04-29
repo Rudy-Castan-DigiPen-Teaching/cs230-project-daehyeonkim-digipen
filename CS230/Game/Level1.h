@@ -11,10 +11,9 @@ Creation date: 03/08/2021
 #include "Background.h"
 #include "..\Engine\GameState.h"
 #include "..\Engine\Input.h"
+#include "Hero.h"
 #include "../Engine/Camera.h"
 #include "../Engine/GameObjectManager.h"
-
-class Hero;
 
 class Level1 : public CS230::GameState {
 public:
@@ -29,7 +28,14 @@ public:
 	
 	std::string GetName() override { return "Level 1"; }
 private:
-	CS230::InputKey levelNext;
+	int score;
+	int lives;
+	double timer;
+	CS230::Texture scoreTexture;
+	CS230::Texture livesTexture;
+	CS230::Texture timerTexture;
+	
+	CS230::InputKey mainMenu;
 	CS230::InputKey levelReload;
 	CS230::Camera camera;
 	CS230::GameObjectManager gameObjectManager;

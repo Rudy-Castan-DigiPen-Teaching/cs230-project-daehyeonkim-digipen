@@ -52,9 +52,14 @@ bool Engine::HasGameEnded()
 	return gameStateManager.HasGameEnded();	
 }
 
+void Engine::AddSpriteFont(const std::filesystem::path& fileName)
+{
+	fonts.push_back(CS230::SpriteFont(fileName));
+}
+
 Engine::Engine() : lastTick(std::chrono::system_clock::now()), frameCount(0),
 #ifdef _DEBUG				
-	logger(CS230::Logger::Severity::Debug, true, lastTick)
+                   logger(CS230::Logger::Severity::Debug, true, lastTick)
 #else 						
 	logger(CS230::Logger::Severity::Event, false, lastTick)
 #endif

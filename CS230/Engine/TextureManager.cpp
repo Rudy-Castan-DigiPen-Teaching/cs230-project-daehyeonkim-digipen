@@ -10,7 +10,7 @@ Creation date: 2/19/2021
 #include "TextureManager.h"
 #include "Engine.h"
 #include "Texture.h"
-
+#include <doodle/color.hpp>
 CS230::Texture* CS230::TextureManager::Load(const std::filesystem::path& filePath)
 {
 	if(pathToTexture.find(filePath) == pathToTexture.end())
@@ -28,4 +28,16 @@ void CS230::TextureManager::Unload()
 		delete iter->second;
 	}
 	pathToTexture.clear();
+}
+
+CS230::Texture::Texture(doodle::Image&& doodleImage) {
+	image = std::move(doodleImage);
+}
+
+unsigned int CS230::Texture::GetPixel(math::ivec2 texel) {
+	int index = texel.y * GetSize().x + texel.x;
+	return (static_cast<int>(image[index].red)) << 24 |
+		(static_cast<int>(image[index].green)) << 16 |
+		(static_cast<int>(image[index].blue)) << 8 |
+		(static_cast<int>(image[index].alpha));
 }

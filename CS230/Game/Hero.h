@@ -74,5 +74,7 @@ private:
     static constexpr math::vec2 x_accel{ 300, 0 };
     static constexpr math::vec2 x_max_speed{ 600, 0 };
     static constexpr math::vec2 jump_accel{ 0, 1000 };
+
+    bool isFlipped = false;
 };
 

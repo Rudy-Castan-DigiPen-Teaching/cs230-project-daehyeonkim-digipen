@@ -80,11 +80,11 @@ void Hero::State_Running::Enter(GameObject* object)
 	hero->sprite.PlayAnimation(static_cast<int>(Hero_Anim::Hero_Run_Anim));
 	if (hero->moveLeftKey.IsKeyDown() == true)
 	{
-		hero->SetScale({ -1.0, 1.0 });
+		hero->isFlipped = true;
 	}
 	else if (hero->moveRightKey.IsKeyDown() == true)
 	{
-		hero->SetScale({ 1.0, 1.0 });
+		hero->isFlipped = false;
 	}
 }
 
@@ -233,6 +233,13 @@ void Hero::Update(double dt)
 	{
 		SetVelocity({ 0, GetVelocity().y });
 		SetPosition({ camera.GetPosition().x + Engine::GetWindow().GetSize().x - collisionOffset, GetPosition().y });
+	}
+	
+	if (isFlipped == true) {
+		SetScale( {-1.0, 1.0} );
+	} else
+	{
+		SetScale({ 1.0, 1.0 });
 	}
 }
 
