@@ -30,7 +30,7 @@ CS230::SpriteFont::SpriteFont(const std::filesystem::path& fileName) : texture(f
 void CS230::SpriteFont::SetupCharRects() {
 	unsigned int testColor = texture.GetPixel({ 0, 0 });
 	unsigned int nextColor;
-	static constexpr char LetterStart = ' ';
+
 	int height = texture.GetSize().y;
 
 	int xPos = 1;
@@ -57,13 +57,12 @@ math::irect2& CS230::SpriteFont::GetCharRect(char c) {
 }
 
 math::ivec2 CS230::SpriteFont::MeasureText(std::string text) {
-	constexpr char letterStart = ' ';
 	math::ivec2 size = { 0,0 };
-	// Todo: For each character use it's charTexel information to find the width/height of the string
 	for (char c : text) {
-		size.x += charTexels[c - letterStart].top_right.x - charTexels[c - letterStart].bottom_left.x;
+		size.x += GetCharRect(c).Size().x;
+		size.y = GetCharRect(c).Size().y;
 	}
-	size.y = charTexels[0].bottom_left.y;
+
 	return size;
 }
 

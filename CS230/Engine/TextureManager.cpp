@@ -30,14 +30,3 @@ void CS230::TextureManager::Unload()
 	pathToTexture.clear();
 }
 
-CS230::Texture::Texture(doodle::Image&& doodleImage) {
-	image = std::move(doodleImage);
-}
-
-unsigned int CS230::Texture::GetPixel(math::ivec2 texel) {
-	int index = texel.y * GetSize().x + texel.x;
-	return (static_cast<int>(image[index].red)) << 24 |
-		(static_cast<int>(image[index].green)) << 16 |
-		(static_cast<int>(image[index].blue)) << 8 |
-		(static_cast<int>(image[index].alpha));
-}
