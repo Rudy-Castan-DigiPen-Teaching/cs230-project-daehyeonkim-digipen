@@ -13,6 +13,9 @@ Creation date: 2/11/2021
 #include "Texture.h"
 #include "TransformMatrix.h"
 CS230::Texture::Texture(const std::filesystem::path& filePath) : image(doodle::Image{ filePath }) {}
+CS230::Texture::Texture(doodle::Image&& doodleImage) {
+	image = std::move(doodleImage);
+}
 
 void CS230::Texture::Draw(math::TransformMatrix displayMatrix) {
     doodle::push_settings();

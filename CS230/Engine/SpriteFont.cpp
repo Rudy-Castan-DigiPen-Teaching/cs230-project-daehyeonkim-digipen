@@ -57,10 +57,11 @@ math::irect2& CS230::SpriteFont::GetCharRect(char c) {
 }
 
 math::ivec2 CS230::SpriteFont::MeasureText(std::string text) {
+	constexpr char letterStart = ' ';
 	math::ivec2 size = { 0,0 };
 	// Todo: For each character use it's charTexel information to find the width/height of the string
 	for (char c : text) {
-		size.x += charTexels[c - ' '].top_right.x - charTexels[c - ' '].bottom_left.x;
+		size.x += charTexels[c - letterStart].top_right.x - charTexels[c - letterStart].bottom_left.x;
 	}
 	size.y = charTexels[0].bottom_left.y;
 	return size;
