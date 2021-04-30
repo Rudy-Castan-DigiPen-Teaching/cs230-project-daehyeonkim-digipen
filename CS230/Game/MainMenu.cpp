@@ -35,25 +35,47 @@ void MainMenu::Load()
 
 void MainMenu::Update([[maybe_unused]]double dt)
 {
-	if (downKey.IsKeyReleased() == true && selectedIndex < static_cast<int>(Options::Quit))
+	constexpr int enumGap = 2;
+	switch(selectedIndex)
 	{
-		RenderOption(optionsData[selectedIndex], false);
-		selectedIndex++;
-	}
-	if (upKey.IsKeyReleased() == true && selectedIndex > static_cast<int>(Options::Level1))
-	{
-		RenderOption(optionsData[selectedIndex], false);
-		selectedIndex--;
-	}
-	if (selectKey.IsKeyReleased() == true)
-	{
-		if(selectedIndex == static_cast<int>(Options::Quit))
-		{
-			Engine::GetGameStateManager().Shutdown();
-		} else
-		{
-			Engine::GetGameStateManager().SetNextState(2 + selectedIndex);
-		}
+		case static_cast<int>(Options::Level1) :
+			if (downKey.IsKeyReleased() == true)
+			{
+				RenderOption(optionsData[selectedIndex], false);
+				selectedIndex++;
+			}
+			if (selectKey.IsKeyReleased() == true)
+			{
+				Engine::GetGameStateManager().SetNextState(enumGap + selectedIndex);
+			}
+			break;
+		case static_cast<int>(Options::Level2) :
+			if (downKey.IsKeyReleased() == true)
+			{
+				RenderOption(optionsData[selectedIndex], false);
+				selectedIndex++;
+			}
+			if (upKey.IsKeyReleased() == true)
+			{
+				RenderOption(optionsData[selectedIndex], false);
+				selectedIndex--;
+			}
+			if (selectKey.IsKeyReleased() == true)
+			{
+				Engine::GetGameStateManager().SetNextState(enumGap + selectedIndex);
+			}
+			break;
+		case static_cast<int>(Options::Quit) :
+			if (upKey.IsKeyReleased() == true)
+			{
+				RenderOption(optionsData[selectedIndex], false);
+				selectedIndex--;
+			}
+			if (selectKey.IsKeyReleased() == true)
+			{
+				Engine::GetGameStateManager().Shutdown();
+			}
+			break;
 	}
 	RenderOption(optionsData[selectedIndex], true);
 }
@@ -65,10 +87,10 @@ void MainMenu::Unload()
 void MainMenu::Draw()
 {
 	Engine::GetWindow().Clear(0x3399DAFF);
-	title.Draw(math::TransformMatrix() * math::TranslateMatrix(math::vec2{ Engine::GetWindow().GetSize().x / 2 - title.GetSize().x/2.0, Engine::GetWindow().GetSize().y / 2.0}) * math::ScaleMatrix({2,2}));
-	optionsData[static_cast<int>(Options::Level1)].texture.Draw(math::TransformMatrix() * math::TranslateMatrix(math::vec2{ Engine::GetWindow().GetSize().x / 2 - title.GetSize().x / 2.0, Engine::GetWindow().GetSize().y / 3.0 }));
-	optionsData[static_cast<int>(Options::Level2)].texture.Draw(math::TransformMatrix() * math::TranslateMatrix(math::vec2{ Engine::GetWindow().GetSize().x / 2 - optionsData[static_cast<int>(Options::Level1)].texture.GetSize().x / 2.0, Engine::GetWindow().GetSize().y / 4.0 }));
-	optionsData[static_cast<int>(Options::Quit)].texture.Draw(math::TransformMatrix() * math::TranslateMatrix(math::vec2{ Engine::GetWindow().GetSize().x / 2 - optionsData[static_cast<int>(Options::Level2)].texture.GetSize().x / 2.0, Engine::GetWindow().GetSize().y / 5.0 }));
+	title.Draw(math::TransformMatrix() * math::TranslateMatrix(math::vec2{ Engine::GetWindow().GetSize().x / 2 - static_cast<double>(title.GetSize().x), Engine::GetWindow().GetSize().y * 0.6}) * math::ScaleMatrix({2,2}));
+	optionsData[static_cast<int>(Options::Level1)].texture.Draw(math::TransformMatrix() * math::TranslateMatrix(math::vec2{ Engine::GetWindow().GetSize().x / 2 - optionsData[static_cast<int>(Options::Level1)].texture.GetSize().x / 2.0, Engine::GetWindow().GetSize().y * 0.4 }));
+	optionsData[static_cast<int>(Options::Level2)].texture.Draw(math::TransformMatrix() * math::TranslateMatrix(math::vec2{ Engine::GetWindow().GetSize().x / 2 - optionsData[static_cast<int>(Options::Level2)].texture.GetSize().x / 2.0, Engine::GetWindow().GetSize().y * 0.3 }));
+	optionsData[static_cast<int>(Options::Quit)].texture.Draw(math::TransformMatrix() * math::TranslateMatrix(math::vec2{ Engine::GetWindow().GetSize().x / 2 - optionsData[static_cast<int>(Options::Quit)].texture.GetSize().x / 2.0, Engine::GetWindow().GetSize().y * 0.2 }));
 }
 
 void MainMenu::RenderOption(OptionData& data, bool isHighlighted)

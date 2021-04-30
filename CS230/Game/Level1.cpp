@@ -25,7 +25,7 @@ void Level1::Load() {
 	scoreTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)).DrawTextToTexture(scoreString, 0xFFFFFFFF, true);
 	std::string livesString = "Lives: " + std::to_string(lives);
 	livesTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)).DrawTextToTexture(livesString, 0xFFFFFFFF, true);
-	std::string timerString = "Time: " + std::to_string(timer);
+	std::string timerString = "Time: " + std::to_string(static_cast<int>(timer));
 	timerTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)).DrawTextToTexture(timerString, 0xFFFFFFFF, true);
 	heroPtr = new Hero({ 150, Level1::floor }, camera);
 	gameObjectManager.Add(heroPtr);
@@ -50,7 +50,7 @@ void Level1::Load() {
 	camera.SetExtent({ { 0,0 }, { background.Size() - Engine::GetWindow().GetSize() } });
 }
 void Level1::Update(double dt) {
-	std::string timerString = "Time: " + std::to_string(std::floor(timer));
+	std::string timerString = "Time: " + std::to_string(static_cast<int>(timer));
 	timerTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)).DrawTextToTexture(timerString, 0xFFFFFFFF, true);
 	if(timer <= 0)
 	{

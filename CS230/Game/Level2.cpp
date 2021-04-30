@@ -45,6 +45,8 @@ void Level2::Unload() {
 void Level2::Draw()
 {
 	Engine::GetWindow().Clear(0x000000FF);
+	math::ivec2 winSize = Engine::GetWindow().GetSize();
+	scoreTexture.Draw(math::TranslateMatrix(math::ivec2{ 10, winSize.y - scoreTexture.GetSize().y - 5 }));
 	gameObjectManager.DrawAll(noCamera);
 }
 
