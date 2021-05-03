@@ -101,8 +101,8 @@ void CS230::Sprite::PlayAnimation(int anim)
 		Engine::GetLogger().LogError("Error: Animation has nothing for that input!");
 		currAnim = 0;
 	}
-	animations[currAnim]->ResetAnimation();
 	currAnim = anim;
+	animations[currAnim]->ResetAnimation();
 }
 
 void CS230::Sprite::Update(double dt)
