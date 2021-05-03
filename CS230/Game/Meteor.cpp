@@ -17,7 +17,8 @@ Meteor::Meteor() : GameObject({ 0,0 }, 0, { 0, 0 }) {
 	SetVelocity({(rand() % 200) - 100.0,(rand() % 200) - 100.0 });
 	SetPosition({ (rand() % Engine::GetWindow().GetSize().x + static_cast<double>(sprite.GetFrameSize().x)) - sprite.GetFrameSize().x / 2.0, (rand() % Engine::GetWindow().GetSize().y + static_cast<double>(sprite.GetFrameSize().y)) - sprite.GetFrameSize().y / 2.0 });
 	SetRotation({(rand() % static_cast<int>(1024 * 2 * PI)) / 1024.0});
-	SetScale({ (rand() % 1024 / 4096) + 0.75,(rand() % 1024 / 4096) + 0.75});
+	const double scales = ((rand() % 1024) / 4096.0) + 0.75;
+	SetScale({ scales,scales });
 }
 
 void Meteor::Update(double dt)
