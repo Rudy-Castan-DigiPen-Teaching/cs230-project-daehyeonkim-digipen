@@ -50,8 +50,11 @@ void Level1::Load() {
 	camera.SetExtent({ { 0,0 }, { background.Size() - Engine::GetWindow().GetSize() } });
 }
 void Level1::Update(double dt) {
-	std::string timerString = "Time: " + std::to_string(static_cast<int>(timer));
-	timerTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)).DrawTextToTexture(timerString, 0xFFFFFFFF, true);
+	if(static_cast<int>(timer) > static_cast<int>(timer-dt))
+	{
+		std::string timerString = "Time: " + std::to_string(static_cast<int>(timer));
+		timerTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)).DrawTextToTexture(timerString, 0xFFFFFFFF, true);
+	}
 	if(timer <= 0)
 	{
 		lives--;
@@ -90,8 +93,8 @@ void Level1::Draw()
 	background.Draw(camera);
 	math::ivec2 winSize = Engine::GetWindow().GetSize();
 	scoreTexture.Draw(math::TranslateMatrix(math::ivec2{ 10, winSize.y - scoreTexture.GetSize().y - 5 }));
-	livesTexture.Draw(math::TranslateMatrix(math::ivec2{ 400, winSize.y - livesTexture.GetSize().y - 5 }));
-	timerTexture.Draw(math::TranslateMatrix(math::ivec2{ 800, winSize.y - timerTexture.GetSize().y - 5 }));
+	livesTexture.Draw(math::TranslateMatrix(math::ivec2{ static_cast<int>(winSize.x * 0.4), winSize.y - livesTexture.GetSize().y - 5 }));
+	timerTexture.Draw(math::TranslateMatrix(math::ivec2{ static_cast<int>(winSize.x * 0.8), winSize.y - timerTexture.GetSize().y - 5 }));
 	math::TransformMatrix cameraMatrix = camera.GetMatrix();
 	gameObjectManager.DrawAll(cameraMatrix);
 }
