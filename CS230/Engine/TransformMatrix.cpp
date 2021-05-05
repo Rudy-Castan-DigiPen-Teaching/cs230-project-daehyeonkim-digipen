@@ -62,7 +62,7 @@ void math::TransformMatrix::Reset()
 }
 
 math::TranslateMatrix::TranslateMatrix(ivec2 translate) : TransformMatrix()
-{
+{   
     matrix[0][2] = translate.x;
     matrix[1][2] = translate.y;
 }
