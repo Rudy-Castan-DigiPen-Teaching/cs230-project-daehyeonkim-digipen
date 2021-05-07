@@ -11,17 +11,19 @@ Creation date: 3/26/2021
 #include "Level1.h"
 #include "..\Engine\Engine.h"
 #include "Ball_Anims.h"
+#include "Gravity.h"
+
 void Ball::State_Bounce::Enter(GameObject* object)
 {
 	Ball* ball = static_cast<Ball*>(object);
-	ball->sprite.PlayAnimation(static_cast<int>(Ball_Anim::None_Anim));
+	ball->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Ball_Anim::None_Anim));
 	ball->SetVelocity({ball->GetVelocity().x, bounceVelocity});
 }
 
 void Ball::State_Bounce::Update(GameObject* object, double dt)
 {
 	Ball* ball = static_cast<Ball*>(object);
-	ball->UpdateVelocity(-Level1::gravity * dt);
+	ball->UpdateVelocity({ 0, -Engine::GetGSComponent<Gravity>()->GetValue() * dt });
 }
 
 void Ball::State_Bounce::TestForExit(GameObject* object) {
@@ -36,7 +38,7 @@ void Ball::State_Bounce::TestForExit(GameObject* object) {
 void Ball::State_Land::Enter(GameObject* object)
 {
 	Ball* ball = static_cast<Ball*>(object);
-	ball->sprite.PlayAnimation(static_cast<int>(Ball_Anim::Squish_Anim));
+	ball->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Ball_Anim::Squish_Anim));
 	ball->SetVelocity({0,0});
 	ball->SetPosition({ ball->GetPosition().x, Level1::floor });
 }
@@ -48,14 +50,13 @@ void Ball::State_Land::Update([[maybe_unused]] GameObject* object, [[maybe_unuse
 void Ball::State_Land::TestForExit(GameObject* object)
 {
 	Ball* ball = static_cast<Ball*>(object);
-	if(ball->sprite.IsAnimationDone() == true)
-	{
+	if (ball->GetGOComponent<CS230::Sprite>()->IsAnimationDone() == true) {
 		ball->ChangeState(&ball->stateBounce);
 	}
 }
 
 Ball::Ball(math::vec2 startPos) : GameObject(startPos) {
-	sprite.Load("assets/Ball.spt");
+	AddGOComponent(new CS230::Sprite("assets/Ball.spt", this));
 	currState = &stateBounce;
 	currState->Enter(this);
 }

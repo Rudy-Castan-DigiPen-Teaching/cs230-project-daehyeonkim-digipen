@@ -8,16 +8,17 @@ Author: Kevin Wright
 Creation date: 2/11/2021
 -----------------------------------------------------------------*/
 #pragma once
+#include "../Engine/Component.h"
 #include "..\Engine\Texture.h"
 
 namespace CS230 {
     class Camera;
 }
 
-class Background {
+class Background : public CS230::Component {
 public:
     void Add(const std::filesystem::path& texturePath, int level);
-    void Unload();
+    ~Background();
     void Draw(const CS230::Camera& camera);
     math::ivec2 Size();
 private:

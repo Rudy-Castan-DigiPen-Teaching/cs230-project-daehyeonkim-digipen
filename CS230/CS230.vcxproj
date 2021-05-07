@@ -88,6 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -126,6 +127,7 @@ xcopy /d /y Assets\* "$(OutputPath)Assets"
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -161,6 +163,7 @@ xcopy /d /y Assets\* "$(OutputPath)Assets"
   <ItemGroup>
     <ClCompile Include="Engine\Animation.cpp" />
     <ClCompile Include="Engine\Camera.cpp" />
+    <ClCompile Include="Engine\Collision.cpp" />
     <ClCompile Include="Engine\Engine.cpp" />
     <ClCompile Include="Engine\GameObject.cpp" />
     <ClCompile Include="Engine\GameObjectManager.cpp" />
@@ -168,6 +171,7 @@ xcopy /d /y Assets\* "$(OutputPath)Assets"
     <ClCompile Include="Engine\Input.cpp" />
     <ClCompile Include="Engine\Input_Doodle.cpp" />
     <ClCompile Include="Engine\Logger.cpp" />
+    <ClCompile Include="Engine\ShowCollision.cpp" />
     <ClCompile Include="Engine\Sprite.cpp" />
     <ClCompile Include="Engine\SpriteFont.cpp" />
     <ClCompile Include="Engine\Texture.cpp" />
@@ -182,20 +186,27 @@ xcopy /d /y Assets\* "$(OutputPath)Assets"
     <ClCompile Include="Game\Level2.cpp" />
     <ClCompile Include="Game\MainMenu.cpp" />
     <ClCompile Include="Game\Meteor.cpp" />
+    <ClCompile Include="Game\Score.cpp" />
+    <ClCompile Include="Game\ScreenWarp.cpp" />
     <ClCompile Include="Game\Ship.cpp" />
     <ClCompile Include="Game\Splash.cpp" />
+    <ClCompile Include="Game\Timer.cpp" />
     <ClCompile Include="Game\TreeStump.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Animation.h" />
     <ClInclude Include="Engine\Camera.h" />
+    <ClInclude Include="Engine\Collision.h" />
+    <ClInclude Include="Engine\Component.h" />
+    <ClInclude Include="Engine\ComponentManager.h" />
     <ClInclude Include="Engine\Engine.h" />
     <ClInclude Include="Engine\GameObject.h" />
     <ClInclude Include="Engine\GameObjectManager.h" />
     <ClInclude Include="Engine\GameState.h" />
     <ClInclude Include="Engine\GameStateManager.h" />
     <ClInclude Include="Engine\Rect.h" />
+    <ClInclude Include="Engine\ShowCollision.h" />
     <ClInclude Include="Engine\Sprite.h" />
     <ClInclude Include="Engine\SpriteFont.h" />
     <ClInclude Include="Engine\Texture.h" />
@@ -211,15 +222,19 @@ xcopy /d /y Assets\* "$(OutputPath)Assets"
     <ClInclude Include="Game\Bunny.h" />
     <ClInclude Include="Game\Flame_Anims.h" />
     <ClInclude Include="Game\Fonts.h" />
+    <ClInclude Include="Game\Gravity.h" />
     <ClInclude Include="Game\Hero.h" />
     <ClInclude Include="Game\Hero_Anims.h" />
     <ClInclude Include="Game\Level1.h" />
     <ClInclude Include="Game\Level2.h" />
     <ClInclude Include="Game\MainMenu.h" />
     <ClInclude Include="Game\Meteor.h" />
+    <ClInclude Include="Game\Score.h" />
     <ClInclude Include="Game\Screens.h" />
+    <ClInclude Include="Game\ScreenWarp.h" />
     <ClInclude Include="Game\Ship.h" />
     <ClInclude Include="Game\Splash.h" />
+    <ClInclude Include="Game\Timer.h" />
     <ClInclude Include="Game\TreeStump.h" />
   </ItemGroup>
   <ItemGroup>

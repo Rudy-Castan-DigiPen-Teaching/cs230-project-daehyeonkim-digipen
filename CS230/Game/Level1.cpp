@@ -13,52 +13,52 @@ Creation date: 03/08/2021
 #include "Ball.h"
 #include "Bunny.h"
 #include "Fonts.h"
+#include "Gravity.h"
+#include "Score.h"
+#include "Timer.h"
 #include "TreeStump.h"
+#include "../Engine/Camera.h"
+#include "../Engine/ShowCollision.h"
 
-Level1::Level1() : lives(3), camera({ { 0.15 * Engine::GetWindow().GetSize().x, 0 }, {0.35 * Engine::GetWindow().GetSize().x, 0 } }),
-                   levelReload(CS230::InputKey::Keyboard::R), mainMenu(CS230::InputKey::Keyboard::Escape) {}
-
+Level1::Level1() : heroPtr(nullptr), gameObjectManager(nullptr), levelReload(CS230::InputKey::Keyboard::R), mainMenu(CS230::InputKey::Keyboard::Escape), lives(3)
+{
+}
 void Level1::Load() {
-	timer = 5;
-	score = 0;
-	std::string scoreString = "Score: " + std::to_string(score / 100) + std::to_string((score % 100) / 10) + std::to_string(score % 10);
-	scoreTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)).DrawTextToTexture(scoreString, 0xFFFFFFFF, true);
+	AddGSComponent(new ShowCollision(CS230::InputKey::Keyboard::Tilde));
+	AddGSComponent(new CS230::GameObjectManager());
+	AddGSComponent(new Background());
+	gameObjectManager = GetGSComponent<CS230::GameObjectManager>();
+	AddGSComponent(new Score(0, Fonts::Font1));
+	AddGSComponent(new Timer(60));
+	AddGSComponent(new Gravity(2000));
 	std::string livesString = "Lives: " + std::to_string(lives);
 	livesTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)).DrawTextToTexture(livesString, 0xFFFFFFFF, true);
-	std::string timerString = "Time: " + std::to_string(static_cast<int>(timer));
-	timerTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)).DrawTextToTexture(timerString, 0xFFFFFFFF, true);
-	heroPtr = new Hero({ 150, Level1::floor }, camera);
-	gameObjectManager.Add(heroPtr);
-	gameObjectManager.Add(new Ball({ 600, Level1::floor }));
-	gameObjectManager.Add(new Ball({ 2700, Level1::floor }));
-	gameObjectManager.Add(new Ball({ 4800, Level1::floor }));
-	gameObjectManager.Add(new Bunny({ 1000, Level1::floor }));
-	gameObjectManager.Add(new Bunny({ 2000, Level1::floor }));
-	gameObjectManager.Add(new Bunny({ 3200, Level1::floor }));
-	gameObjectManager.Add(new Bunny({ 3800, Level1::floor }));
-	gameObjectManager.Add(new TreeStump({ 300, Level1::floor }, 3));
-	gameObjectManager.Add(new TreeStump({ 1200, Level1::floor }, 2));
-	gameObjectManager.Add(new TreeStump({ 2200, Level1::floor }, 1));
-	gameObjectManager.Add(new TreeStump({ 2800, Level1::floor }, 5));
-	gameObjectManager.Add(new TreeStump({ 5100, Level1::floor }, 5));
+	heroPtr = new Hero({ 150, Level1::floor });
+	gameObjectManager->Add(heroPtr);
+	gameObjectManager->Add(new Ball({ 600, Level1::floor }));
+	gameObjectManager->Add(new Ball({ 2700, Level1::floor }));
+	gameObjectManager->Add(new Ball({ 4800, Level1::floor }));
+	gameObjectManager->Add(new Bunny({ 1000, Level1::floor }));
+	gameObjectManager->Add(new Bunny({ 2000, Level1::floor }));
+	gameObjectManager->Add(new Bunny({ 3200, Level1::floor }));
+	gameObjectManager->Add(new Bunny({ 3800, Level1::floor }));
+	gameObjectManager->Add(new TreeStump({ 300, Level1::floor }, 3));
+	gameObjectManager->Add(new TreeStump({ 1200, Level1::floor }, 2));
+	gameObjectManager->Add(new TreeStump({ 2200, Level1::floor }, 1));
+	gameObjectManager->Add(new TreeStump({ 2800, Level1::floor }, 5));
+	gameObjectManager->Add(new TreeStump({ 5100, Level1::floor }, 5));
 
-	background.Add("assets/clouds.png", 4);
-	background.Add("assets/mountains.png", 2);
-	background.Add("assets/foreground.png", 1);
-
-	camera.SetPosition({ 0,0 });
-	camera.SetExtent({ { 0,0 }, { background.Size() - Engine::GetWindow().GetSize() } });
+	GetGSComponent<Background>()->Add("assets/clouds.png", 4);
+	GetGSComponent<Background>()->Add("assets/mountains.png", 2);
+	GetGSComponent<Background>()->Add("assets/foreground.png", 1);
+	CS230::Camera* cameraPtr = new CS230::Camera({ { 0.15 * Engine::GetWindow().GetSize().x, 0 }, {0.35 * Engine::GetWindow().GetSize().x, 0 } });
+	AddGSComponent(cameraPtr);
+	cameraPtr->SetExtent({ { 0,0 }, { GetGSComponent<Background>()->Size() - Engine::GetWindow().GetSize() } });
 }
 void Level1::Update(double dt) {
-	if(static_cast<int>(timer) > static_cast<int>(timer-dt))
-	{
-		std::string timerString = "Time: " + std::to_string(static_cast<int>(timer));
-		timerTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)).DrawTextToTexture(timerString, 0xFFFFFFFF, true);
-	}
-	if(timer <= 0)
+	if(GetGSComponent<Timer>()->hasEnded() == true)
 	{
 		lives--;
-		Engine::GetGameStateManager().ReloadState();
 		if(lives == 0)
 		{
 			lives = 3;
@@ -68,8 +68,8 @@ void Level1::Update(double dt) {
 			Engine::GetGameStateManager().ReloadState();
 		}
 	}
-	gameObjectManager.UpdateAll(dt);
-	camera.Update(heroPtr->GetPosition());
+	gameObjectManager->Update(dt);
+	GetGSComponent<CS230::Camera>()->Update(heroPtr->GetPosition());
 	if (mainMenu.IsKeyReleased() == true) {
 		Engine::GetGameStateManager().SetNextState(static_cast<int>(Screens::MainMenu));
 	}
@@ -78,23 +78,26 @@ void Level1::Update(double dt) {
 	{
 		Engine::GetGameStateManager().ReloadState();
 	}
+	GetGSComponent<ShowCollision>()->Update(dt);
 #endif
-	timer-=dt;
+	GetGSComponent<Timer>()->Update(dt);
 }
 void Level1::Unload() {
-	background.Unload();
-	gameObjectManager.Unload();
+	ClearGSComponent();
 	heroPtr = nullptr;
 }
 
 void Level1::Draw()
 {
 	Engine::GetWindow().Clear(0x3399DAFF);
-	background.Draw(camera);
+	CS230::Camera* cameraPtr = GetGSComponent<CS230::Camera>();
+	GetGSComponent<Background>()->Draw(*cameraPtr);
+	
 	math::ivec2 winSize = Engine::GetWindow().GetSize();
-	scoreTexture.Draw(math::TranslateMatrix(math::ivec2{ 10, winSize.y - scoreTexture.GetSize().y - 5 }));
-	livesTexture.Draw(math::TranslateMatrix(math::ivec2{ static_cast<int>(winSize.x * 0.4), winSize.y - livesTexture.GetSize().y - 5 }));
-	timerTexture.Draw(math::TranslateMatrix(math::ivec2{ static_cast<int>(winSize.x * 0.8), winSize.y - timerTexture.GetSize().y - 5 }));
-	math::TransformMatrix cameraMatrix = camera.GetMatrix();
-	gameObjectManager.DrawAll(cameraMatrix);
+	GetGSComponent<Score>()->Draw(math::ivec2{ 10, winSize.y});
+	GetGSComponent<Timer>()->Draw(math::ivec2{ static_cast<int>(winSize.x * 0.45), winSize.y});
+	livesTexture.Draw(math::TranslateMatrix(math::ivec2{ static_cast<int>(winSize.x * 0.85), winSize.y - livesTexture.GetSize().y - 5 }));
+
+	math::TransformMatrix cameraMatrix = cameraPtr->GetMatrix();
+	gameObjectManager->DrawAll(cameraMatrix);
 }

@@ -11,9 +11,7 @@ Creation date: 2/11/2021
 #include "..\Engine\Input.h"
 #include "..\Engine\GameObject.h"
 namespace math { struct vec2; }
-namespace CS230 {
-    class Camera;
-}
+
 class Hero : public CS230::GameObject {
 private:
     class State_Idle : public State {
@@ -60,12 +58,11 @@ private:
     void UpdateXVelocity(double dt);     //Change X velocity stuff
 
 public:
-    Hero(math::vec2 startPos, const CS230::Camera& camera);
+    Hero(math::vec2 startPos);
     //void Load();
     void Update(double dt) override;
     math::vec2 GetPosition();
 private:
-    const CS230::Camera& camera;
     CS230::InputKey moveLeftKey;
     CS230::InputKey moveRightKey;
     CS230::InputKey jumpKey;

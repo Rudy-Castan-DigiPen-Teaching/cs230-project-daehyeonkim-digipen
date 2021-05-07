@@ -12,23 +12,24 @@ Creation date: 2/11/2021
 #include "Texture.h"
 #include "Animation.h"
 #include <filesystem>
-
+#include "Component.h"
 namespace CS230 {
-    class Texture;
+	class GameObject;
+	class Texture;
     class Animation;
 }
 
 namespace CS230 {
-    class Sprite {
+    class Sprite : public Component {
     public:
-        Sprite();
+        Sprite(const std::filesystem::path& spriteInfoFile, GameObject* object);
         ~Sprite();
-        void Load(const std::filesystem::path& spriteInfoFile);
+        void Load(const std::filesystem::path& spriteInfoFile, GameObject* object);
         void Draw(math::TransformMatrix displayMatrix);
         math::ivec2 GetHotSpot(int index);
         math::ivec2 GetFrameSize() const;
         void PlayAnimation(int anim);
-        void Update(double dt);
+        void Update(double dt) override;
         bool IsAnimationDone();
     private:
         math::ivec2 GetFrameTexel(int frameNum) const;

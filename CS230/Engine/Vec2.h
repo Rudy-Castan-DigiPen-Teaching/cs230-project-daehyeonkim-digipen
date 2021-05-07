@@ -8,7 +8,7 @@ Creation date: 03.15.2021
 -----------------------------------------------------------------*/
 #pragma once
 #include <limits>
-
+#include <algorithm>
 namespace math
 {
 	[[nodiscard]] constexpr double abs(double d) noexcept { return (d < 0.0) ? -d : d; }

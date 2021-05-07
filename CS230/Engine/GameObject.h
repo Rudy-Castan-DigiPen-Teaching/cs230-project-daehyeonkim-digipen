@@ -9,36 +9,46 @@ Creation date: 2/14/2021
 -----------------------------------------------------------------*/
 #pragma once
 
+#include "ComponentManager.h"
 #include "Vec2.h"
 #include "Sprite.h"
 #include "TransformMatrix.h"
 
 namespace CS230 {
+	class Component;
+
 	class GameObject {
+		friend class Sprite;
 	public:
 		GameObject(math::vec2 position);
 		GameObject(math::vec2 position, double rotation, math::vec2 scale);
-		virtual ~GameObject() {}
+		virtual ~GameObject();
 
 		virtual void Update(double dt);
 		virtual void Draw(math::TransformMatrix cameraMatrix);
 
 		const math::TransformMatrix& GetMatrix();
 		const math::vec2& GetPosition() const;
+		void SetPosition(math::vec2 newPosition);
 		const math::vec2& GetVelocity() const;
 		const math::vec2& GetScale() const;
 		double GetRotation() const;
-
+		template<typename T>
+		T* GetGOComponent() { return components.GetComponent<T>(); }
 	protected:
-		void SetPosition(math::vec2 newPosition);
+		void AddGOComponent(Component* component) { components.AddComponent(component); }
+		void UpdateGOComponents(double dt) { components.UpdateAll(dt); }
+		void ClearGOComponents() { components.Clear(); }
+
+		template<typename T>
+		void RemoveGOComponent() { components.RemoveComponent<T>(); }
+		
 		void UpdatePosition(math::vec2 adjustPosition);
 		void SetVelocity(math::vec2 newVelocity);
 		void UpdateVelocity(math::vec2 adjustVelocity);
 		void SetScale(math::vec2 newScale);
 		void SetRotation(double newRotationAmount);
 		void UpdateRotation(double newRotationAmount);
-
-		Sprite sprite;
 		
 		class State {
 		public:
@@ -65,6 +75,8 @@ namespace CS230 {
 		math::vec2 scale;
 		math::vec2 position;
 		math::vec2 velocity;
+
+		ComponentManager components;
 	};
 }
 

@@ -16,7 +16,7 @@ void Background::Add(const std::filesystem::path& texturePath, int level)
 	backgrounds.push_back({ Engine::GetTextureManager().Load(texturePath), level });
 }
 
-void Background::Unload()
+Background::~Background()
 {
 	backgrounds.clear();
 }

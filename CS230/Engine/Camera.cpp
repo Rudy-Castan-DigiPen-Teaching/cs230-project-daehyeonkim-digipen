@@ -31,40 +31,40 @@ void CS230::Camera::SetExtent(math::irect2 newExtent)
 
 void CS230::Camera::Update(const math::vec2& followObjPos)
 {
-	if(followObjPos.x - position.x > movableRange.top_right.x)
+	if(followObjPos.x - position.x > movableRange.Right())
 	{
-		position.x = followObjPos.x - movableRange.top_right.x;
-	} else if(followObjPos.x - position.x < movableRange.bottom_left.x)
+		position.x = followObjPos.x - movableRange.Right();
+	} else if(followObjPos.x - position.x < movableRange.Left())
 	{
-		position.x = followObjPos.x - movableRange.bottom_left.x;
+		position.x = followObjPos.x - movableRange.Left();
 	}
-	if (followObjPos.y - position.y > movableRange.top_right.y)
+	if (followObjPos.y - position.y > movableRange.Top())
 	{
-		position.y = followObjPos.y - movableRange.top_right.y;
+		position.y = followObjPos.y - movableRange.Top();
 	}
-	else if (followObjPos.y - position.y < movableRange.bottom_left.y)
+	else if (followObjPos.y - position.y < movableRange.Bottom())
 	{
-		position.y = followObjPos.y - movableRange.bottom_left.y;
+		position.y = followObjPos.y - movableRange.Bottom();
 	}
-	if(position.x > extent.top_right.x)
+	if(position.x > extent.Right())
 	{
-		position.x = extent.top_right.x;
-	} else if(position.x < extent.bottom_left.x)
+		position.x = extent.Right();
+	} else if(position.x < extent.Left())
 	{
-		position.x = extent.bottom_left.x;
+		position.x = extent.Left();
 	}
-	if (position.y > extent.top_right.y)
+	if (position.y > extent.Top())
 	{
-		position.y = extent.top_right.y;
+		position.y = extent.Top();
 	}
-	else if (position.y < extent.bottom_left.y)
+	else if (position.y < extent.Bottom())
 	{
-		position.y = extent.bottom_left.y;
+		position.y = extent.Bottom();
 	}
 }
 
 math::TransformMatrix CS230::Camera::GetMatrix()
 {
-	return math::TranslateMatrix(-position);
+	return math::TranslateMatrix(-position); 
 }
 

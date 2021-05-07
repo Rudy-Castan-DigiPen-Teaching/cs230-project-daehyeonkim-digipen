@@ -35,12 +35,12 @@ void CS230::SpriteFont::SetupCharRects() {
 
 	int xPos = 1;
 	for (int index = 0; index < numOfChars; index++) {
-		charTexels[index].bottom_left = { xPos, height };
+		charTexels[index].point1 = { xPos, height };
 		while (texture.GetPixel({ xPos,0 }) == testColor)
 		{
 			xPos += 1;
 		}
-		charTexels[index].top_right = {xPos-1, 1 };
+		charTexels[index].point2 = {xPos-1, 1 };
 		nextColor = texture.GetPixel({ xPos,0 });
 		testColor = nextColor;
 	}
@@ -97,7 +97,7 @@ CS230::Texture CS230::SpriteFont::DrawTextToTexture(std::string text, unsigned i
 
 void CS230::SpriteFont::DrawChar(math::TransformMatrix& matrix, char c) {
 	math::irect2& displayRect = GetCharRect(c);
-	math::ivec2 topLeftTexel = { displayRect.bottom_left.x, displayRect.top_right.y };
+	math::ivec2 topLeftTexel = { displayRect.point1.x, displayRect.point2.y };
 	if (c != ' ') {
 		texture.Draw(matrix, topLeftTexel, displayRect.Size());
 	}

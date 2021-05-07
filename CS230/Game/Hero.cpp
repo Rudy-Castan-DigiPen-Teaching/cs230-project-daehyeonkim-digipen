@@ -8,6 +8,8 @@ Author: Daehyeon Kim
 Creation date: 03/16/2021
 -----------------------------------------------------------------*/
 #include "Hero.h"
+
+#include "Gravity.h"
 #include "Level1.h"
 #include "..\Engine\Engine.h"
 #include "..\Engine\Camera.h"
@@ -55,7 +57,7 @@ void Hero::UpdateXVelocity(double dt)
 void Hero::State_Idle::Enter(GameObject* object)
 {
 	Hero* hero = static_cast<Hero*>(object);
-	hero->sprite.PlayAnimation(static_cast<int>(Hero_Anim::Hero_Idle_Anim));
+	hero->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Hero_Anim::Hero_Idle_Anim));
 }
 
 void Hero::State_Idle::Update([[maybe_unused]] GameObject* object, [[maybe_unused]] double dt)
@@ -77,7 +79,7 @@ void Hero::State_Idle::TestForExit(GameObject* object)
 void Hero::State_Running::Enter(GameObject* object)
 {
 	Hero* hero = static_cast<Hero*>(object);
-	hero->sprite.PlayAnimation(static_cast<int>(Hero_Anim::Hero_Run_Anim));
+	hero->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Hero_Anim::Hero_Run_Anim));
 	if (hero->moveLeftKey.IsKeyDown() == true)
 	{
 		hero->isFlipped = true;
@@ -114,7 +116,7 @@ void Hero::State_Running::TestForExit(GameObject* object)
 void Hero::State_Skidding::Enter(GameObject* object)
 {
 	Hero* hero = static_cast<Hero*>(object);
-	hero->sprite.PlayAnimation(static_cast<int>(Hero_Anim::Hero_Skid_Anim));
+	hero->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Hero_Anim::Hero_Skid_Anim));
 }
 
 void Hero::State_Skidding::Update(GameObject* object, double dt)
@@ -145,12 +147,12 @@ void Hero::State_Skidding::TestForExit(GameObject* object)
 
 void Hero::State_Jumping::Enter(GameObject* object) {
 	Hero* hero = static_cast<Hero*>(object);
-	hero->sprite.PlayAnimation(static_cast<int>(Hero_Anim::Hero_Jump_Anim));
+	hero->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Hero_Anim::Hero_Jump_Anim));
 	hero->SetVelocity({hero->GetVelocity().x, Hero::jump_accel.y});   //Set the velocity.y
 }
 void Hero::State_Jumping::Update(GameObject* object, double dt) {
 	Hero* hero = static_cast<Hero*>(object);
-	hero->UpdateVelocity(-Level1::gravity * dt);  //Apply Gravity
+	hero->UpdateVelocity({ 0,-Engine::GetGSComponent<Gravity>()->GetValue() * dt });  //Apply Gravity
 	hero->UpdateXVelocity(dt);  //Change X Velocity stuff
 }
 void Hero::State_Jumping::TestForExit(GameObject* object) {
@@ -166,13 +168,13 @@ void Hero::State_Jumping::TestForExit(GameObject* object) {
 void Hero::State_Falling::Enter(GameObject* object)
 {
 	Hero* hero = static_cast<Hero*>(object);
-	hero->sprite.PlayAnimation(static_cast<int>(Hero_Anim::Hero_Fall_Anim));
+	hero->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Hero_Anim::Hero_Fall_Anim));
 }
 
 void Hero::State_Falling::Update(GameObject* object, double dt)
 {
 	Hero* hero = static_cast<Hero*>(object);
-	hero->UpdateVelocity(-Level1::gravity * dt);
+	hero->UpdateVelocity({ 0,-Engine::GetGSComponent<Gravity>()->GetValue() * dt });
 	hero->UpdateXVelocity(dt);
 }
 
@@ -212,9 +214,9 @@ void Hero::State_Falling::TestForExit(GameObject* object)
 	} 
 }
 
-Hero::Hero(math::vec2 startPos, const CS230::Camera& camera) : GameObject(startPos), camera(camera), moveLeftKey(CS230::InputKey::Keyboard::Left), moveRightKey(CS230::InputKey::Keyboard::Right), jumpKey(CS230::InputKey::Keyboard::Up)
+Hero::Hero(math::vec2 startPos) : GameObject(startPos), moveLeftKey(CS230::InputKey::Keyboard::Left), moveRightKey(CS230::InputKey::Keyboard::Right), jumpKey(CS230::InputKey::Keyboard::Up)
 {
-	sprite.Load("assets/Hero.spt");
+	AddGOComponent(new CS230::Sprite("assets/Hero.spt", this));
 	currState = &stateIdle;
 	currState->Enter(this);
 }
@@ -222,8 +224,8 @@ Hero::Hero(math::vec2 startPos, const CS230::Camera& camera) : GameObject(startP
 void Hero::Update(double dt)
 {
 	GameObject::Update(dt);
-	const double collisionOffset = sprite.GetFrameSize().x / 2;
-	const double screenPositionX = GetPosition().x - camera.GetPosition().x;
+	const double collisionOffset = GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2;
+	const double screenPositionX = GetPosition().x - Engine::GetGSComponent<CS230::Camera>()->GetPosition().x;
 	if (screenPositionX - collisionOffset < 0)
 	{
 		SetVelocity({0, GetVelocity().y});
@@ -232,7 +234,7 @@ void Hero::Update(double dt)
 	else if (screenPositionX + collisionOffset > Engine::GetWindow().GetSize().x)
 	{
 		SetVelocity({ 0, GetVelocity().y });
-		SetPosition({ camera.GetPosition().x + Engine::GetWindow().GetSize().x - collisionOffset, GetPosition().y });
+		SetPosition({ Engine::GetGSComponent<CS230::Camera>()->GetPosition().x + Engine::GetWindow().GetSize().x - collisionOffset, GetPosition().y });
 	}
 	
 	if (isFlipped == true) {

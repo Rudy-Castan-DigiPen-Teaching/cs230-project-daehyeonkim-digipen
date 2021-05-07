@@ -8,20 +8,30 @@ Author: Daehyeon Kim
 Creation date: 4/19/2021
 -----------------------------------------------------------------*/
 #include "GameObject.h"
+#include "Collision.h"
+#include "Engine.h"
+#include "ShowCollision.h"
 
 CS230::GameObject::GameObject(math::vec2 position) : GameObject(position, 0, { 1, 1 }) {}
 
 CS230::GameObject::GameObject(math::vec2 position, double rotation, math::vec2 scale)
     : velocity{ 0,0 }, position(position), updateMatrix(true),
-    scale(scale), rotation(rotation), currState(&state_nothing) {
+    scale(scale), rotation(rotation), currState(&state_nothing)
+{
+
+}
+
+CS230::GameObject::~GameObject()
+{
+    components.Clear();
 }
 
 void CS230::GameObject::Update(double dt) {
     currState->Update(this, dt);
-    sprite.Update(dt);
     if (velocity.x != 0 || velocity.y != 0) {
         UpdatePosition(velocity * dt);
     }
+    UpdateGOComponents(dt);
     currState->TestForExit(this);
 }
 
@@ -30,8 +40,15 @@ void CS230::GameObject::ChangeState(State* newState) {
     currState->Enter(this);
 }
 
-void CS230::GameObject::Draw(math::TransformMatrix cameraMatrix) {
-    sprite.Draw(cameraMatrix * GetMatrix());
+void CS230::GameObject::Draw(math::TransformMatrix displayMatrix) {
+    Sprite* spritePtr = GetGOComponent<Sprite>();
+    if (spritePtr != nullptr) {
+        spritePtr->Draw(displayMatrix * GetMatrix());
+    }
+	if(Engine::GetGSComponent<ShowCollision>()->IsEnabled() == true)
+	{
+        GetGOComponent<Collision>()->Draw(displayMatrix);
+	}
 }
 
 const math::TransformMatrix& CS230::GameObject::GetMatrix() {

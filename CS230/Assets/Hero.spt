@@ -16,3 +16,4 @@ Anim assets/heroRun.anm
 Anim assets/heroJump.anm
 Anim assets/heroFall.anm
 Anim assets/heroSkid.anm
+CollisionRect -31 0 36 64

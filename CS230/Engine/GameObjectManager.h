@@ -9,18 +9,19 @@ Creation date: 2/14/2021
 -----------------------------------------------------------------*/
 #pragma once
 #include <vector>
+#include "Component.h"
 
 namespace math { class TransformMatrix; }
 
 namespace CS230 {
 	class GameObject;
 
-	class GameObjectManager {
+	class GameObjectManager : public Component{
 	public:
 		void Add(GameObject* obj);
-		void Unload();
+		~GameObjectManager();
 
-		void UpdateAll(double dt);
+		void Update(double dt) override;
 		void DrawAll(math::TransformMatrix& cameraMatrix);
 	private:
 		std::vector<GameObject*> gameObjects;

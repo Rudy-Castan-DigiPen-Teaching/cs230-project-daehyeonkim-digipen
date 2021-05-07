@@ -37,6 +37,9 @@ CS230::InputKey::Keyboard DoodleKeyToCS230Key(doodle::KeyboardButtons button) {
 	else if (button >= doodle::KeyboardButtons::A && button <= doodle::KeyboardButtons::Z) {
 		int offset = static_cast<int>(button) - static_cast<int>(doodle::KeyboardButtons::A);
 		return static_cast<CS230::InputKey::Keyboard>(static_cast<int>(CS230::InputKey::Keyboard::A) + offset);
+	} else if (button == doodle::KeyboardButtons::Tilde)
+	{
+		return CS230::InputKey::Keyboard::Tilde;
 	}
 	return CS230::InputKey::Keyboard::None;
 }

@@ -34,6 +34,8 @@ public:
     void Update();
     bool HasGameEnded();
     void AddSpriteFont(const std::filesystem::path& fileName);
+    template<typename T>
+    static T* GetGSComponent() { return GetGameStateManager().GetGSComponent<T>(); }
 private:
     Engine();
     ~Engine();

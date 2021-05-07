@@ -18,7 +18,7 @@ MainMenu::OptionData MainMenu::optionsData[static_cast<int>(MainMenu::Options::C
 	{"Quit", {0.5, 0.25}, {} },
 };
 
-MainMenu::MainMenu() : upKey(CS230::InputKey::Keyboard::Up), downKey(CS230::InputKey::Keyboard::Down), selectKey(CS230::InputKey::Keyboard::Enter)
+MainMenu::MainMenu() : selectedIndex(static_cast<int>(Options::Level1)), upKey(CS230::InputKey::Keyboard::Up), downKey(CS230::InputKey::Keyboard::Down), selectKey(CS230::InputKey::Keyboard::Enter)
 {
 	
 }
@@ -87,10 +87,11 @@ void MainMenu::Unload()
 void MainMenu::Draw()
 {
 	Engine::GetWindow().Clear(0x3399DAFF);
-	title.Draw(math::TransformMatrix() * math::TranslateMatrix(math::vec2{ Engine::GetWindow().GetSize().x / 2 - static_cast<double>(title.GetSize().x), Engine::GetWindow().GetSize().y * 0.6}) * math::ScaleMatrix({2,2}));
-	optionsData[static_cast<int>(Options::Level1)].texture.Draw(math::TransformMatrix() * math::TranslateMatrix(math::vec2{ Engine::GetWindow().GetSize().x / 2 - optionsData[static_cast<int>(Options::Level1)].texture.GetSize().x / 2.0, Engine::GetWindow().GetSize().y * 0.4 }));
-	optionsData[static_cast<int>(Options::Level2)].texture.Draw(math::TransformMatrix() * math::TranslateMatrix(math::vec2{ Engine::GetWindow().GetSize().x / 2 - optionsData[static_cast<int>(Options::Level2)].texture.GetSize().x / 2.0, Engine::GetWindow().GetSize().y * 0.3 }));
-	optionsData[static_cast<int>(Options::Quit)].texture.Draw(math::TransformMatrix() * math::TranslateMatrix(math::vec2{ Engine::GetWindow().GetSize().x / 2 - optionsData[static_cast<int>(Options::Quit)].texture.GetSize().x / 2.0, Engine::GetWindow().GetSize().y * 0.2 }));
+	title.Draw(math::TranslateMatrix(math::vec2{ Engine::GetWindow().GetSize().x / 2 - static_cast<double>(title.GetSize().x), Engine::GetWindow().GetSize().y * 0.6}) * math::ScaleMatrix({2,2}));
+	for (OptionData& textData : optionsData)
+	{
+		textData.texture.Draw(math::TranslateMatrix(math::vec2{ Engine::GetWindow().GetSize().x / 2 - textData.texture.GetSize().x * textData.positionPercent.x, Engine::GetWindow().GetSize().y * textData.positionPercent.y }));
+	}
 }
 
 void MainMenu::RenderOption(OptionData& data, bool isHighlighted)

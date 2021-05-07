@@ -8,6 +8,7 @@ Author: Kevin Wright
 Creation date: 2/11/2021
 -----------------------------------------------------------------*/
 #pragma once
+#include "Component.h"
 #include "Rect.h"
 
 namespace math
@@ -16,7 +17,7 @@ namespace math
 }
 
 namespace CS230 {
-	class Camera {
+	class Camera : public Component{
 	public:
 		Camera(math::rect2 movableRange);
 		void SetPosition(math::vec2 newPosition);

@@ -12,13 +12,11 @@ Creation date: 03/08/2021
 #include "..\Engine\GameState.h"
 #include "..\Engine\Input.h"
 #include "Hero.h"
-#include "../Engine/Camera.h"
 #include "../Engine/GameObjectManager.h"
 
 class Level1 : public CS230::GameState {
 public:
 	static constexpr double floor = 126.0f;
-	static constexpr math::vec2 gravity{ 0, 2000 };
 
 	Level1();
 	void Load() override;
@@ -28,18 +26,12 @@ public:
 	
 	std::string GetName() override { return "Level 1"; }
 private:
-	int score;
 	int lives;
-	double timer;
-	CS230::Texture scoreTexture;
 	CS230::Texture livesTexture;
-	CS230::Texture timerTexture;
 	
 	CS230::InputKey mainMenu;
 	CS230::InputKey levelReload;
-	CS230::Camera camera;
-	CS230::GameObjectManager gameObjectManager;
-	Hero* heroPtr;
-	Background background;
 
+	CS230::GameObjectManager* gameObjectManager;
+	Hero* heroPtr;
 };

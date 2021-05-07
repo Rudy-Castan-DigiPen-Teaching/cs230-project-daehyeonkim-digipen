@@ -13,16 +13,16 @@ Creation date: 2/15/2021
 TreeStump::TreeStump(math::vec2 pos, int size) : GameObject(pos) {
 	switch (size) {
 	case 1:
-		sprite.Load("assets/treeStump1.spt");
+		AddGOComponent(new CS230::Sprite("assets/treeStump1.spt", this));
 		break;
 	case 2:
-		sprite.Load("assets/treeStump2.spt");
+		AddGOComponent(new CS230::Sprite("assets/treeStump2.spt", this));
 		break;
 	case 3:
-		sprite.Load("assets/treeStump3.spt");
+		AddGOComponent(new CS230::Sprite("assets/treeStump3.spt", this));
 		break;
 	case 5:
-		sprite.Load("assets/treeStump5.spt");
+		AddGOComponent(new CS230::Sprite("assets/treeStump5.spt", this));
 		break;
 	}
 }

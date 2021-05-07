@@ -28,6 +28,5 @@ private:
 
     static constexpr math::vec2 accel{ 0, 400 };
     static constexpr double drag = 1.0f;
-    void TestForWrap();
 };
 

@@ -21,11 +21,8 @@ public:
 	void Draw() override;
 	std::string GetName() override { return "Level 2"; }
 private:
-	int score;
-	CS230::Texture scoreTexture;
-	
 	CS230::InputKey mainMenu;
 	CS230::InputKey levelReload;
-	CS230::GameObjectManager gameObjectManager;
+	CS230::GameObjectManager* gameObjectManager;
 	math::TransformMatrix noCamera;
 };
