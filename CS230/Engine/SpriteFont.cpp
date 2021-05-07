@@ -60,7 +60,10 @@ math::ivec2 CS230::SpriteFont::MeasureText(std::string text) {
 	math::ivec2 size = { 0,0 };
 	for (char c : text) {
 		size.x += GetCharRect(c).Size().x;
-		size.y = GetCharRect(c).Size().y;
+		if(size.y < GetCharRect(c).Size().y)
+		{
+			size.y = GetCharRect(c).Size().y;
+		}
 	}
 
 	return size;
