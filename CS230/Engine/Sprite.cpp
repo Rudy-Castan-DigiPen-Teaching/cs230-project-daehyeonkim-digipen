@@ -101,7 +101,7 @@ void CS230::Sprite::PlayAnimation(int anim)
 	if(static_cast<size_t>(anim) >= animations.size())
 	{
 		Engine::GetLogger().LogError("Error: Animation has nothing for that input!");
-		currAnim = 0;
+		anim = 0;
 	}
 	currAnim = anim;
 	animations[currAnim]->ResetAnimation();
