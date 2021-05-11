@@ -93,8 +93,8 @@ void Level1::Draw()
 	background.Draw(camera);
 	math::ivec2 winSize = Engine::GetWindow().GetSize();
 	scoreTexture.Draw(math::TranslateMatrix(math::ivec2{ 10, winSize.y - scoreTexture.GetSize().y - 5 }));
-	livesTexture.Draw(math::TranslateMatrix(math::ivec2{ winSize.x/2 - texture.GetSize().x/2, winSize.y - livesTexture.GetSize().y - 5 }));
-	timerTexture.Draw(math::TranslateMatrix(math::ivec2{ winSize.x - texture.GetSize().x - 10, winSize.y - timerTexture.GetSize().y - 5 }));
+	livesTexture.Draw(math::TranslateMatrix(math::ivec2{ winSize.x/2 - livesTexture.GetSize().x/2, winSize.y - livesTexture.GetSize().y - 5 }));
+	timerTexture.Draw(math::TranslateMatrix(math::ivec2{ winSize.x - timerTexture.GetSize().x - 10, winSize.y - timerTexture.GetSize().y - 5 }));
 	math::TransformMatrix cameraMatrix = camera.GetMatrix();
 	gameObjectManager.DrawAll(cameraMatrix);
 }
