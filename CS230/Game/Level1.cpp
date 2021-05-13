@@ -24,7 +24,10 @@ Level1::Level1() : heroPtr(nullptr), gameObjectManager(nullptr), levelReload(CS2
 {
 }
 void Level1::Load() {
+#if _DEBUG
 	AddGSComponent(new ShowCollision(CS230::InputKey::Keyboard::Tilde));
+#endif
+
 	AddGSComponent(new CS230::GameObjectManager());
 	AddGSComponent(new Background());
 	gameObjectManager = GetGSComponent<CS230::GameObjectManager>();
@@ -95,8 +98,8 @@ void Level1::Draw()
 	
 	math::ivec2 winSize = Engine::GetWindow().GetSize();
 	GetGSComponent<Score>()->Draw(math::ivec2{ 10, winSize.y});
-	GetGSComponent<Timer>()->Draw(math::ivec2{ static_cast<int>(winSize.x * 0.45), winSize.y});
-	livesTexture.Draw(math::TranslateMatrix(math::ivec2{ static_cast<int>(winSize.x * 0.85), winSize.y - livesTexture.GetSize().y - 5 }));
+	GetGSComponent<Timer>()->Draw(math::ivec2{ winSize.x , winSize.y});
+	livesTexture.Draw(math::TranslateMatrix(math::ivec2{ winSize.x / 2 - livesTexture.GetSize().x / 2, winSize.y - livesTexture.GetSize().y - 5 }));
 
 	math::TransformMatrix cameraMatrix = cameraPtr->GetMatrix();
 	gameObjectManager->DrawAll(cameraMatrix);

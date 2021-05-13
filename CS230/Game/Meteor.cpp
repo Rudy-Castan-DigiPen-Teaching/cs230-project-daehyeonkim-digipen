@@ -21,9 +21,3 @@ Meteor::Meteor() : GameObject({ 0,0 }, 0, { 0, 0 }) {
 	const double scales = ((rand() % 1024) / 4096.0) + 0.75;
 	SetScale({ scales,scales });
 }
-
-void Meteor::Update(double dt)
-{
-	GameObject::Update(dt);
-	GetGOComponent<ScreenWrap>()->Update(dt);
-}

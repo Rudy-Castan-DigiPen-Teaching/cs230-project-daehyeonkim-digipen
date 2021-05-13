@@ -18,7 +18,9 @@ Creation date: 03/08/2021
 Level2::Level2() : gameObjectManager(nullptr), mainMenu(CS230::InputKey::Keyboard::Escape), levelReload(CS230::InputKey::Keyboard::R) { gameObjectManager = GetGSComponent<CS230::GameObjectManager>(); }
 
 void Level2::Load() {
+#if _DEBUG
 	AddGSComponent(new ShowCollision(CS230::InputKey::Keyboard::Tilde));
+#endif
 	AddGSComponent(new CS230::GameObjectManager());
 	gameObjectManager = GetGSComponent<CS230::GameObjectManager>();
 	AddGSComponent(new Score(0, Fonts::Font2));

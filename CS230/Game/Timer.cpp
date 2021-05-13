@@ -30,7 +30,7 @@ void Timer::Update(double dt)
 
 void Timer::Draw(math::ivec2 location)
 {
-	timeTexture.Draw(math::TranslateMatrix(location - math::ivec2{ 0, timeTexture.GetSize().y + 5 }));
+	timeTexture.Draw(math::TranslateMatrix(location - math::ivec2{ timeTexture.GetSize().x + 10, timeTexture.GetSize().y + 5 }));
 }
 
 bool Timer::hasEnded()

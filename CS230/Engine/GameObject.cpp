@@ -45,7 +45,7 @@ void CS230::GameObject::Draw(math::TransformMatrix displayMatrix) {
     if (spritePtr != nullptr) {
         spritePtr->Draw(displayMatrix * GetMatrix());
     }
-	if(Engine::GetGSComponent<ShowCollision>()->IsEnabled() == true)
+	if(Engine::GetGSComponent<ShowCollision>() != nullptr && Engine::GetGSComponent<ShowCollision>()->IsEnabled() == true)
 	{
         GetGOComponent<Collision>()->Draw(displayMatrix);
 	}
