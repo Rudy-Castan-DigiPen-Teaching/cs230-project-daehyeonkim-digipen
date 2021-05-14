@@ -8,10 +8,14 @@ Author: Kevin Wright
 Creation date: 2/15/2021
 -----------------------------------------------------------------*/
 #pragma once
+#include "GameObjectTypes.h"
 #include "..\Engine\GameObject.h"
 
 class Meteor : public CS230::GameObject {
 public:
 	Meteor();
+	GameObjectType GetObjectType() override { return GameObjectType::Meteor; }
+	std::string GetObjectTypeName() override { return "Meteor"; }
+
 private:
 };

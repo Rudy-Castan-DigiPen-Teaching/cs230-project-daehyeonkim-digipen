@@ -8,6 +8,7 @@ Author: Daehyeon Kim
 Creation date: 3/17/2021
 -----------------------------------------------------------------*/
 #pragma once
+#include "GameObjectTypes.h"
 #include "..\Engine\Input.h"
 #include "../Engine/GameObject.h"
 namespace math { struct vec2; }
@@ -16,12 +17,16 @@ public:
     Ship(math::vec2 startPos);
     void Update(double dt) override;
     void Draw(math::TransformMatrix cameraMatrix) override;
-
+    GameObjectType GetObjectType() override { return GameObjectType::Ship; }
+    std::string GetObjectTypeName() override { return "Ship"; }
+    bool CanCollideWith(GameObjectType) override { return true; }
+    bool IsDead() { return isDead; }
+    void ResolveCollision(CS230::GameObject* objectB) override;
 private:
     CS230::Sprite flameSpriteL;
     CS230::Sprite flameSpriteR;
     bool wasAccel;
-	
+    bool isDead;
     CS230::InputKey rotateCounterKey;
     CS230::InputKey rotateClockKey;
     CS230::InputKey accelerateKey;

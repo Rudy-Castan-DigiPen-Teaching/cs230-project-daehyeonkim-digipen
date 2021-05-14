@@ -20,7 +20,7 @@ namespace CS230 {
 	public:
 		void Add(GameObject* obj);
 		~GameObjectManager();
-
+		void CollideTest();
 		void Update(double dt) override;
 		void DrawAll(math::TransformMatrix& cameraMatrix);
 	private:

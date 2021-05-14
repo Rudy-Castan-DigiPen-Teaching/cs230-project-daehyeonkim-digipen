@@ -8,12 +8,11 @@ Author: Kevin Wright
 Creation date: 2/14/2021
 -----------------------------------------------------------------*/
 #pragma once
-
 #include "ComponentManager.h"
 #include "Vec2.h"
 #include "Sprite.h"
 #include "TransformMatrix.h"
-
+enum class GameObjectType;
 namespace CS230 {
 	class Component;
 
@@ -35,6 +34,12 @@ namespace CS230 {
 		double GetRotation() const;
 		template<typename T>
 		T* GetGOComponent() { return components.GetComponent<T>(); }
+
+		virtual GameObjectType GetObjectType() = 0;
+		virtual std::string GetObjectTypeName() = 0;
+		virtual bool CanCollideWith(GameObjectType objectBType);
+		virtual void ResolveCollision(GameObject*);
+		bool DoesCollideWith(GameObject* objectB);
 	protected:
 		void AddGOComponent(Component* component) { components.AddComponent(component); }
 		void UpdateGOComponents(double dt) { components.UpdateAll(dt); }

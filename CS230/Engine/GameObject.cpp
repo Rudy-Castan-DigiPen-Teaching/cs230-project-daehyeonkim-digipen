@@ -90,6 +90,25 @@ double CS230::GameObject::GetRotation() const
     return rotation;
 }
 
+bool CS230::GameObject::CanCollideWith(GameObjectType)
+{
+    return false;
+}
+
+void CS230::GameObject::ResolveCollision(GameObject*)
+{
+    Engine::GetLogger().LogError("Error: Resolve Collision wasn't override");
+}
+
+bool CS230::GameObject::DoesCollideWith(GameObject* objectB)
+{
+	if(GetGOComponent<Collision>() != nullptr && CanCollideWith(objectB->GetObjectType()) == true)
+	{
+        return GetGOComponent<Collision>()->DoesCollideWith(objectB);
+	}
+    return false;
+}
+
 void CS230::GameObject::SetVelocity(math::vec2 newVelocity)
 {
     velocity = newVelocity;

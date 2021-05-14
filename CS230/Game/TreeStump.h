@@ -8,10 +8,13 @@ Author: Kevin Wright
 Creation date: 2/15/2021
 -----------------------------------------------------------------*/
 #pragma once
+#include "GameObjectTypes.h"
 #include "..\Engine\GameObject.h"
 
 class TreeStump : public CS230::GameObject {
 public:
 	TreeStump(math::vec2 pos, int size);
+	GameObjectType GetObjectType() override { return GameObjectType::TreeStump; }
+	std::string GetObjectTypeName() override { return "TreeStump"; }
 private:
 };

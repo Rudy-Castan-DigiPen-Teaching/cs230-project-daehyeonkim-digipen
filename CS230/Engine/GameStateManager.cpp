@@ -9,6 +9,8 @@ Creation date: 03/08/2021
 -----------------------------------------------------------------*/
 #include "GameStateManager.h"
 #include "Engine.h"
+#include "GameObjectManager.h"
+
 CS230::GameStateManager::GameStateManager()
 {
 	state = State::START;
@@ -53,6 +55,10 @@ void CS230::GameStateManager::Update(double dt)
 		{
 			currGameState->Update(dt);
 			Engine::GetLogger().LogVerbose("Update " + currGameState->GetName());
+			if(GetGSComponent<GameObjectManager>() != nullptr)
+			{
+				currGameState->GetGSComponent<GameObjectManager>()->CollideTest();
+			}
 			currGameState->Draw();
 		}
 		break;

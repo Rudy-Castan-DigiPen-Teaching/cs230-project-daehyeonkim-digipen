@@ -228,6 +228,12 @@
     <ClInclude Include="Engine\ShowCollision.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Game\GameObjectTypes.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Ship_Anims.h">
+      <Filter>Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Vec2.inl">

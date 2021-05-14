@@ -8,10 +8,14 @@ Author: Daehyeon Kim
 Creation date: 04/19/2021
 -----------------------------------------------------------------*/
 #pragma once
+#include "GameObjectTypes.h"
 #include "..\Engine\GameObject.h"
 
 class Bunny : public CS230::GameObject {
 public:
 	Bunny(math::vec2 pos);
+	GameObjectType GetObjectType() override { return GameObjectType::Bunny; }
+	std::string GetObjectTypeName() override { return "Bunny"; }
+
 private:
 };

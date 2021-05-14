@@ -8,6 +8,7 @@ Author: Daehyeon Kim
 Creation date:4/19/2021
 -----------------------------------------------------------------*/
 #include "GameObjectManager.h"
+#include "Engine.h"
 #include "GameObject.h"
 #include "TransformMatrix.h"
 
@@ -23,6 +24,21 @@ CS230::GameObjectManager::~GameObjectManager()
 		delete unloadedObj;
 	}
 	gameObjects.clear();
+}
+
+void CS230::GameObjectManager::CollideTest()
+{
+	for(GameObject* testObj1 : gameObjects)
+	{
+		for(GameObject* testObj2 : gameObjects)
+		{
+			if(testObj1 != testObj2 && testObj1->DoesCollideWith(testObj2) == true)
+			{
+				Engine::GetLogger().LogEvent("Collision Detected: " + testObj1->GetObjectTypeName() + " and " + testObj2->GetObjectTypeName());
+				testObj1->ResolveCollision(testObj2);
+			}
+		}
+	}
 }
 
 void CS230::GameObjectManager::Update(double dt)

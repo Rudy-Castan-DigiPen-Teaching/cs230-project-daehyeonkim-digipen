@@ -8,6 +8,7 @@ Author: Kevin Wright
 Creation date: 2/11/2021
 -----------------------------------------------------------------*/
 #pragma once
+#include "GameObjectTypes.h"
 #include "..\Engine\Input.h"
 #include "..\Engine\GameObject.h"
 namespace math { struct vec2; }
@@ -62,16 +63,22 @@ public:
     //void Load();
     void Update(double dt) override;
     math::vec2 GetPosition();
+    GameObjectType GetObjectType() override { return GameObjectType::Hero; }
+    std::string GetObjectTypeName() override { return "Hero"; }
+    bool CanCollideWith(GameObjectType) override { return true; }
+    void Draw(math::TransformMatrix displayMatrix);
+    void ResolveCollision(GameObject* objectB) override;
 private:
     CS230::InputKey moveLeftKey;
     CS230::InputKey moveRightKey;
     CS230::InputKey jumpKey;
-
-	static constexpr math::vec2 x_drag{600, 0};
-    static constexpr math::vec2 x_accel{ 300, 0 };
-    static constexpr math::vec2 x_max_speed{ 600, 0 };
+    static constexpr double hurtTime = 2;
+	static constexpr math::vec2 x_drag{800, 0};
+    static constexpr math::vec2 x_accel{ 400, 0 };
+    static constexpr math::vec2 x_max_speed{ 800, 0 };
     static constexpr math::vec2 jump_accel{ 0, 1000 };
 
-    bool isFlipped = false;
+    double hurtTimer;
+    bool drawHero;
 };
 

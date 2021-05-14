@@ -21,7 +21,8 @@ namespace math
 		constexpr double Right() const noexcept { return std::max(point1.x, point2.x); }    // if the rect was flipped, then bottomLeft.x > topRight.x
 		constexpr double Top() const noexcept { return std::max(point1.y, point2.y); }   // if the rect uses top left as {0, 0} or was flipped in the y direction
 		constexpr double Bottom() const noexcept { return std::min(point1.y, point2.y); }   // if the rect uses top left as {0, 0} or was flipped in the y direction
-		};
+		constexpr math::vec2 Center() { return { (Right() + Left()) / 2, (Top() + Bottom()) / 2 }; }
+	};
 
 	struct irect2
 	{

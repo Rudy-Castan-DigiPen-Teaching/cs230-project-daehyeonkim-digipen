@@ -28,9 +28,15 @@ void Engine::Shutdown()
 void Engine::Update()
 {
 	const std::chrono::time_point now = std::chrono::system_clock::now();
-	const double deltaTime = std::chrono::duration<double>(std::chrono::system_clock::now() - lastTick).count();
+	double deltaTime = std::chrono::duration<double>(std::chrono::system_clock::now() - lastTick).count();
 	if (deltaTime >= 1 / Target_FPS)
 	{
+#ifdef _DEBUG
+		if (deltaTime > 2 / Target_FPS) {
+			deltaTime = 1 / Target_FPS;
+			logger.LogEvent("Long Frame detected!");
+		}
+#endif
 		logger.LogVerbose("Engine Update");
 		frameCount++;
 		gameStateManager.Update(deltaTime);
