@@ -74,9 +74,14 @@ void Ship::Draw(math::TransformMatrix cameraMatrix)
 	}
 }
 
-void Ship::ResolveCollision(CS230::GameObject*)
+void Ship::ResolveCollision(CS230::GameObject* objectB)
 {
-	GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Ship_Anim::Explode_Anim));
-	RemoveGOComponent<CS230::Collision>();
-	isDead = true;
+	switch (objectB->GetObjectType())
+	{
+	case GameObjectType::Meteor:
+		GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Ship_Anim::Explode_Anim));
+		RemoveGOComponent<CS230::Collision>();
+		isDead = true;
+		break;
+	}
 }
