@@ -102,7 +102,7 @@ void CS230::GameObject::ResolveCollision(GameObject*)
 
 bool CS230::GameObject::DoesCollideWith(GameObject* objectB)
 {
-	if(GetGOComponent<Collision>() != nullptr && CanCollideWith(objectB->GetObjectType()) == true)
+	if(GetGOComponent<Collision>() != nullptr && objectB->GetGOComponent<Collision>() != nullptr && CanCollideWith(objectB->GetObjectType()) == true)
 	{
         return GetGOComponent<Collision>()->DoesCollideWith(objectB);
 	}

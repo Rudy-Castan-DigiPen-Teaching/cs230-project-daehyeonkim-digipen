@@ -20,6 +20,8 @@ Ship::Ship(math::vec2 startPos) : GameObject(startPos), wasAccel(false), isDead(
 {
 	AddGOComponent(new CS230::Sprite("assets/Ship.spt", this));
 	AddGOComponent(new ScreenWrap(*this));
+	GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Ship_Anim::None_Anim));
+
 }
 
 void Ship::Update(double dt)

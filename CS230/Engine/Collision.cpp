@@ -46,7 +46,7 @@ math::rect2 CS230::RectCollision::GetWorldCoorRect()
 
 bool CS230::RectCollision::DoesCollideWith(GameObject* objectB)
 {
-    if(GetWorldCoorRect().Left() <= objectB->GetGOComponent<RectCollision>()->GetWorldCoorRect().Right() && GetWorldCoorRect().Right() >= objectB->GetGOComponent<RectCollision>()->GetWorldCoorRect().Left() &&
+    if(objectB->GetGOComponent<Collision>()->GetCollideType() == CollideType::Rect_Collide && GetWorldCoorRect().Left() <= objectB->GetGOComponent<RectCollision>()->GetWorldCoorRect().Right() && GetWorldCoorRect().Right() >= objectB->GetGOComponent<RectCollision>()->GetWorldCoorRect().Left() &&
         GetWorldCoorRect().Bottom() <= objectB->GetGOComponent<RectCollision>()->GetWorldCoorRect().Top() && GetWorldCoorRect().Top() >= objectB->GetGOComponent<RectCollision>()->GetWorldCoorRect().Bottom())
     {
         return true;
@@ -64,7 +64,7 @@ bool CS230::CircleCollision::DoesCollideWith(GameObject* objectB)
     const double xDistance = objectPtr->GetPosition().x - objectB->GetPosition().x;
     const double yDistance = objectPtr->GetPosition().y - objectB->GetPosition().y;
     const double totalRadius = objectPtr->GetGOComponent<CircleCollision>()->GetRadius() + objectB->GetGOComponent<CircleCollision>()->GetRadius();
-	if(xDistance*xDistance + yDistance*yDistance <= totalRadius*totalRadius)
+	if(objectB->GetGOComponent<Collision>()->GetCollideType() == CollideType::Circle_Collide && xDistance*xDistance + yDistance*yDistance <= totalRadius*totalRadius)
 	{
         return true;
 	}
