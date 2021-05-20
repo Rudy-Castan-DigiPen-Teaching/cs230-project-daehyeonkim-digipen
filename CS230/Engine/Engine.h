@@ -19,7 +19,8 @@ Creation date: 2/10/2021
 #include <random>
 class Engine {
 public:
-	static Engine& Instance() {
+	static Engine& Instance()
+	{
         static Engine instance;
         return instance;
     }

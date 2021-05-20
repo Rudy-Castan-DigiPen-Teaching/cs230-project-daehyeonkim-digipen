@@ -2,30 +2,28 @@
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
-File Name: Bunny.h
+File Name: Exit.cpp
 Project: CS230
 Author: Daehyeon Kim
-Creation date: 04/19/2021
+Creation date: 5/17/2021
 -----------------------------------------------------------------*/
-#include "Bunny.h"
-
-#include "Bunny_Anims.h"
+#include "Exit.h"
+#include "Screens.h"
 #include "../Engine/Collision.h"
+#include "../Engine/Engine.h"
+#include "../Engine/Rect.h"
 
-Bunny::Bunny(math::vec2 pos) : GameObject(pos)
+Exit::Exit(math::irect2 rect) : GameObject(rect.point1)
 {
-	AddGOComponent(new CS230::Sprite("assets/bunny.spt", this));
-	GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Bunny_Anim::None_Anim));
-
+	AddGOComponent(new CS230::RectCollision({{ 0,0 }, rect.Size() }, this));
 }
 
-void Bunny::ResolveCollision(GameObject* objectA)
+void Exit::ResolveCollision(GameObject* objectA)
 {
 	switch(objectA->GetObjectType())
 	{
 	case GameObjectType::Hero:
-		RemoveGOComponent<CS230::Collision>();
-		GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Bunny_Anim::Dead_Anim));
+		Engine::GetGameStateManager().SetNextState(static_cast<int>(Screens::MainMenu));
 		break;
 	}
 }

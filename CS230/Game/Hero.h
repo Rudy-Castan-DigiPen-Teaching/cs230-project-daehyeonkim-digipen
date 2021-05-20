@@ -60,7 +60,7 @@ private:
 
 public:
     Hero(math::vec2 startPos);
-    //void Load();
+    bool IsDead() { return isDead; }
     void Update(double dt) override;
     math::vec2 GetPosition();
     GameObjectType GetObjectType() override { return GameObjectType::Hero; }
@@ -77,7 +77,8 @@ private:
     static constexpr math::vec2 x_accel{ 400, 0 };
     static constexpr math::vec2 x_max_speed{ 800, 0 };
     static constexpr math::vec2 jump_accel{ 0, 1000 };
-
+    bool isDead;
+    GameObject* standingOnObject;
     double hurtTimer;
     bool drawHero;
 };

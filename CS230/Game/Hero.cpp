@@ -13,6 +13,7 @@ Creation date: 03/16/2021
 #include "..\Engine\Engine.h"
 #include "..\Engine\Camera.h"
 #include "Hero_Anims.h"
+#include "Score.h"
 #include "../Engine/Collision.h"
 
 void Hero::UpdateXVelocity(double dt)
@@ -58,6 +59,10 @@ void Hero::State_Idle::Enter(GameObject* object)
 {
 	Hero* hero = static_cast<Hero*>(object);
 	hero->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Hero_Anim::Hero_Idle_Anim));
+	if(hero->standingOnObject == nullptr)
+	{
+		Engine::GetLogger().LogError("Error: Cannot read hero idle on where");
+	}
 }
 
 void Hero::State_Idle::Update([[maybe_unused]] GameObject* object, [[maybe_unused]] double dt)
@@ -70,7 +75,8 @@ void Hero::State_Idle::TestForExit(GameObject* object)
 	if(hero->moveLeftKey.IsKeyDown() == true || hero->moveRightKey.IsKeyDown() == true)
 	{
 		hero->ChangeState(&hero->stateRunning);
-	} else if(hero->jumpKey.IsKeyDown() == true)
+	}
+	else if(hero->jumpKey.IsKeyDown() == true)
 	{
 		hero->ChangeState(&hero->stateJumping);
 	}
@@ -88,6 +94,10 @@ void Hero::State_Running::Enter(GameObject* object)
 	{
 		hero->SetScale({ 1.0, 1.0 });
 	}
+	if (hero->standingOnObject == nullptr)
+	{
+		Engine::GetLogger().LogError("Error: Cannot read hero running on where");
+	}
 }
 
 void Hero::State_Running::Update(GameObject* object, double dt)
@@ -99,18 +109,24 @@ void Hero::State_Running::Update(GameObject* object, double dt)
 void Hero::State_Running::TestForExit(GameObject* object)
 {
 	Hero* hero = static_cast<Hero*>(object);
-	if (hero->GetVelocity().x == 0)
+	if (hero->standingOnObject != nullptr && hero->standingOnObject->DoesCollideWith(hero->GetPosition()) == false)
+	{
+		hero->ChangeState(&hero->stateFalling);
+		hero->standingOnObject = nullptr;
+	}
+	else if (hero->GetVelocity().x == 0)
 	{
 		hero->ChangeState(&hero->stateIdle);
 	}
-	if(hero->jumpKey.IsKeyDown() == true)
+	else if(hero->jumpKey.IsKeyDown() == true)
 	{
 		hero->ChangeState(&hero->stateJumping);
 	}
-	if((hero->moveLeftKey.IsKeyDown() == true && hero->GetVelocity().x > 0) || (hero->moveRightKey.IsKeyDown() == true && hero->GetVelocity().x < 0))
+	else if((hero->moveLeftKey.IsKeyDown() == true && hero->GetVelocity().x > 0) || (hero->moveRightKey.IsKeyDown() == true && hero->GetVelocity().x < 0))
 	{
 		hero->ChangeState(&hero->stateSkidding);
 	}
+
 }
 
 void Hero::State_Skidding::Enter(GameObject* object)
@@ -147,6 +163,7 @@ void Hero::State_Skidding::TestForExit(GameObject* object)
 
 void Hero::State_Jumping::Enter(GameObject* object) {
 	Hero* hero = static_cast<Hero*>(object);
+	hero->standingOnObject = nullptr;
 	hero->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Hero_Anim::Hero_Jump_Anim));
 	hero->SetVelocity({hero->GetVelocity().x, Hero::jump_accel.y});   //Set the velocity.y
 }
@@ -181,10 +198,13 @@ void Hero::State_Falling::Update(GameObject* object, double dt)
 void Hero::State_Falling::TestForExit(GameObject* object)
 {
 	Hero* hero = static_cast<Hero*>(object);
-	if (hero->GetPosition().y <= Level1::floor)
+	if(hero->GetPosition().y <= -300)
+	{
+		hero->isDead = true;
+	}
+	if (hero->standingOnObject != nullptr)
 	{
 		hero->SetVelocity({ hero->GetVelocity().x, 0 });
-		hero->SetPosition({hero->GetPosition().x,Level1::floor});
 		if(hero->GetVelocity().x > 0)
 		{
 			if (hero->moveLeftKey.IsKeyDown() == true)
@@ -214,11 +234,19 @@ void Hero::State_Falling::TestForExit(GameObject* object)
 	} 
 }
 
-Hero::Hero(math::vec2 startPos) : GameObject(startPos), moveLeftKey(CS230::InputKey::Keyboard::Left), moveRightKey(CS230::InputKey::Keyboard::Right), jumpKey(CS230::InputKey::Keyboard::Up), hurtTimer(0), drawHero(true)
+Hero::Hero(math::vec2 startPos) : GameObject(startPos), moveLeftKey(CS230::InputKey::Keyboard::Left), moveRightKey(CS230::InputKey::Keyboard::Right), jumpKey(CS230::InputKey::Keyboard::Up), hurtTimer(0), drawHero(true), isDead(false)
 {
 	AddGOComponent(new CS230::Sprite("assets/Hero.spt", this));
 	currState = &stateIdle;
 	currState->Enter(this);
+	for(GameObject* standingObj : Engine::GetGSComponent<CS230::GameObjectManager>()->Objects())
+	{
+		if(standingObj->GetObjectType() == GameObjectType::Floor && DoesCollideWith(standingObj) == true)
+		{
+			standingOnObject = standingObj;
+			SetPosition({ startPos.x, standingObj->GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect().Top() });
+		}
+	}
 }
 
 void Hero::Update(double dt)
@@ -264,24 +292,78 @@ void Hero::ResolveCollision(GameObject* objectB)
 {
 	math::rect2 collideRect = objectB->GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect();
 	math::rect2 heroRect = GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect();
-	if (heroRect.Center().x < collideRect.Center().x)
-	{
-		UpdatePosition({ -(heroRect.Right() - collideRect.Left()), 0 });
-	}
-	else
-	{
-		UpdatePosition({ -(heroRect.Left() - collideRect.Right()), 0 });
-	}
 	switch (objectB->GetObjectType())
 	{
 	case GameObjectType::Ball:
+		if (heroRect.Left() < collideRect.Right() || heroRect.Right() > collideRect.Left())
+		{
+			if (currState == &stateFalling)
+			{
+				SetVelocity({ GetVelocity().x, jump_accel.y });
+			}
+			else
+			{
+				if (heroRect.Center().x < collideRect.Center().x)
+				{
+					UpdatePosition({ -(heroRect.Right() - collideRect.Left()), 0 });
+				}
+				else
+				{
+					UpdatePosition({ -(heroRect.Left() - collideRect.Right()), 0 });
+				}
+				hurtTimer = hurtTime;
+				SetVelocity(-(GetVelocity().x / abs(GetVelocity().x)) * x_max_speed / 2 + jump_accel / 4);
+			}
+		}
+		break;
 	case GameObjectType::Bunny:
-		hurtTimer = hurtTime;
-		ChangeState(&stateFalling);
-		SetVelocity(-(GetVelocity().x / abs(GetVelocity().x)) * x_max_speed / 2 + jump_accel / 4);
+		if (heroRect.Left() < collideRect.Right() || heroRect.Right() > collideRect.Left())
+		{
+			if (currState == &stateSkidding || currState == &stateFalling)
+			{
+				SetVelocity({ GetVelocity().x, jump_accel.y/2 });
+				objectB->ResolveCollision(this);
+				Engine::GetGSComponent<Score>()->AddScore(100);
+			}
+			else
+			{
+				if (heroRect.Center().x < collideRect.Center().x)
+				{
+					UpdatePosition({ -(heroRect.Right() - collideRect.Left()), 0 });
+				}
+				else
+				{
+					UpdatePosition({ -(heroRect.Left() - collideRect.Right()), 0 });
+				}
+				hurtTimer = hurtTime;
+				SetVelocity(-(GetVelocity().x / abs(GetVelocity().x)) * x_max_speed / 2 + jump_accel / 4);
+			}
+		}
 		break;
 	case GameObjectType::TreeStump:
-		SetVelocity({ 0, GetVelocity().y });
+		[[fallthrough]];
+	case GameObjectType::Floor:
+		if (heroRect.Center().x < collideRect.Right() && heroRect.Center().x > collideRect.Left())
+		{
+			SetPosition({ GetPosition().x, collideRect.Top()});
+			standingOnObject = objectB;
+			currState->TestForExit(this);
+		}
+		else
+		{
+			if (heroRect.Center().x < collideRect.Center().x)
+			{
+				UpdatePosition({ -(heroRect.Right() - collideRect.Left()), 0 });
+			}
+			else
+			{
+				UpdatePosition({ -(heroRect.Left() - collideRect.Right()), 0 });
+			}
+			SetVelocity({ 0, GetVelocity().y });
+		}
+		break;
+	case GameObjectType::Trigger:
+		objectB->ResolveCollision(this);
 		break;
 	default: break;
 	}

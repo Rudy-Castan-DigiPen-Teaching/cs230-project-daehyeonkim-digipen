@@ -16,6 +16,6 @@ public:
 	Bunny(math::vec2 pos);
 	GameObjectType GetObjectType() override { return GameObjectType::Bunny; }
 	std::string GetObjectTypeName() override { return "Bunny"; }
-
+	void ResolveCollision(GameObject* objectA) override;
 private:
 };

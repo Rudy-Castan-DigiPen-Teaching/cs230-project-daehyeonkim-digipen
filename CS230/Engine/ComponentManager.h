@@ -29,7 +29,7 @@ namespace CS230 {
         template<typename T>
         T* GetComponent() {
             for (Component* component : components) {
-                T* ptr = dynamic_cast<T*>(component);
+                 T* ptr = dynamic_cast<T*>(component);
                 if (ptr != nullptr) {
                     return ptr;
                 }

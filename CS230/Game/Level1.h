@@ -16,7 +16,7 @@ Creation date: 03/08/2021
 
 class Level1 : public CS230::GameState {
 public:
-	static constexpr double floor = 126.0f;
+
 
 	Level1();
 	void Load() override;
@@ -31,7 +31,7 @@ private:
 	
 	CS230::InputKey mainMenu;
 	CS230::InputKey levelReload;
-
+	static constexpr double floor = 126.0f;
 	CS230::GameObjectManager* gameObjectManager;
 	Hero* heroPtr;
 };

@@ -43,10 +43,21 @@ void CS230::GameObjectManager::CollideTest()
 
 void CS230::GameObjectManager::Update(double dt)
 {
+	std::list<GameObject*> NeedToRemoved{};
 	for(GameObject* updatedObj : gameObjects)
 	{
 		updatedObj->Update(dt);
+		if(updatedObj->IsDestroyed() == true)
+		{
+			NeedToRemoved.push_back(updatedObj);
+		}
 	}
+	for(GameObject* removedObj : NeedToRemoved)
+	{
+		gameObjects.remove(removedObj);
+		delete removedObj;
+	}
+	NeedToRemoved.clear();
 }
 
 void CS230::GameObjectManager::DrawAll(math::TransformMatrix& cameraMatrix)

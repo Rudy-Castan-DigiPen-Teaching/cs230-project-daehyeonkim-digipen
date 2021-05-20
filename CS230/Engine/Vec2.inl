@@ -201,9 +201,9 @@ namespace math
 		return !is_equal(left.x, right.x) || !is_equal(left.y, right.y);
 	}
 
-	[[nodiscard]] constexpr ivec2::operator vec2() const noexcept
+	[[nodiscard]] constexpr ivec2::operator vec2()  noexcept
 	{
-		const vec2 returnVec = vec2(static_cast<double>(this->x), static_cast<double>(this->y));
+		vec2 returnVec = vec2(static_cast<double>(this->x), static_cast<double>(this->y));
 		return returnVec;
 	}
 }

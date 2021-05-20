@@ -16,7 +16,7 @@ CS230::GameObject::GameObject(math::vec2 position) : GameObject(position, 0, { 1
 
 CS230::GameObject::GameObject(math::vec2 position, double rotation, math::vec2 scale)
     : velocity{ 0,0 }, position(position), updateMatrix(true),
-    scale(scale), rotation(rotation), currState(&state_nothing)
+    scale(scale), rotation(rotation), currState(&state_nothing), destroyed(false)
 {
 
 }
@@ -36,7 +36,9 @@ void CS230::GameObject::Update(double dt) {
 }
 
 void CS230::GameObject::ChangeState(State* newState) {
-    currState = newState;
+    Engine::GetLogger().LogDebug(currState->GetName() + " -> " + newState->GetName());
+
+	currState = newState;
     currState->Enter(this);
 }
 
@@ -45,7 +47,7 @@ void CS230::GameObject::Draw(math::TransformMatrix displayMatrix) {
     if (spritePtr != nullptr) {
         spritePtr->Draw(displayMatrix * GetMatrix());
     }
-	if(Engine::GetGSComponent<ShowCollision>() != nullptr && Engine::GetGSComponent<ShowCollision>()->IsEnabled() == true)
+	if(GetGOComponent<Collision>() != nullptr && Engine::GetGSComponent<ShowCollision>() != nullptr && Engine::GetGSComponent<ShowCollision>()->IsEnabled() == true)
 	{
         GetGOComponent<Collision>()->Draw(displayMatrix);
 	}
@@ -102,10 +104,19 @@ void CS230::GameObject::ResolveCollision(GameObject*)
 
 bool CS230::GameObject::DoesCollideWith(GameObject* objectB)
 {
-	if(GetGOComponent<Collision>() != nullptr && objectB->GetGOComponent<Collision>() != nullptr && CanCollideWith(objectB->GetObjectType()) == true)
+	if(GetGOComponent<Collision>() != nullptr && objectB->GetGOComponent<Collision>() != nullptr&& CanCollideWith(objectB->GetObjectType()) == true)
 	{
         return GetGOComponent<Collision>()->DoesCollideWith(objectB);
 	}
+    return false;
+}
+
+bool CS230::GameObject::DoesCollideWith(math::vec2 point)
+{
+    if (GetGOComponent<Collision>() != nullptr)
+    {
+        return GetGOComponent<Collision>()->DoesCollideWith(point);
+    }
     return false;
 }
 

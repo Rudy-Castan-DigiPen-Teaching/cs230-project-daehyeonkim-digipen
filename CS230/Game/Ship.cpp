@@ -10,13 +10,15 @@ Creation date: 3/17/2021
 #include "Ship.h"
 #include "..\Engine\Engine.h"
 #include "Flame_Anims.h"
+#include "Laser.h"
 #include "ScreenWarp.h"
 #include "Ship_Anims.h"
 #include "../Engine/Collision.h"
+#include "../Engine/GameObjectManager.h"
 #include "../Engine/ShowCollision.h"
 
 
-Ship::Ship(math::vec2 startPos) : GameObject(startPos), wasAccel(false), isDead(false), rotateCounterKey(CS230::InputKey::Keyboard::A), rotateClockKey(CS230::InputKey::Keyboard::D), accelerateKey(CS230::InputKey::Keyboard::W), flameSpriteL("assets/Flame.spt", this), flameSpriteR("assets/Flame.spt", this)
+Ship::Ship(math::vec2 startPos) : GameObject(startPos), wasAccel(false), isDead(false), rotateCounterKey(CS230::InputKey::Keyboard::A), rotateClockKey(CS230::InputKey::Keyboard::D), accelerateKey(CS230::InputKey::Keyboard::W), shootingKey(CS230::InputKey::Keyboard::Space), flameSpriteL("assets/Flame.spt", this), flameSpriteR("assets/Flame.spt", this)
 {
 	AddGOComponent(new CS230::Sprite("assets/Ship.spt", this));
 	AddGOComponent(new ScreenWrap(*this));
@@ -26,6 +28,7 @@ Ship::Ship(math::vec2 startPos) : GameObject(startPos), wasAccel(false), isDead(
 
 void Ship::Update(double dt)
 {
+	SetScale({ 0.75, 0.75 });
 	if(isDead == false)
 	{
 		constexpr double rotateSpeed = 3.14;
@@ -56,10 +59,14 @@ void Ship::Update(double dt)
 				wasAccel = false;
 			}
 		}
+		if (shootingKey.IsKeyReleased() == true)
+		{
+			Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Laser(GetMatrix() * GetGOComponent<CS230::Sprite>()->GetHotSpot(3), GetRotation(), GetScale(), Laser::LaserVelocity));
+			Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Laser(GetMatrix() * GetGOComponent<CS230::Sprite>()->GetHotSpot(4), GetRotation(), GetScale(), Laser::LaserVelocity));
+		}
 	}
 	UpdateVelocity(-GetVelocity()*drag*dt);
 	UpdatePosition(GetVelocity() * dt);
-	SetScale({ 0.75, 0.75 });
 	flameSpriteL.Update(dt);
 	flameSpriteR.Update(dt);
 	UpdateGOComponents(dt);

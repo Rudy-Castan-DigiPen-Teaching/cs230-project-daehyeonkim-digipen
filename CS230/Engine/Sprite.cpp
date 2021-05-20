@@ -121,6 +121,11 @@ math::ivec2 CS230::Sprite::GetFrameSize() const
 	return frameSize;
 }
 
+int CS230::Sprite::GetCurrAnim()
+{
+	return currAnim;
+}
+
 void CS230::Sprite::PlayAnimation(int anim)
 {
 	if(static_cast<size_t>(anim) >= animations.size())

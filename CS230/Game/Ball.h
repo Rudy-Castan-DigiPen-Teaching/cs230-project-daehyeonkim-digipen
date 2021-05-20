@@ -36,6 +36,8 @@ public:
     Ball(math::vec2 startPos);
     GameObjectType GetObjectType() override { return GameObjectType::Ball; }
     std::string GetObjectTypeName() override { return "Ball"; }
+    bool CanCollideWith(GameObjectType objectBType) override;
+    void ResolveCollision(GameObject* objectB) override;
 
 private:
     static constexpr int ballCenterX = 44;

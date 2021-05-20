@@ -46,8 +46,18 @@ math::rect2 CS230::RectCollision::GetWorldCoorRect()
 
 bool CS230::RectCollision::DoesCollideWith(GameObject* objectB)
 {
-    if(objectB->GetGOComponent<Collision>()->GetCollideType() == CollideType::Rect_Collide && GetWorldCoorRect().Left() <= objectB->GetGOComponent<RectCollision>()->GetWorldCoorRect().Right() && GetWorldCoorRect().Right() >= objectB->GetGOComponent<RectCollision>()->GetWorldCoorRect().Left() &&
-        GetWorldCoorRect().Bottom() <= objectB->GetGOComponent<RectCollision>()->GetWorldCoorRect().Top() && GetWorldCoorRect().Top() >= objectB->GetGOComponent<RectCollision>()->GetWorldCoorRect().Bottom())
+    if(objectB->GetGOComponent<Collision>()->GetCollideType() == CollideType::Rect_Collide && GetWorldCoorRect().Left() < objectB->GetGOComponent<RectCollision>()->GetWorldCoorRect().Right() && GetWorldCoorRect().Right() > objectB->GetGOComponent<RectCollision>()->GetWorldCoorRect().Left() &&
+        GetWorldCoorRect().Bottom() < objectB->GetGOComponent<RectCollision>()->GetWorldCoorRect().Top() && GetWorldCoorRect().Top() > objectB->GetGOComponent<RectCollision>()->GetWorldCoorRect().Bottom())
+    {
+        return true;
+    }
+    return false;
+}
+
+bool CS230::RectCollision::DoesCollideWith(math::vec2 point)
+{
+    if (GetWorldCoorRect().Left() <= point.x && GetWorldCoorRect().Right() >= point.x &&
+        GetWorldCoorRect().Bottom() <= point.y && GetWorldCoorRect().Top() >= point.y)
     {
         return true;
     }
@@ -68,5 +78,16 @@ bool CS230::CircleCollision::DoesCollideWith(GameObject* objectB)
 	{
         return true;
 	}
+    return false;
+}
+
+bool CS230::CircleCollision::DoesCollideWith(math::vec2 point)
+{
+    const double xDistance = objectPtr->GetPosition().x - point.x;
+    const double yDistance = objectPtr->GetPosition().y - point.y;
+    if (xDistance * xDistance + yDistance * yDistance <= radius * radius)
+    {
+        return true;
+    }
     return false;
 }

@@ -40,6 +40,8 @@ namespace CS230 {
 		virtual bool CanCollideWith(GameObjectType objectBType);
 		virtual void ResolveCollision(GameObject*);
 		bool DoesCollideWith(GameObject* objectB);
+		bool DoesCollideWith(math::vec2 point);
+		bool IsDestroyed() const { return destroyed; }
 	protected:
 		void AddGOComponent(Component* component) { components.AddComponent(component); }
 		void UpdateGOComponents(double dt) { components.UpdateAll(dt); }
@@ -72,10 +74,11 @@ namespace CS230 {
 		State_Nothing state_nothing;
 		void ChangeState(State* newState);
 		State* currState;
+		bool destroyed;
+
 	private:
 		math::TransformMatrix objectMatrix;
 		bool updateMatrix;
-
 		double rotation;
 		math::vec2 scale;
 		math::vec2 position;

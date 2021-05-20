@@ -28,6 +28,7 @@ namespace CS230 {
         virtual void Draw(math::TransformMatrix cameraMatrix) = 0;
         virtual CollideType GetCollideType() = 0;
         virtual bool DoesCollideWith(GameObject* objectB) = 0;
+        virtual bool DoesCollideWith(math::vec2 point) = 0;
     };
 
     class RectCollision : public Collision {
@@ -37,6 +38,7 @@ namespace CS230 {
         CollideType GetCollideType() override { return Collision::CollideType::Rect_Collide; };
         math::rect2 GetWorldCoorRect();
         bool DoesCollideWith(GameObject* objectB) override;
+        virtual bool DoesCollideWith(math::vec2 point);
     private:
         GameObject* objectPtr;
         math::irect2 rect;
@@ -49,7 +51,7 @@ namespace CS230 {
         CollideType GetCollideType() override { return Collision::CollideType::Circle_Collide; };
         double GetRadius();
         bool DoesCollideWith(GameObject* objectB) override;
-
+        virtual bool DoesCollideWith(math::vec2 point);
     private:
         GameObject* objectPtr;
         double radius;

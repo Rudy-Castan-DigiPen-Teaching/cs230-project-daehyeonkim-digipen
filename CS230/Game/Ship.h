@@ -30,6 +30,7 @@ private:
     CS230::InputKey rotateCounterKey;
     CS230::InputKey rotateClockKey;
     CS230::InputKey accelerateKey;
+    CS230::InputKey shootingKey;
 
     static constexpr math::vec2 accel{ 0, 400 };
     static constexpr double drag = 1.0f;

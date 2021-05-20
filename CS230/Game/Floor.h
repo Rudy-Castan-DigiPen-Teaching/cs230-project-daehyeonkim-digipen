@@ -2,24 +2,23 @@
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
-File Name: Meteor.h
+File Name: Floor.h
 Project: CS230
 Author: Kevin Wright
-Creation date: 2/15/2021
+Creation date: 2/19/2021
 -----------------------------------------------------------------*/
 #pragma once
-#include "GameObjectTypes.h"
-#include "..\Engine\GameObject.h"
 
-class Meteor : public CS230::GameObject {
+#include "..\Engine\GameObject.h"
+#include "GameObjectTypes.h"
+namespace math {
+    struct irect2;
+}
+
+class Floor : public CS230::GameObject {
 public:
-	Meteor();
-	Meteor(Meteor& original);
-	void Update(double dt) override;
-	GameObjectType GetObjectType() override { return GameObjectType::Meteor; }
-	std::string GetObjectTypeName() override { return "Meteor"; }
-	void ResolveCollision(GameObject* objectB) override;
+    Floor(math::irect2 rect);
+    std::string GetObjectTypeName() override { return "Floor"; }
+    virtual GameObjectType GetObjectType() override { return GameObjectType::Floor; }
 private:
-	int health;
-	int size;
 };

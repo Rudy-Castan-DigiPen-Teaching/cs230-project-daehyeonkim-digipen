@@ -7,5 +7,8 @@ enum class GameObjectType {
     TreeStump,
     Meteor,
     Ship,
-    Count,
+    Floor,
+    Trigger,
+    Laser,
+    Count
 };

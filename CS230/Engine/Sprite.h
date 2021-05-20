@@ -28,6 +28,7 @@ namespace CS230 {
         void Draw(math::TransformMatrix displayMatrix);
         math::ivec2 GetHotSpot(int index);
         math::ivec2 GetFrameSize() const;
+        int GetCurrAnim();
         void PlayAnimation(int anim);
         void Update(double dt) override;
         bool IsAnimationDone();

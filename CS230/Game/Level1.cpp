@@ -12,6 +12,8 @@ Creation date: 03/08/2021
 #include "Level1.h"
 #include "Ball.h"
 #include "Bunny.h"
+#include "Exit.h"
+#include "Floor.h"
 #include "Fonts.h"
 #include "Gravity.h"
 #include "Score.h"
@@ -36,8 +38,6 @@ void Level1::Load() {
 	AddGSComponent(new Gravity(2000));
 	std::string livesString = "Lives: " + std::to_string(lives);
 	livesTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)).DrawTextToTexture(livesString, 0xFFFFFFFF, true);
-	heroPtr = new Hero({ 150, Level1::floor });
-	gameObjectManager->Add(heroPtr);
 	gameObjectManager->Add(new Ball({ 600, Level1::floor }));
 	gameObjectManager->Add(new Ball({ 2700, Level1::floor }));
 	gameObjectManager->Add(new Ball({ 4800, Level1::floor }));
@@ -50,6 +50,12 @@ void Level1::Load() {
 	gameObjectManager->Add(new TreeStump({ 2200, Level1::floor }, 1));
 	gameObjectManager->Add(new TreeStump({ 2800, Level1::floor }, 5));
 	gameObjectManager->Add(new TreeStump({ 5100, Level1::floor }, 5));
+	gameObjectManager->Add(new Floor({ {0, 0}, {1471, static_cast<int>(Level1::floor)} }));
+	gameObjectManager->Add(new Floor({ {1602, 0}, {4262, static_cast<int>(Level1::floor)} }));
+	gameObjectManager->Add(new Floor({ {4551, 0}, {5760, static_cast<int>(Level1::floor)} }));
+	gameObjectManager->Add(new Exit({ {5550, static_cast<int>(Level1::floor)}, {5760, 683} }));
+	heroPtr = new Hero({ 100, Level1::floor - 1 });
+	gameObjectManager->Add(heroPtr);
 
 	GetGSComponent<Background>()->Add("assets/clouds.png", 4);
 	GetGSComponent<Background>()->Add("assets/mountains.png", 2);
@@ -59,7 +65,7 @@ void Level1::Load() {
 	cameraPtr->SetExtent({ { 0,0 }, { GetGSComponent<Background>()->Size() - Engine::GetWindow().GetSize() } });
 }
 void Level1::Update(double dt) {
-	if(GetGSComponent<Timer>()->hasEnded() == true)
+	if(GetGSComponent<Timer>()->hasEnded() == true || heroPtr->IsDead() == true)
 	{
 		lives--;
 		if(lives == 0)

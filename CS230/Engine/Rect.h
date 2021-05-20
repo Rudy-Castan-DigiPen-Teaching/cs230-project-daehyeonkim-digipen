@@ -34,5 +34,6 @@ namespace math
 		constexpr int Right() const noexcept { return std::max(point1.x, point2.x); }    // if the rect was flipped, then bottomLeft.x > topRight.x
 		constexpr int Top() const noexcept { return std::max(point1.y, point2.y); }   // if the rect uses top left as {0, 0} or was flipped in the y direction
 		constexpr int Bottom() const noexcept { return std::min(point1.y, point2.y); }   // if the rect uses top left as {0, 0} or was flipped in the y direction
+		constexpr math::ivec2 Center() { return { (Right() + Left()) / 2, (Top() + Bottom()) / 2 }; }
 	};
 }

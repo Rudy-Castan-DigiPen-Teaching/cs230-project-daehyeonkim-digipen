@@ -21,7 +21,7 @@ Creation date: 2/10/2021
 int main(void) {
 	try {
 		Engine& engine = Engine::Instance();
-		engine.Init("Week 10");
+		engine.Init("Week 11");
 		Splash splash;
 		MainMenu mainmenu;
 		Level1 level1;
