@@ -68,11 +68,11 @@ void Meteor::ResolveCollision(GameObject* objectB)
 		{
 			if(size != 3)
 			{
- 				constexpr double offsetAngle = 3.141592 / 6.0;
+ 				constexpr double PI_devide_6 = 3.141592 / 6.0;
 				Meteor* smallMeteor1 = new Meteor{ *this };
-				smallMeteor1->SetVelocity(math::RotateMatrix(offsetAngle) * GetVelocity());
+				smallMeteor1->SetVelocity(math::RotateMatrix(PI_devide_6) * GetVelocity());
 				Meteor* smallMeteor2 = new Meteor{ *this };
-				smallMeteor2->SetVelocity(math::RotateMatrix(-offsetAngle) * GetVelocity());
+				smallMeteor2->SetVelocity(math::RotateMatrix(-PI_devide_6) * GetVelocity());
 				Engine::GetGSComponent<CS230::GameObjectManager>()->Add(smallMeteor1);
 				Engine::GetGSComponent<CS230::GameObjectManager>()->Add(smallMeteor2);
 			}
