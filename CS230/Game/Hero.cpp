@@ -321,7 +321,10 @@ void Hero::ResolveCollision(GameObject* objectB)
 		{
 			if (currState == &stateSkidding || currState == &stateFalling)
 			{
-				SetVelocity({ GetVelocity().x, jump_accel.y/2 });
+				if(currState == &stateFalling)
+				{
+					SetVelocity({ GetVelocity().x, jump_accel.y / 2 });
+				}
 				objectB->ResolveCollision(this);
 				Engine::GetGSComponent<Score>()->AddScore(100);
 			}
