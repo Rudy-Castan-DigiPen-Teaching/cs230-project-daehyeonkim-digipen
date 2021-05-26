@@ -31,7 +31,7 @@ void Ship::Update(double dt)
 	SetScale({ 0.75, 0.75 });
 	if(isDead == false)
 	{
-		constexpr double rotateSpeed = 3.14;
+		constexpr double rotateSpeed = 3.14159;
 		if (rotateCounterKey.IsKeyDown() == true)
 		{
 			UpdateRotation(rotateSpeed * dt);
@@ -77,20 +77,29 @@ void Ship::Draw(math::TransformMatrix cameraMatrix)
 	flameSpriteL.Draw(GetMatrix() * math::TranslateMatrix(GetGOComponent<CS230::Sprite>()->GetHotSpot(1)));
 	flameSpriteR.Draw(GetMatrix() * math::TranslateMatrix(GetGOComponent<CS230::Sprite>()->GetHotSpot(2)));
 	GetGOComponent<CS230::Sprite>()->Draw(GetMatrix());
-	if (Engine::GetGSComponent<ShowCollision>() != nullptr && Engine::GetGSComponent<ShowCollision>()->IsEnabled() == true)
+	if (Engine::GetGSComponent<ShowCollision>() != nullptr && GetGOComponent<CS230::Collision>() != nullptr && Engine::GetGSComponent<ShowCollision>()->IsEnabled() == true)
 	{
  		GetGOComponent<CS230::Collision>()->Draw(cameraMatrix);
 	}
+}
+
+bool Ship::CanCollideWith(GameObjectType objectBType)
+{
+	return objectBType == GameObjectType::Particle ? false : true;
 }
 
 void Ship::ResolveCollision(CS230::GameObject* objectB)
 {
 	switch (objectB->GetObjectType())
 	{
+	case GameObjectType::EnemyShip:
+		[[fallthrough]];
 	case GameObjectType::Meteor:
 		GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Ship_Anim::Explode_Anim));
 		RemoveGOComponent<CS230::Collision>();
 		isDead = true;
+		flameSpriteL.PlayAnimation(static_cast<int>(Flame_Anim::None_Anim));
+		flameSpriteR.PlayAnimation(static_cast<int>(Flame_Anim::None_Anim));
 		break;
 	}
 }

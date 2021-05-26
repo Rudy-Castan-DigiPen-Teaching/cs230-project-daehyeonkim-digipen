@@ -16,8 +16,6 @@ Creation date: 03/08/2021
 
 class Level1 : public CS230::GameState {
 public:
-
-
 	Level1();
 	void Load() override;
 	void Update(double dt) override;

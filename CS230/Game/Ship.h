@@ -19,7 +19,7 @@ public:
     void Draw(math::TransformMatrix cameraMatrix) override;
     GameObjectType GetObjectType() override { return GameObjectType::Ship; }
     std::string GetObjectTypeName() override { return "Ship"; }
-    bool CanCollideWith(GameObjectType) override { return true; }
+    bool CanCollideWith(GameObjectType) override;
     bool IsDead() { return isDead; }
     void ResolveCollision(CS230::GameObject* objectB) override;
 private:

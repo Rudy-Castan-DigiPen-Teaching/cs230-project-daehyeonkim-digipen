@@ -1,6 +1,7 @@
 #pragma once
 
 enum class Bunny_Anim {
-    None_Anim,
+    Walk_Anim,
     Dead_Anim,
+    Attack_Anim
 };

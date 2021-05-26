@@ -19,6 +19,7 @@ namespace CS230 {
 	class GameObject {
 		friend class Sprite;
 	public:
+		GameObject();
 		GameObject(math::vec2 position);
 		GameObject(math::vec2 position, double rotation, math::vec2 scale);
 		virtual ~GameObject();

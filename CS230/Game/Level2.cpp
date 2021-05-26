@@ -10,7 +10,9 @@ Creation date: 03/08/2021
 #include "../Engine/Engine.h"	//GetGameStateManager
 #include "Screens.h"
 #include "Level2.h"
+#include "EnemyShip.h"
 #include "Fonts.h"
+#include "GameParticles.h"
 #include "Meteor.h"
 #include "Score.h"
 #include "../Engine/ShowCollision.h"
@@ -32,6 +34,9 @@ void Level2::Load() {
 	gameObjectManager->Add(new Meteor());
 	shipPtr = new Ship({ Engine::GetWindow().GetSize() / 2.0 });
 	gameObjectManager->Add(shipPtr);
+	gameObjectManager->Add(new EnemyShip(shipPtr));
+	AddGSComponent(new MeteorBitEmitter());
+	AddGSComponent(new HitEmitter());
 	GameOverTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font2)).DrawTextToTexture("Game Ove", 0xFFFFFFFF, false);
 	RestartTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font2)).DrawTextToTexture("Press r to restart", 0xFFFFFFFF, false);
 

@@ -19,6 +19,7 @@ public:
 	GameObjectType GetObjectType() override { return GameObjectType::Meteor; }
 	std::string GetObjectTypeName() override { return "Meteor"; }
 	void ResolveCollision(GameObject* objectB) override;
+	static constexpr double PI = 3.141592;
 private:
 	int health;
 	int size;

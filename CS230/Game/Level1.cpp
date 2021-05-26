@@ -15,6 +15,7 @@ Creation date: 03/08/2021
 #include "Exit.h"
 #include "Floor.h"
 #include "Fonts.h"
+#include "GameParticles.h"
 #include "Gravity.h"
 #include "Score.h"
 #include "Timer.h"
@@ -41,10 +42,6 @@ void Level1::Load() {
 	gameObjectManager->Add(new Ball({ 600, Level1::floor }));
 	gameObjectManager->Add(new Ball({ 2700, Level1::floor }));
 	gameObjectManager->Add(new Ball({ 4800, Level1::floor }));
-	gameObjectManager->Add(new Bunny({ 1000, Level1::floor }));
-	gameObjectManager->Add(new Bunny({ 2000, Level1::floor }));
-	gameObjectManager->Add(new Bunny({ 3200, Level1::floor }));
-	gameObjectManager->Add(new Bunny({ 3800, Level1::floor }));
 	gameObjectManager->Add(new TreeStump({ 300, Level1::floor }, 3));
 	gameObjectManager->Add(new TreeStump({ 1200, Level1::floor }, 2));
 	gameObjectManager->Add(new TreeStump({ 2200, Level1::floor }, 1));
@@ -55,8 +52,12 @@ void Level1::Load() {
 	gameObjectManager->Add(new Floor({ {4551, 0}, {5760, static_cast<int>(Level1::floor)} }));
 	gameObjectManager->Add(new Exit({ {5550, static_cast<int>(Level1::floor)}, {5760, 683} }));
 	heroPtr = new Hero({ 100, Level1::floor - 1 });
+	gameObjectManager->Add(new Bunny({ 1000, floor }, { 674, 1132 }, heroPtr));
+	gameObjectManager->Add(new Bunny({ 2000, floor }, { 1635, 2135 }, heroPtr));
+	gameObjectManager->Add(new Bunny({ 3200, floor }, { 2860, 4250 }, heroPtr));
+	gameObjectManager->Add(new Bunny({ 3800, floor }, { 2860, 4250 }, heroPtr));
 	gameObjectManager->Add(heroPtr);
-
+	AddGSComponent(new SmokeEmitter());
 	GetGSComponent<Background>()->Add("assets/clouds.png", 4);
 	GetGSComponent<Background>()->Add("assets/mountains.png", 2);
 	GetGSComponent<Background>()->Add("assets/foreground.png", 1);

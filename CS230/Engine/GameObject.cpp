@@ -12,6 +12,10 @@ Creation date: 4/19/2021
 #include "Engine.h"
 #include "ShowCollision.h"
 
+CS230::GameObject::GameObject() : GameObject({0,0})
+{
+}
+
 CS230::GameObject::GameObject(math::vec2 position) : GameObject(position, 0, { 1, 1 }) {}
 
 CS230::GameObject::GameObject(math::vec2 position, double rotation, math::vec2 scale)

@@ -104,6 +104,11 @@ namespace math
 		return vec2(*this / sqrt(LengthSquared()));
 	}
 
+	constexpr double vec2::Cross(const vec2& v) const noexcept
+	{
+		return x * v.y - y * v.x;
+	}
+	
 	[[nodiscard]] constexpr ivec2 operator+(const ivec2 left, const ivec2 right) noexcept
 	{
 		const int returnX = left.x + right.x;

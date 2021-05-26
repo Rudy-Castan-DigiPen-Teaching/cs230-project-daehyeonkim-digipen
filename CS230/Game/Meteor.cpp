@@ -8,6 +8,8 @@ Author: Daehyeon Kim
 Creation date: 4/19/2021
 -----------------------------------------------------------------*/
 #include "Meteor.h"
+
+#include "GameParticles.h"
 #include "Meteor_Anims.h"
 #include "Score.h"
 #include "ScreenWarp.h"
@@ -17,7 +19,6 @@ Creation date: 4/19/2021
 
 Meteor::Meteor() : GameObject({ 0,0 }), health(100), size(1)
 {
-	constexpr double PI = 3.141592;
 	AddGOComponent(new CS230::Sprite("assets/Meteor.spt", this));
 	AddGOComponent(new ScreenWrap(*this));
 	GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Meteor_Anim::None_Anim));
@@ -30,7 +31,7 @@ Meteor::Meteor() : GameObject({ 0,0 }), health(100), size(1)
 
 Meteor::Meteor(Meteor& original) : GameObject(original.GetPosition()), size(original.size), health(100)
 {
-	constexpr double PI = 3.141592;
+	
 	AddGOComponent(new CS230::Sprite("assets/Meteor.spt", this));
 	AddGOComponent(new ScreenWrap(*this));
 	GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Meteor_Anim::None_Anim));
@@ -64,15 +65,20 @@ void Meteor::ResolveCollision(GameObject* objectB)
 	{
 	case GameObjectType::Laser:
 		health -= 10;
+		math::vec2 vectorToObject = objectB->GetPosition() - GetPosition();
+		math::vec2 collisionSpot = GetPosition() + (vectorToObject.Normalize() * GetGOComponent<CS230::CircleCollision>()->GetRadius());
+		Engine::GetGSComponent<HitEmitter>()->Emit(1, collisionSpot, GetVelocity(), { 0,0 }, 0);
+		Engine::GetGSComponent<MeteorBitEmitter>()->Emit(10, collisionSpot, GetVelocity(),  math::ScaleMatrix({ 50,50 }) * (vectorToObject.Normalize() * 2 + GetVelocity().Normalize()), PI / 2);
+
 		if(health == 0)
 		{
 			if(size != 3)
 			{
- 				constexpr double PI_devide_6 = 3.141592 / 6.0;
+ 				constexpr double offsetAngle = PI / 6.0;
 				Meteor* smallMeteor1 = new Meteor{ *this };
-				smallMeteor1->SetVelocity(math::RotateMatrix(PI_devide_6) * GetVelocity());
+				smallMeteor1->SetVelocity(math::RotateMatrix(offsetAngle) * GetVelocity());
 				Meteor* smallMeteor2 = new Meteor{ *this };
-				smallMeteor2->SetVelocity(math::RotateMatrix(-PI_devide_6) * GetVelocity());
+				smallMeteor2->SetVelocity(math::RotateMatrix(-offsetAngle) * GetVelocity());
 				Engine::GetGSComponent<CS230::GameObjectManager>()->Add(smallMeteor1);
 				Engine::GetGSComponent<CS230::GameObjectManager>()->Add(smallMeteor2);
 			}

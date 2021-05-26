@@ -30,7 +30,7 @@ void Laser::Update(double dt)
 
 bool Laser::CanCollideWith(GameObjectType objectBType)
 {
-	if(objectBType == GameObjectType::Meteor)
+	if(objectBType == GameObjectType::Meteor || objectBType == GameObjectType::EnemyShip)
 	{
 		return true;
 	}

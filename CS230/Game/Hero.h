@@ -65,7 +65,7 @@ public:
     math::vec2 GetPosition();
     GameObjectType GetObjectType() override { return GameObjectType::Hero; }
     std::string GetObjectTypeName() override { return "Hero"; }
-    bool CanCollideWith(GameObjectType) override { return true; }
+    bool CanCollideWith(GameObjectType) override;
     void Draw(math::TransformMatrix displayMatrix);
     void ResolveCollision(GameObject* objectB) override;
 private:

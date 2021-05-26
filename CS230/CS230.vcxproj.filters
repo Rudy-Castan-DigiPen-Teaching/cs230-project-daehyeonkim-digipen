@@ -112,6 +112,15 @@
     <ClCompile Include="Game\Laser.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\ParticleEmitter.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameParticles.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\EnemyShip.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Engine.h">
@@ -256,6 +265,15 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\Meteor_Anims.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ParticleEmitter.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameParticles.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\EnemyShip.h">
       <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
