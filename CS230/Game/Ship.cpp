@@ -77,7 +77,7 @@ void Ship::Draw(math::TransformMatrix cameraMatrix)
 	flameSpriteL.Draw(GetMatrix() * math::TranslateMatrix(GetGOComponent<CS230::Sprite>()->GetHotSpot(1)));
 	flameSpriteR.Draw(GetMatrix() * math::TranslateMatrix(GetGOComponent<CS230::Sprite>()->GetHotSpot(2)));
 	GetGOComponent<CS230::Sprite>()->Draw(GetMatrix());
-	if (Engine::GetGSComponent<ShowCollision>() != nullptr && Engine::GetGSComponent<ShowCollision>()->IsEnabled() == true)
+	if (GetGOComponent<CS230::Collision>() != nullptr && Engine::GetGSComponent<ShowCollision>() != nullptr && Engine::GetGSComponent<ShowCollision>()->IsEnabled() == true)
 	{
  		GetGOComponent<CS230::Collision>()->Draw(cameraMatrix);
 	}

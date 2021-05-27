@@ -234,7 +234,7 @@ void Hero::State_Falling::TestForExit(GameObject* object)
 	} 
 }
 
-Hero::Hero(math::vec2 startPos) : GameObject(startPos), moveLeftKey(CS230::InputKey::Keyboard::Left), moveRightKey(CS230::InputKey::Keyboard::Right), jumpKey(CS230::InputKey::Keyboard::Up), hurtTimer(0), drawHero(true), isDead(false)
+Hero::Hero(math::vec2 startPos) : GameObject(startPos), standingOnObject(nullptr),moveLeftKey(CS230::InputKey::Keyboard::Left), moveRightKey(CS230::InputKey::Keyboard::Right), jumpKey(CS230::InputKey::Keyboard::Up), hurtTimer(0), drawHero(true), isDead(false)
 {
 	AddGOComponent(new CS230::Sprite("assets/Hero.spt", this));
 	currState = &stateIdle;
@@ -297,8 +297,9 @@ void Hero::ResolveCollision(GameObject* objectB)
 	case GameObjectType::Ball:
 		if (heroRect.Left() < collideRect.Right() || heroRect.Right() > collideRect.Left())
 		{
-			if (currState == &stateFalling)
+			if (currState == &stateFalling && heroRect.Bottom() > collideRect.Center().y)
 			{
+				SetPosition({ GetPosition().x, collideRect.Top() });
 				SetVelocity({ GetVelocity().x, jump_accel.y });
 			}
 			else
@@ -319,14 +320,15 @@ void Hero::ResolveCollision(GameObject* objectB)
 	case GameObjectType::Bunny:
 		if (heroRect.Left() < collideRect.Right() || heroRect.Right() > collideRect.Left())
 		{
-			if (currState == &stateSkidding || currState == &stateFalling)
+			if (currState == &stateSkidding)
 			{
-				if(currState == &stateFalling)
-				{
-					SetVelocity({ GetVelocity().x, jump_accel.y / 2 });
-				}
 				objectB->ResolveCollision(this);
-				Engine::GetGSComponent<Score>()->AddScore(100);
+			}
+			else if (currState == &stateFalling && heroRect.Bottom() > collideRect.Center().y)
+			{
+				SetPosition({ GetPosition().x, collideRect.Top() });
+				SetVelocity({ GetVelocity().x, jump_accel.y / 2 });
+				objectB->ResolveCollision(this);
 			}
 			else
 			{
@@ -346,7 +348,7 @@ void Hero::ResolveCollision(GameObject* objectB)
 	case GameObjectType::TreeStump:
 		[[fallthrough]];
 	case GameObjectType::Floor:
-		if (heroRect.Center().x < collideRect.Right() && heroRect.Center().x > collideRect.Left())
+		if (GetPosition().x < collideRect.Right() && GetPosition().x > collideRect.Left() && objectB->DoesCollideWith(GetPosition()))
 		{
 			SetPosition({ GetPosition().x, collideRect.Top()});
 			standingOnObject = objectB;

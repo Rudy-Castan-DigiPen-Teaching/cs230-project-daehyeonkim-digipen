@@ -8,9 +8,10 @@ Author: Daehyeon Kim
 Creation date: 04/19/2021
 -----------------------------------------------------------------*/
 #include "Bunny.h"
-
 #include "Bunny_Anims.h"
+#include "Score.h"
 #include "../Engine/Collision.h"
+#include "../Engine/Engine.h"
 
 Bunny::Bunny(math::vec2 pos) : GameObject(pos)
 {
@@ -26,6 +27,7 @@ void Bunny::ResolveCollision(GameObject* objectA)
 	case GameObjectType::Hero:
 		RemoveGOComponent<CS230::Collision>();
 		GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Bunny_Anim::Dead_Anim));
+		Engine::GetGSComponent<Score>()->AddScore(100);
 		break;
 	}
 }
