@@ -10,7 +10,9 @@ Creation date: 04/19/2021
 #include "Bunny.h"
 #include "Bunny_Anims.h"
 #include "Hero.h"
+#include "Score.h"
 #include "../Engine/Collision.h"
+#include "../Engine/Engine.h"
 
 Bunny::Bunny(math::vec2 pos, std::vector<double> patrolNodes, Hero* heroPtr) : GameObject(pos), patrolNodes(patrolNodes), heroPtr(heroPtr), currPatrolNode(0)
 {
@@ -95,6 +97,8 @@ void Bunny::State_Dead::Enter(GameObject* object)
 	bunny->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Bunny_Anim::Dead_Anim));
 	bunny->RemoveGOComponent<CS230::Collision>();
 	bunny->SetVelocity({ 0,0 });
+	Engine::GetGSComponent<Score>()->AddScore(100);
+
 }
 
 void Bunny::State_Dead::Update(GameObject*, double)

@@ -304,7 +304,7 @@ void Hero::ResolveCollision(GameObject* objectB)
 	case GameObjectType::Ball:
 		if (heroRect.Left() < collideRect.Right() || heroRect.Right() > collideRect.Left())
 		{
-			if (currState == &stateFalling)
+			if (currState == &stateFalling && heroRect.Bottom() > collideRect.Center().y)
 			{
 				SetVelocity({ GetVelocity().x, jump_accel.y });
 			}
@@ -329,7 +329,6 @@ void Hero::ResolveCollision(GameObject* objectB)
 			if (currState == &stateSkidding)
 			{
 				objectB->ResolveCollision(this);
-				Engine::GetGSComponent<Score>()->AddScore(100);
 				if (heroRect.Center().x < collideRect.Center().x)
 				{
 					UpdatePosition({ -(heroRect.Right() - collideRect.Left()), 0 });
@@ -341,11 +340,10 @@ void Hero::ResolveCollision(GameObject* objectB)
 					Engine::GetGSComponent<SmokeEmitter>()->Emit(1, math::vec2{ (heroRect.Left()+ collideRect.Right()) / 2., heroRect.Bottom() }, { 0,0 }, { 0,0 }, 0);
 				}
 			}
-			else if(currState == &stateFalling)
+			else if(currState == &stateFalling && heroRect.Bottom() > collideRect.Center().y)
 			{
 				SetVelocity({ GetVelocity().x, jump_accel.y / 2 });
 				objectB->ResolveCollision(this);
-				Engine::GetGSComponent<Score>()->AddScore(100);
 				Engine::GetGSComponent<SmokeEmitter>()->Emit(1, math::vec2{ heroRect.Center().x ,(heroRect.Bottom() + collideRect.Top()) / 2 }, { 0,0 }, { 0,0 }, 0);
 			}
 			else
@@ -366,7 +364,7 @@ void Hero::ResolveCollision(GameObject* objectB)
 	case GameObjectType::TreeStump:
 		[[fallthrough]];
 	case GameObjectType::Floor:
-		if (heroRect.Center().x < collideRect.Right() && heroRect.Center().x > collideRect.Left())
+		if (heroRect.Center().x < collideRect.Right() && heroRect.Center().x > collideRect.Left() && objectB->DoesCollideWith(GetPosition()))
 		{
 			if(GetVelocity().y < -jump_accel.y)
 			{

@@ -22,7 +22,7 @@ EnemyShip::EnemyShip(GameObject* player) : GameObject(), player(player), isDead(
 	AddGOComponent(new CS230::Sprite("assets/enemyShip.spt", this));
 	constexpr double PI = 3.141592;
 	SetRotation((rand() % static_cast<int>(1024 * 2 * PI)) / 1024.0);
-	SetPosition(player->GetPosition() + (math::RotateMatrix(GetRotation()) * math::vec2{ 0, -((rand() % 128) + 128.0)}));
+	SetPosition(player->GetPosition() + (math::RotateMatrix(GetRotation()) * math::vec2{ 0, -((rand() % 1024) + 1024.0)}));
 	GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Ship_Anim::None_Anim));
 	flameLeft.PlayAnimation(static_cast<int>(Flame_Anim::Flame_Anim));
 	flameRight.PlayAnimation(static_cast<int>(Flame_Anim::Flame_Anim));
@@ -61,7 +61,7 @@ void EnemyShip::Draw(math::TransformMatrix displayMatrix)
 	flameLeft.Draw(GetMatrix() * math::TranslateMatrix(GetGOComponent<CS230::Sprite>()->GetHotSpot(1)));
 	flameRight.Draw(GetMatrix() * math::TranslateMatrix(GetGOComponent<CS230::Sprite>()->GetHotSpot(2)));
 	GetGOComponent<CS230::Sprite>()->Draw(GetMatrix());
-	if (Engine::GetGSComponent<ShowCollision>() != nullptr && Engine::GetGSComponent<ShowCollision>()->IsEnabled() == true)
+	if (Engine::GetGSComponent<ShowCollision>() != nullptr && GetGOComponent<CS230::Collision>() != nullptr && Engine::GetGSComponent<ShowCollision>()->IsEnabled() == true)
 	{
 		GetGOComponent<CS230::Collision>()->Draw(displayMatrix);
 	}
