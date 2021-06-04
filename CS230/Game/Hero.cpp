@@ -348,7 +348,7 @@ void Hero::ResolveCollision(GameObject* objectB)
 	case GameObjectType::TreeStump:
 		[[fallthrough]];
 	case GameObjectType::Floor:
-		if (GetPosition().x < collideRect.Right() && GetPosition().x > collideRect.Left() && objectB->DoesCollideWith(GetPosition()))
+		if (GetPosition().x < collideRect.Right() && GetPosition().x > collideRect.Left() && heroRect.Center().y > collideRect.Top())
 		{
 			SetPosition({ GetPosition().x, collideRect.Top()});
 			standingOnObject = objectB;
