@@ -1,0 +1,27 @@
+Assets/Prince/knight_S.png
+FrameSize 80 64
+HotSpot 36 1
+Frame 0 0
+Frame 80 0
+Frame 160 0 
+Frame 240 0
+
+Frame 320 0
+Frame 400 0
+
+Frame 480 0
+Frame 560 0
+Frame 640 0
+Frame 720 0
+
+Frame 800 0
+Frame 880 0
+Frame 960 0
+Frame 1040 0
+
+CollisionRect -11 0 11 72
+
+Anim Assets/Prince/knight_S_walk.anm
+Anim Assets/Prince/knight_S_idle.anm
+Anim Assets/Prince/knight_S_attack.anm
+Anim Assets/Prince/knight_S_dead.anm
