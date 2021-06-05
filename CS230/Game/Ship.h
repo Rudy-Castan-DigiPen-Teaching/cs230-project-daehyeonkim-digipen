@@ -4,35 +4,40 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
 File Name: Ship.h
 Project: CS230
-Author: Daehyeon Kim
-Creation date: 3/17/2021
+Author: Kevin Wright
+Creation date: 2/11/2021
 -----------------------------------------------------------------*/
 #pragma once
-#include "GameObjectTypes.h"
 #include "..\Engine\Input.h"
-#include "../Engine/GameObject.h"
-namespace math { struct vec2; }
+#include "..\Engine\Sprite.h"
+#include "..\Engine\Vec2.h"
+#include "..\Engine\GameObject.h"
+#include "GameObjectTypes.h"
+
 class Ship : public CS230::GameObject {
 public:
-    Ship(math::vec2 startPos);
-    void Update(double dt) override;
-    void Draw(math::TransformMatrix cameraMatrix) override;
-    GameObjectType GetObjectType() override { return GameObjectType::Ship; }
-    std::string GetObjectTypeName() override { return "Ship"; }
-    bool CanCollideWith(GameObjectType) override;
-    bool IsDead() { return isDead; }
-    void ResolveCollision(CS230::GameObject* objectB) override;
+	Ship(math::vec2 startPos);
+	void Update(double dt);
+	void Draw(math::TransformMatrix displayMatrix);
+
+	GameObjectType GetObjectType() override { return GameObjectType::Ship; }
+	std::string GetObjectTypeName() override { return "Ship"; }
+	bool CanCollideWith(GameObjectType objectBType) override;
+	void ResolveCollision(CS230::GameObject* objectB) override;
+
+	bool IsDead() { return isDead; }
 private:
-    CS230::Sprite flameSpriteL;
-    CS230::Sprite flameSpriteR;
-    bool wasAccel;
-    bool isDead;
-    CS230::InputKey rotateCounterKey;
-    CS230::InputKey rotateClockKey;
-    CS230::InputKey accelerateKey;
-    CS230::InputKey shootingKey;
+	CS230::Sprite flameLeft;
+	CS230::Sprite flameRight;
 
-    static constexpr math::vec2 accel{ 0, 400 };
-    static constexpr double drag = 1.0f;
+	bool isAccelerating;
+	bool isDead;
+	static constexpr double accel = 400;
+	static constexpr double drag = 1;
+	static constexpr double rotationRate = 2.0;
+
+	CS230::InputKey fireLazerKey;
+	CS230::InputKey rotateCounterKey;
+	CS230::InputKey rotateClockKey;
+	CS230::InputKey accelerateKey;
 };
-

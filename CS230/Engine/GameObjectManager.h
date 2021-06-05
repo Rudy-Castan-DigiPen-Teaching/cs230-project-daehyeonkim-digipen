@@ -8,22 +8,21 @@ Author: Kevin Wright
 Creation date: 2/14/2021
 -----------------------------------------------------------------*/
 #pragma once
-#include <list>	
+
+#include <list>
+#include "GameObject.h"
 #include "Component.h"
 
-namespace math { class TransformMatrix; }
-
 namespace CS230 {
-	class GameObject;
-
-	class GameObjectManager : public Component{
+	class GameObjectManager : public Component {
 	public:
-		void Add(GameObject* obj);
 		~GameObjectManager();
-		void CollideTest();
+		void Add(GameObject* obj);
+
 		void Update(double dt) override;
 		void DrawAll(math::TransformMatrix& cameraMatrix);
-		const std::list<GameObject*>& Objects() { return gameObjects; }
+		void CollideTest();
+		const std::list<GameObject*> &Objects() { return gameObjects; }
 	private:
 		std::list<GameObject*> gameObjects;
 	};

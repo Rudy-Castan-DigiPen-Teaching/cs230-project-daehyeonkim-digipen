@@ -3,212 +3,87 @@ Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
 File Name: Vec2.inl
-Author: Daehyeon Kim
-Creation date: 03.15.2021
+Project: CS230
+Author: Rudy Castan
+Creation date: 
 -----------------------------------------------------------------*/
+#include <cmath>
 
 namespace math
 {
-	[[nodiscard]] constexpr vec2 operator+(const vec2 left, const vec2 right) noexcept
-	{
-		const double returnX = left.x + right.x;
-		const double returnY = left.y + right.y;
-		return vec2{ returnX, returnY };
-	}
+    constexpr bool vec2::operator==(const vec2& v) const noexcept { return is_equal(x, v.x) && is_equal(y, v.y); }
+    constexpr bool vec2::operator!=(const vec2& v) const noexcept { return !operator==(v); }
 
-	constexpr vec2& vec2::operator+=(const vec2 right) noexcept
-	{
-		*this = *this + right;
-		return *this;
-	}
+    constexpr vec2 vec2::operator+(const vec2& v) const noexcept { return {x + v.x, y + v.y}; }
+    constexpr vec2& vec2::operator+=(const vec2& v) noexcept
+    {
+        x += v.x;
+        y += v.y;
+        return *this;
+    }
 
-	[[nodiscard]] constexpr vec2 operator-(const vec2 left, const vec2 right) noexcept
-	{
-		const double returnX = left.x - right.x;
-		const double returnY = left.y - right.y;
-		return vec2{ returnX, returnY };
-	}
+    constexpr vec2 vec2::operator-(const vec2& v) const noexcept { return {x - v.x, y - v.y}; }
+    constexpr vec2& vec2::operator-=(const vec2& v) noexcept
+    {
+        x -= v.x;
+        y -= v.y;
+        return *this;
+    }
 
-	constexpr vec2& vec2::operator-=(const vec2 right) noexcept
-	{
-		*this = *this - right;
-		return *this;
-	}
+    constexpr vec2 vec2::operator-() const noexcept { return {-x, -y}; }
 
-	[[nodiscard]] constexpr vec2 operator-(const vec2 left) noexcept
-	{
-		const double returnX = -left.x;
-		const double returnY = -left.y;
-		return vec2(returnX, returnY);
-	}
+    constexpr vec2 vec2::operator*(double scale) const noexcept { return {x * scale, y * scale}; }
+    constexpr vec2 vec2::operator/(double divisor) const noexcept { return {x / divisor, y / divisor}; }
+    constexpr vec2& vec2::operator*=(double scale) noexcept
+    {
+        x *= scale, y *= scale;
+        return *this;
+    }
+    constexpr vec2& vec2::operator/=(double divisor) noexcept
+    {
+        x /= divisor, y /= divisor;
+        return *this;
+    }
+    constexpr vec2 operator*(double scale, const vec2& v) noexcept { return v * scale; }
 
-	[[nodiscard]] constexpr vec2 operator*(const vec2 left, const double right) noexcept
-	{
-		const double returnX = left.x * right;
-		const double returnY = left.y * right;
-		return vec2(returnX, returnY);
-	}
+    inline vec2 vec2::Normalize() const noexcept {
+        double length = std::sqrt(x * x + y * y);
+        return { x / length, y / length };
+    }
+    constexpr double vec2::Cross(const vec2& v) const noexcept { return x * v.y - y * v.x; }
 
-	[[nodiscard]] constexpr vec2 operator*(const double left, const vec2 right) noexcept
-	{
-		const double returnX = left * right.x;
-		const double returnY = left * right.y;
-		return vec2(returnX, returnY);
-	}
 
-	[[nodiscard]] constexpr vec2 operator*(const vec2 left, const vec2 right) noexcept
-	{
-		const double returnX = left.x * right.x;
-		const double returnY = left.y * right.y;
-		return vec2(returnX, returnY);
-	}
-	
-	constexpr vec2& vec2::operator*=(const double input) noexcept
-	{
-		*this = *this * input;
-		return *this;
-	}
+    constexpr bool ivec2::operator==(const ivec2& v) const noexcept { return is_equal(x, v.x) && is_equal(y, v.y); }
+    constexpr bool ivec2::operator!=(const ivec2& v) const noexcept { return !operator==(v); }
 
-	[[nodiscard]] constexpr vec2 operator/(const vec2 left, const double right) noexcept
-	{
-		const double returnX = left.x / right;
-		const double returnY = left.y / right;
-		return vec2(returnX, returnY);
-	}
+    constexpr ivec2 ivec2::operator+(const ivec2& v) const noexcept { return { x + v.x, y + v.y }; }
+    constexpr ivec2& ivec2::operator+=(const ivec2& v) noexcept {
+        x += v.x;
+        y += v.y;
+        return *this;
+    }
 
-	constexpr vec2& vec2::operator/=(const double input) noexcept
-	{
-		*this = *this / input;
-		return *this;
-	}
+    constexpr ivec2 ivec2::operator-(const ivec2& v) const noexcept { return { x - v.x, y - v.y }; }
+    constexpr ivec2& ivec2::operator-=(const ivec2& v) noexcept {
+        x -= v.x;
+        y -= v.y;
+        return *this;
+    }
 
-	[[nodiscard]] constexpr bool operator==(const vec2 left, const vec2 right) noexcept
-	{
-		return is_equal(left.x, right.x) && is_equal(left.y, right.y);
-	}
+    constexpr ivec2 ivec2::operator-() const noexcept { return { -x, -y }; }
 
-	[[nodiscard]] constexpr bool operator!=(const vec2 left, const vec2 right) noexcept
-	{
-		return !is_equal(left.x, right.x) || !is_equal(left.y, right.y);
-	}
+    constexpr ivec2 ivec2::operator*(int scale) const noexcept { return { x * scale, y * scale }; }
+    constexpr ivec2 ivec2::operator/(int divisor) const noexcept { return { x / divisor, y / divisor }; }
+    constexpr ivec2& ivec2::operator*=(int scale) noexcept {
+        x *= scale, y *= scale;
+        return *this;
+    }
+    constexpr ivec2& ivec2::operator/=(int divisor) noexcept {
+        x /= divisor, y /= divisor;
+        return *this;
+    }
 
-	[[nodiscard]] constexpr double vec2::LengthSquared() const noexcept
-	{
-		const double returnX = this->x * this->x;
-		const double returnY = this->y * this->y;
-		return 	returnX + returnY;
-	}
-
-	[[nodiscard]] constexpr vec2 vec2::Normalize() const noexcept
-	{
-		return vec2(*this / sqrt(LengthSquared()));
-	}
-
-	constexpr double vec2::Cross(const vec2& v) const noexcept
-	{
-		return x * v.y - y * v.x;
-	}
-	
-	[[nodiscard]] constexpr ivec2 operator+(const ivec2 left, const ivec2 right) noexcept
-	{
-		const int returnX = left.x + right.x;
-		const int returnY = left.y + right.y;
-		return ivec2{ returnX, returnY };
-	}
-
-	constexpr ivec2& ivec2::operator+=(const ivec2 right) noexcept
-	{
-		*this = *this + right;
-		return *this;
-	}
-
-	[[nodiscard]] constexpr ivec2 operator-(const ivec2 left, const ivec2 right) noexcept
-	{
-		const int returnX = left.x - right.x;
-		const int returnY = left.y - right.y;
-		return ivec2{ returnX, returnY };
-	}
-
-	constexpr ivec2& ivec2::operator-=(const ivec2 right) noexcept
-	{
-		*this = *this - right;
-		return *this;
-	}
-
-	[[nodiscard]] constexpr ivec2 operator-(const ivec2 right) noexcept
-	{
-		const int returnX = -right.x;
-		const int returnY = -right.y;
-		return ivec2(returnX, returnY);
-	}
-
-	[[nodiscard]] constexpr ivec2 operator*(const ivec2 left, const int right) noexcept
-	{
-		const int returnX = left.x * right;
-		const int returnY = left.y * right;
-		return ivec2(returnX, returnY);
-	}
-
-	[[nodiscard]] constexpr ivec2 operator*(const int left, const ivec2 right) noexcept
-	{
-		const int returnX = left * right.x;
-		const int returnY = left * right.y;
-		return ivec2(returnX, returnY);
-	}
-
-	[[nodiscard]] constexpr vec2 operator*(const ivec2 left, const double right) noexcept
-	{
-		const double returnX = left.x * right;
-		const double returnY = left.y * right;
-		return vec2(returnX, returnY);
-	}
-
-	[[nodiscard]] constexpr vec2 operator*(const double left, const ivec2 right) noexcept
-	{
-		const double returnX = left * right.x;
-		const double returnY = left * right.y;
-		return vec2(returnX, returnY);
-	}
-
-	constexpr ivec2& ivec2::operator*=(const int input) noexcept
-	{
-		*this = *this * input;
-		return *this;
-	}
-
-	[[nodiscard]] constexpr ivec2 operator/(const ivec2 left, const int right) noexcept
-	{
-		const int returnX = left.x / right;
-		const int returnY = left.y / right;
-		return ivec2(returnX, returnY);
-	}
-
-	[[nodiscard]] constexpr vec2 operator/(const ivec2 left, const double right) noexcept
-	{
-		const double returnX = left.x / right;
-		const double returnY = left.y / right;
-		return vec2(returnX, returnY);
-	}
-
-	constexpr ivec2& ivec2::operator/=(const int input) noexcept
-	{
-		*this = *this / input;
-		return *this;
-	}
-
-	[[nodiscard]] constexpr bool operator==(const ivec2 left, const ivec2 right) noexcept
-	{
-		return is_equal(left.x, right.x) && is_equal(left.y, right.y);
-	}
-
-	[[nodiscard]] constexpr bool operator!=(const ivec2 left, const ivec2 right) noexcept
-	{
-		return !is_equal(left.x, right.x) || !is_equal(left.y, right.y);
-	}
-
-	[[nodiscard]] constexpr ivec2::operator vec2()  noexcept
-	{
-		vec2 returnVec = vec2(static_cast<double>(this->x), static_cast<double>(this->y));
-		return returnVec;
-	}
+    constexpr vec2 ivec2::operator*(double scale) const noexcept { return { x * scale, y * scale }; }
+    constexpr vec2 ivec2::operator/(double divisor) const noexcept { return { x / divisor, y / divisor }; }
+    constexpr ivec2 operator*(int scale, const ivec2& v) noexcept { return v * scale; }
 }

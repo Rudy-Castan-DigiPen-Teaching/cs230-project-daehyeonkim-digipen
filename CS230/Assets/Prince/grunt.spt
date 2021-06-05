@@ -1,0 +1,23 @@
+Assets/Prince/grunt.png
+FrameSize 120 100
+HotSpot 60 1
+Frame 0 0
+Frame 120 0
+Frame 240 0 
+Frame 360 0
+
+Frame 480 0
+Frame 600 0
+Frame 720 0
+Frame 840 0
+
+Frame 960 0
+Frame 1080 0
+Frame 1200 0
+Frame 1320 0
+
+CollisionRect -20 1 25 72
+
+Anim Assets/Prince/grunt_walk.anm
+Anim Assets/Prince/grunt_attack.anm
+Anim Assets/Prince/grunt_dead.anm

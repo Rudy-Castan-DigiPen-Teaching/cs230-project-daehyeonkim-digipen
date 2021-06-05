@@ -2,8 +2,8 @@ assets/Ship.png
 HotSpot 50 41
 HotSpot -15 -41
 HotSpot 15 -41
-HotSpot -27 29
-HotSpot 27 29
+HotSpot -29 39
+HotSpot  28 39
 FrameSize 100 82
 NumFrames 14
 CollisionCircle 40 

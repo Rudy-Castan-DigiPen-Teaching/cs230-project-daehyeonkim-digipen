@@ -4,31 +4,26 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
 File Name: GameParticles.cpp
 Project: CS230
-Author: Daehyeon Kim
-Creation date: 5/25/2021
+Author: Kevin Wright
+Creation date: 2/26/2021
 -----------------------------------------------------------------*/
+
 #include "GameParticles.h"
 
-SmokeEmitter::SmokeEmitter() : ParticleEmitter(1.)
-{
-	for (int i = 0; i < NumParticles; i++)
-	{
-		AddParticle(new SmokeParticle("assets/smoke.spt"));
+SmokeEmitter::SmokeEmitter() : CS230::ParticleEmitter(1.0) {
+	for (int i = 0; i < SmokeEmitter::NumParticles; i++) {
+		AddParticle(new SmokeParticle("assets/Smoke.spt"));
 	}
 }
 
-HitEmitter::HitEmitter() : ParticleEmitter(1.)
-{
-	for (int i = 0; i < NumParticles; i++)
-	{
-		AddParticle(new HitParticle("assets/hit.spt"));
+HitEmitter::HitEmitter() : CS230::ParticleEmitter(1.0) {
+	for (int i = 0; i < HitEmitter::NumParticles; i++) {
+		AddParticle(new HitParticle("assets/Hit.spt"));
 	}
 }
 
-MeteorBitEmitter::MeteorBitEmitter() : ParticleEmitter(1.5)
-{
-	for (int i = 0; i < NumParticles; i++)
-	{
-		AddParticle(new MeteorBit("assets/meteorBit.spt"));
+MeteorBitEmitter::MeteorBitEmitter() : CS230::ParticleEmitter(1.5) {
+	for (int i = 0; i < MeteorBitEmitter::NumParticles; i++) {
+		AddParticle(new MeteorBit("assets/MeteorBit.spt"));
 	}
 }

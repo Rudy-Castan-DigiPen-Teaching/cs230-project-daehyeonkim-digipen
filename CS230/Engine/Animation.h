@@ -8,14 +8,14 @@ Author: Kevin Wright
 Creation date: 2/12/2021
 -----------------------------------------------------------------*/
 #pragma once
-#include <vector>
-#include <filesystem>
+#include <vector>	// std::vector
+
 namespace CS230 {
 	class Animation {
 	public:
 		Animation();
-		Animation(const std::filesystem::path& fileName);
 		~Animation();
+		Animation(const std::filesystem::path& fileName);
 		void Update(double dt);
 		int GetDisplayFrame();
 		void ResetAnimation();
@@ -64,4 +64,3 @@ namespace CS230 {
 		std::vector<CommandData*> animation;
 	};
 }
-

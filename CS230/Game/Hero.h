@@ -8,12 +8,22 @@ Author: Kevin Wright
 Creation date: 2/11/2021
 -----------------------------------------------------------------*/
 #pragma once
-#include "GameObjectTypes.h"
-#include "..\Engine\Input.h"
+#include "..\Engine\Sprite.h"
+#include "..\Engine\Input.h"		//Input::InputKey
 #include "..\Engine\GameObject.h"
-namespace math { struct vec2; }
+#include "GameObjectTypes.h"
 
 class Hero : public CS230::GameObject {
+public:
+    Hero(math::vec2 startPos);
+    void Update(double dt);
+    void Draw(math::TransformMatrix displayMatrix);
+    GameObjectType GetObjectType() override { return GameObjectType::Hero; }
+    std::string GetObjectTypeName() override { return "Hero"; }
+    bool CanCollideWith(GameObjectType objectBType) override;
+    void ResolveCollision(GameObject* objectB) override;
+
+    bool IsDead() { return isDead; }
 private:
     class State_Idle : public State {
     public:
@@ -56,30 +66,20 @@ private:
     State_Jumping stateJumping;
     State_Falling stateFalling;
 
-    void UpdateXVelocity(double dt);     //Change X velocity stuff
+    void UpdateXVelocity(double dt);
 
-public:
-    Hero(math::vec2 startPos);
-    bool IsDead() { return isDead; }
-    void Update(double dt) override;
-    math::vec2 GetPosition();
-    GameObjectType GetObjectType() override { return GameObjectType::Hero; }
-    std::string GetObjectTypeName() override { return "Hero"; }
-    bool CanCollideWith(GameObjectType) override;
-    void Draw(math::TransformMatrix displayMatrix);
-    void ResolveCollision(GameObject* objectB) override;
-private:
-    CS230::InputKey moveLeftKey;
-    CS230::InputKey moveRightKey;
-    CS230::InputKey jumpKey;
+	static constexpr double jumpVelocity = 950;
+	static constexpr double xAccel = 500;
+	static constexpr double xDrag = 750;
+	static constexpr double maxXVelocity = 750;
     static constexpr double hurtTime = 2;
-	static constexpr math::vec2 x_drag{800, 0};
-    static constexpr math::vec2 x_accel{ 400, 0 };
-    static constexpr math::vec2 x_max_speed{ 800, 0 };
-    static constexpr math::vec2 jump_accel{ 0, 1000 };
-    bool isDead;
-    GameObject* standingOnObject;
+
     double hurtTimer;
     bool drawHero;
-};
+    bool isDead;
+    GameObject* standingOnObject;
 
+	CS230::InputKey jumpKey;
+	CS230::InputKey moveLeftKey;
+	CS230::InputKey moveRightKey;
+};

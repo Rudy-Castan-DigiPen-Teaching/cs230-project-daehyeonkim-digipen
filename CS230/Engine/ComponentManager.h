@@ -26,10 +26,14 @@ namespace CS230 {
             }
         }
 
+        void AddComponent(Component* component) {
+            components.push_back(component);
+        }
+
         template<typename T>
         T* GetComponent() {
             for (Component* component : components) {
-                 T* ptr = dynamic_cast<T*>(component);
+                T* ptr = dynamic_cast<T*>(component);
                 if (ptr != nullptr) {
                     return ptr;
                 }
@@ -37,9 +41,6 @@ namespace CS230 {
             return nullptr;
         }
 
-        void AddComponent(Component* component) {
-            components.push_back(component);
-        }
         template<typename T>
         void RemoveComponent() {
             auto it = std::find_if(components.begin(), components.end(), [](Component* element) {

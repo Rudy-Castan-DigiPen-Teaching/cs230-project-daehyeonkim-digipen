@@ -8,11 +8,13 @@ Author: Kevin Wright
 Creation date: 2/14/2021
 -----------------------------------------------------------------*/
 #pragma once
-#include "ComponentManager.h"
-#include "Vec2.h"
-#include "Sprite.h"
+#include <string>
+#include "Vec2.h"	
 #include "TransformMatrix.h"
+#include "ComponentManager.h"
+
 enum class GameObjectType;
+
 namespace CS230 {
 	class Component;
 
@@ -23,41 +25,35 @@ namespace CS230 {
 		GameObject(math::vec2 position);
 		GameObject(math::vec2 position, double rotation, math::vec2 scale);
 		virtual ~GameObject();
+		void Destroy() { destroyObject = true; }
+		bool ShouldDestroy() { return destroyObject; }
 
 		virtual void Update(double dt);
-		virtual void Draw(math::TransformMatrix cameraMatrix);
-
-		const math::TransformMatrix& GetMatrix();
-		const math::vec2& GetPosition() const;
-		void SetPosition(math::vec2 newPosition);
-		const math::vec2& GetVelocity() const;
-		const math::vec2& GetScale() const;
-		double GetRotation() const;
-		template<typename T>
-		T* GetGOComponent() { return components.GetComponent<T>(); }
-
+		virtual void Draw(math::TransformMatrix displayMatrix);
 		virtual GameObjectType GetObjectType() = 0;
 		virtual std::string GetObjectTypeName() = 0;
 		virtual bool CanCollideWith(GameObjectType objectBType);
-		virtual void ResolveCollision(GameObject*);
 		bool DoesCollideWith(GameObject* objectB);
 		bool DoesCollideWith(math::vec2 point);
-		bool IsDestroyed() const { return destroyed; }
+		virtual void ResolveCollision(GameObject*);
+
+		const math::vec2& GetPosition() const;
+		const math::vec2& GetVelocity() const;
+		const math::vec2& GetScale() const;
+		double GetRotation() const;
+		const math::TransformMatrix& GetMatrix();
+
+		void SetPosition(math::vec2 newPosition);
+
+		template<typename T>
+		T* GetGOComponent() { return components.GetComponent<T>(); }
 	protected:
 		void AddGOComponent(Component* component) { components.AddComponent(component); }
 		void UpdateGOComponents(double dt) { components.UpdateAll(dt); }
 		void ClearGOComponents() { components.Clear(); }
-
 		template<typename T>
 		void RemoveGOComponent() { components.RemoveComponent<T>(); }
-		
-		void UpdatePosition(math::vec2 adjustPosition);
-		void SetVelocity(math::vec2 newVelocity);
-		void UpdateVelocity(math::vec2 adjustVelocity);
-		void SetScale(math::vec2 newScale);
-		void SetRotation(double newRotationAmount);
-		void UpdateRotation(double newRotationAmount);
-		
+
 		class State {
 		public:
 			virtual void Enter(GameObject* object) = 0;
@@ -70,22 +66,29 @@ namespace CS230 {
 			void Enter(GameObject*) override {}
 			void Update(GameObject*, double) override {}
 			void TestForExit(GameObject*) override {}
-			std::string GetName() { return ""; }
+			std::string GetName() override { return ""; }
 		};
 		State_Nothing state_nothing;
+
+		void UpdatePosition(math::vec2 addPosition);
+		void SetVelocity(math::vec2 newVelocity);
+		void UpdateVelocity(math::vec2 newVelocity);
+		void SetScale(math::vec2 newScale);
+		void SetRotation(double newRotationAmount);
+		void UpdateRotation(double adjustRotation);
 		void ChangeState(State* newState);
+
 		State* currState;
-		bool destroyed;
 
 	private:
 		math::TransformMatrix objectMatrix;
 		bool updateMatrix;
+
 		double rotation;
 		math::vec2 scale;
 		math::vec2 position;
 		math::vec2 velocity;
-
 		ComponentManager components;
+		bool destroyObject;
 	};
 }
-

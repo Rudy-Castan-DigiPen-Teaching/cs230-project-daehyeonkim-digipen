@@ -8,37 +8,43 @@ Author: Kevin Wright
 Creation date: 2/11/2021
 -----------------------------------------------------------------*/
 #pragma once
-#include "Vec2.h"
-#include "Texture.h"
-#include "Animation.h"
+#include <string>
+#include <vector>
 #include <filesystem>
+#include "Vec2.h"
 #include "Component.h"
-namespace CS230 {
-	class GameObject;
-	class Texture;
-    class Animation;
+
+namespace math {
+	class TransformMatrix;
 }
 
 namespace CS230 {
-    class Sprite : public Component {
-    public:
-        Sprite(const std::filesystem::path& spriteInfoFile, GameObject* object);
-        ~Sprite();
-        void Load(const std::filesystem::path& spriteInfoFile, GameObject* object);
-        void Draw(math::TransformMatrix displayMatrix);
-        math::ivec2 GetHotSpot(int index);
-        math::ivec2 GetFrameSize() const;
-        int GetCurrAnim();
-        void PlayAnimation(int anim);
-        void Update(double dt) override;
-        bool IsAnimationDone();
-    private:
-        math::ivec2 GetFrameTexel(int frameNum) const;
-        Texture* texturePtr;
-        math::ivec2 frameSize;
-        std::vector<math::ivec2> frameTexel;
-        std::vector<math::ivec2> hotSpotList;
-        int currAnim;
-        std::vector<Animation*> animations;
-    };
+	class Texture;
+	class Animation;
+	class GameObject;
+}
+
+namespace CS230 {
+	class Sprite : public Component {
+	public:
+		Sprite(const std::filesystem::path& spriteInfoFile, GameObject* object);
+		~Sprite();
+		void Load(const std::filesystem::path& spriteInfoFile, GameObject* object);
+		void Update(double dt) override;
+		void Draw(math::TransformMatrix displayMatrix);
+		void PlayAnimation(int anim);
+		int GetCurrentAnim();
+		bool IsAnimationDone();
+		math::ivec2 GetHotSpot(int index);
+		math::ivec2 GetFrameSize() const;
+	private:
+		math::ivec2 GetFrameTexel(int frameNum) const;
+
+		Texture *texturePtr;    
+		int currAnim;
+		math::ivec2 frameSize;
+		std::vector<math::ivec2> frameTexel;
+		std::vector<Animation*> animations;
+		std::vector<math::ivec2> hotSpotList;
+	};
 }

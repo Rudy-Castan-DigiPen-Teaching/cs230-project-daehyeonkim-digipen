@@ -4,32 +4,33 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
 File Name: Level1.h
 Project: CS230
-Author: Daehyeon Kim
-Creation date: 03/08/2021
+Author: Kevin Wright
+Creation date: 2/10/2021
 -----------------------------------------------------------------*/
 #pragma once
-#include "Background.h"
 #include "..\Engine\GameState.h"
 #include "..\Engine\Input.h"
-#include "Hero.h"
-#include "../Engine/GameObjectManager.h"
+#include "Background.h"
 
+class Hero;
 class Level1 : public CS230::GameState {
 public:
+
 	Level1();
 	void Load() override;
 	void Update(double dt) override;
 	void Unload() override;
-    void Draw() override;
-	
+	void Draw() override;
+
 	std::string GetName() override { return "Level 1"; }
 private:
+	static constexpr double floor = 126.0f;
 	int lives;
 	CS230::Texture livesTexture;
-	
-	CS230::InputKey mainMenu;
-	CS230::InputKey levelReload;
-	static constexpr double floor = 126.0f;
-	CS230::GameObjectManager* gameObjectManager;
+
 	Hero* heroPtr;
+
+	CS230::InputKey levelReload;
+	CS230::InputKey mainMenu;
 };
+

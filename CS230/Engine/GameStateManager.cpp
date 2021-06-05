@@ -4,38 +4,28 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
 File Name: GameStateManager.cpp
 Project: CS230
-Author: Daehyeon Kim
-Creation date: 03/08/2021
+Author: Kevin Wright
+Creation date: 2/10/2021
 -----------------------------------------------------------------*/
+#include "Engine.h"			//logger
 #include "GameStateManager.h"
-#include "Engine.h"
+#include "GameState.h"
 #include "GameObjectManager.h"
 
-CS230::GameStateManager::GameStateManager()
-{
-	state = State::START;
-	currGameState = nullptr;
-	nextGameState = nullptr;
-}
+CS230::GameStateManager::GameStateManager() : currGameState(nullptr), nextGameState(nullptr), state(State::START) {}
 
-void CS230::GameStateManager::AddGameState(GameState& gameState)
-{
+void CS230::GameStateManager::AddGameState(GameState& gameState) {
 	gameStates.push_back(&gameState);
 }
 
-void CS230::GameStateManager::Update(double dt)
-{
-	switch (state)
-	{
+void CS230::GameStateManager::Update(double dt) {
+	switch (state) {
 	case State::START:
-		if (gameStates.empty() == true)
-		{
-			Engine::GetLogger().LogError("Error: Cannot load the GameState");
+		if (gameStates.size() == 0) {
+			Engine::GetLogger().LogError("No States have been loaded");
 			state = State::SHUTDOWN;
-		}
-		else
-		{
-			nextGameState = gameStates.front();
+		} else {
+			nextGameState = gameStates[0];
 			state = State::LOAD;
 		}
 		break;
@@ -47,35 +37,29 @@ void CS230::GameStateManager::Update(double dt)
 		state = State::UPDATE;
 		break;
 	case State::UPDATE:
-		if(nextGameState != currGameState)
-		{
-			Engine::GetTextureManager().Unload();
+		if (currGameState != nextGameState) {
 			state = State::UNLOAD;
-		} else
-		{
-			currGameState->Update(dt);
+		} else {
 			Engine::GetLogger().LogVerbose("Update " + currGameState->GetName());
-			if(GetGSComponent<GameObjectManager>() != nullptr)
-			{
-				currGameState->GetGSComponent<GameObjectManager>()->CollideTest();
+			currGameState->Update(dt);
+			if (GetGSComponent<CS230::GameObjectManager>() != nullptr) {
+				GetGSComponent<CS230::GameObjectManager>()->CollideTest();
 			}
 			currGameState->Draw();
 		}
 		break;
 	case State::UNLOAD:
-		currGameState->Unload();
 		Engine::GetLogger().LogEvent("Unload " + currGameState->GetName());
-		currGameState = nullptr;
-		if (nextGameState == nullptr)
-		{
+		currGameState->Unload();
+		if (nextGameState != currGameState) {
+			Engine::GetTextureManager().Unload();
+		}
+		if (nextGameState == nullptr) {
 			state = State::SHUTDOWN;
+			break;
 		}
-		else
-		{
-			state = State::LOAD;
-		}
+		state = State::LOAD;
 		break;
-
 	case State::SHUTDOWN:
 		state = State::EXIT;
 		break;
@@ -84,17 +68,15 @@ void CS230::GameStateManager::Update(double dt)
 	}
 }
 
-void CS230::GameStateManager::SetNextState(int initState)
-{
+void CS230::GameStateManager::SetNextState(int initState) {
 	nextGameState = gameStates[initState];
 }
 
-void CS230::GameStateManager::Shutdown()
-{
-	nextGameState = nullptr;
+void CS230::GameStateManager::ReloadState() {
+	state = State::UNLOAD;
 }
 
-void CS230::GameStateManager::ReloadState()
-{
+void CS230::GameStateManager::Shutdown() {
 	state = State::UNLOAD;
+	nextGameState = nullptr;
 }

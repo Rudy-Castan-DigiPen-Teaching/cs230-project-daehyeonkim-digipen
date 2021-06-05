@@ -5,70 +5,66 @@ written consent of DigiPen Institute of Technology is prohibited.
 File Name: Engine.cpp
 Purpose: This is the service provider for our games engine services
 Project: CS230
-Author: Daehyeon Kim
-Creation date: 03/08/2021
+Author: Kevin Wright
+Creation date: 2/10/2021
 -----------------------------------------------------------------*/
 #include "Engine.h"
 
-void Engine::Init(std::string windowName)
-{
-	logger.LogEvent("Engine Init");
-	window.Init(windowName);
-	fpsCalcTime = lastTick;
-	const time_t getTime = time(NULL);
-	srand(static_cast<unsigned int>(getTime));
-	logger.LogEvent("Seed = " + std::to_string(getTime));
-}
-
-void Engine::Shutdown()
-{										
-	logger.LogEvent("Engine Shutdown");
-}
-
-void Engine::Update()
-{
-	const std::chrono::time_point now = std::chrono::system_clock::now();
-	double deltaTime = std::chrono::duration<double>(std::chrono::system_clock::now() - lastTick).count();
-	if (deltaTime >= 1 / Target_FPS)
-	{
-#ifdef _DEBUG
-		if (deltaTime > 2 / Target_FPS) {
-			deltaTime = 1 / Target_FPS;
-			logger.LogEvent("Long Frame detected!");
-		}
-#endif
-		logger.LogVerbose("Engine Update");
-		frameCount++;
-		gameStateManager.Update(deltaTime);
-		input.Update();
-		window.Update();
-		lastTick = now;
-	}
-	if(frameCount >= FPS_IntervalFrameCount)
-	{
-		const double averageFrameRate = frameCount / std::chrono::duration<double>(lastTick - fpsCalcTime).count();
-		logger.LogEvent("FPS:\t" + std::to_string(averageFrameRate));
-		frameCount = 0;
-		fpsCalcTime = lastTick;
-	}
-}
-
-bool Engine::HasGameEnded()
-{
-	return gameStateManager.HasGameEnded();	
-}
-
-void Engine::AddSpriteFont(const std::filesystem::path& fileName)
-{
-	fonts.push_back(CS230::SpriteFont(fileName));
-}
-
-Engine::Engine() : lastTick(std::chrono::system_clock::now()), frameCount(0),
+Engine::Engine() : frameCount(0), lastTick(std::chrono::system_clock::now()),
 #ifdef _DEBUG				
-                   logger(CS230::Logger::Severity::Debug, true, lastTick)
+logger(CS230::Logger::Severity::Debug, true, lastTick)
 #else 						
-	logger(CS230::Logger::Severity::Event, false, lastTick)
+logger(CS230::Logger::Severity::Event, false, lastTick)
 #endif
 {}
 
 Engine::~Engine() {}
+
+void Engine::Init(std::string windowName) {
+	logger.LogEvent("Engine Init");
+	window.Init(windowName);
+	fpsCalcTime = lastTick;
+
+	int seed = static_cast<unsigned int>(time(NULL));
+	srand(seed);
+	Engine::GetLogger().LogEvent("Seed = " + std::to_string(seed));
+}
+
+void Engine::Shutdown() {
+	logger.LogEvent("Engine Shutdown");
+}
+
+void Engine::Update() {
+	std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
+	double dt = std::chrono::duration<double>(now - lastTick).count();
+
+#ifdef _DEBUG
+	if (dt > 2 / Engine::Target_FPS) {
+		dt = 1 / Engine::Target_FPS;
+		Engine::GetLogger().LogEvent("Long Frame detected!");
+	}
+#endif
+
+	if (dt >= 1 / Engine::Target_FPS) 	{
+		logger.LogVerbose("Engine Update");
+		lastTick = now;
+
+		if (++frameCount >= Engine::FPS_IntervalFrameCount) {
+			double actualTime = std::chrono::duration<double>((now - fpsCalcTime)).count();
+			logger.LogEvent("FPS:  " + std::to_string(frameCount / actualTime));
+			frameCount = 0;
+			fpsCalcTime = now;
+		}
+		gameStateManager.Update(dt);
+		input.Update();
+		window.Update();
+	}
+}
+
+bool Engine::HasGameEnded() {
+	return gameStateManager.HasGameEnded();
+}
+
+void Engine::AddSpriteFont(const std::filesystem::path& fileName) {
+	fonts.push_back(CS230::SpriteFont(fileName));
+}

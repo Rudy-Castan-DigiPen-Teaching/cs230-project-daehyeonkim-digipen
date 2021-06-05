@@ -2,12 +2,12 @@
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
-File Name: TreeStump.cpp
+File Name: TreeStump.h
 Project: CS230
 Author: Kevin Wright
 Creation date: 2/15/2021
 -----------------------------------------------------------------*/
-
+#include "../Engine/Sprite.h"
 #include "TreeStump.h"
 
 TreeStump::TreeStump(math::vec2 pos, int size) : GameObject(pos) {

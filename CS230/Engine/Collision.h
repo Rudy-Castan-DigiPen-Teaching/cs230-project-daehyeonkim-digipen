@@ -25,20 +25,21 @@ namespace CS230 {
             Rect_Collide,
             Circle_Collide,
         };
-        virtual void Draw(math::TransformMatrix cameraMatrix) = 0;
+        virtual void Draw(math::TransformMatrix displayMatrix) = 0;
         virtual CollideType GetCollideType() = 0;
-        virtual bool DoesCollideWith(GameObject* objectB) = 0;
+
+        virtual bool DoesCollideWith(GameObject* gameObject) = 0;
         virtual bool DoesCollideWith(math::vec2 point) = 0;
     };
 
     class RectCollision : public Collision {
     public:
         RectCollision(math::irect2 rect, GameObject* objectPtr) : rect(rect), objectPtr(objectPtr) {}
-        void Draw(math::TransformMatrix cameraMatrix) override;
+        void Draw(math::TransformMatrix displayMatrix) override;
         CollideType GetCollideType() override { return Collision::CollideType::Rect_Collide; };
-        math::rect2 GetWorldCoorRect();
         bool DoesCollideWith(GameObject* objectB) override;
-        virtual bool DoesCollideWith(math::vec2 point);
+        bool DoesCollideWith(math::vec2 point) override;
+        math::rect2 GetWorldCoorRect();
     private:
         GameObject* objectPtr;
         math::irect2 rect;
@@ -47,14 +48,14 @@ namespace CS230 {
     class CircleCollision : public Collision {
     public:
         CircleCollision(double radius, GameObject* objectPtr) : radius(radius), objectPtr(objectPtr) {}
-        void Draw(math::TransformMatrix cameraMatrix) override;
+        void Draw(math::TransformMatrix displayMatrix) override;
         CollideType GetCollideType() override { return Collision::CollideType::Circle_Collide; };
-        double GetRadius();
+
         bool DoesCollideWith(GameObject* objectB) override;
-        virtual bool DoesCollideWith(math::vec2 point);
+        bool DoesCollideWith(math::vec2 point) override;
+        double GetRadius();
     private:
         GameObject* objectPtr;
         double radius;
     };
 }
-

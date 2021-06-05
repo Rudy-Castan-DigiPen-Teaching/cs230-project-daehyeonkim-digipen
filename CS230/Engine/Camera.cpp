@@ -4,67 +4,49 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
 File Name: Camera.cpp
 Project: CS230
-Author: Daehyeon Kim
-Creation date: 3/28/2021
+Author: Kevin Wright
+Creation date: 2/11/2021
 -----------------------------------------------------------------*/
-#include "Camera.h"
+#include "Engine.h"
 #include "TransformMatrix.h"
+#include "Camera.h"
 
-CS230::Camera::Camera(math::rect2 movableRange) : movableRange(movableRange), extent({{0,0}, {0,0}}), position({0,0})
-{
-}
+CS230::Camera::Camera(math::rect2 movableRange) : movableRange(movableRange), position({ 0,0 }) {}
 
-void CS230::Camera::SetPosition(math::vec2 newPosition)
-{
+void CS230::Camera::SetPosition(math::vec2 newPosition) {
 	position = newPosition;
 }
 
-const math::vec2& CS230::Camera::GetPosition() const
-{
+const math::vec2 &CS230::Camera::GetPosition() const {
 	return position;
 }
 
-void CS230::Camera::SetExtent(math::irect2 newExtent)
-{
+void CS230::Camera::SetExtent(math::irect2 newExtent) {
 	extent = newExtent;
 }
 
-void CS230::Camera::Update(const math::vec2& followObjPos)
-{
-	if(followObjPos.x - position.x > movableRange.Right())
-	{
+void CS230::Camera::Update(const math::vec2& followObjPos) {
+	if (followObjPos.x > movableRange.Right() + position.x) {
 		position.x = followObjPos.x - movableRange.Right();
-	} else if(followObjPos.x - position.x < movableRange.Left())
-	{
+	}
+	if (followObjPos.x - position.x < movableRange.Left()) {
 		position.x = followObjPos.x - movableRange.Left();
 	}
-	if (followObjPos.y - position.y > movableRange.Top())
-	{
-		position.y = followObjPos.y - movableRange.Top();
-	}
-	else if (followObjPos.y - position.y < movableRange.Bottom())
-	{
-		position.y = followObjPos.y - movableRange.Bottom();
-	}
-	if(position.x > extent.Right())
-	{
-		position.x = extent.Right();
-	} else if(position.x < extent.Left())
-	{
+
+	if (position.x < extent.Left()) {
 		position.x = extent.Left();
 	}
-	if (position.y > extent.Top())
-	{
-		position.y = extent.Top();
+	if (position.x > extent.Right()) {
+		position.x = extent.Right();
 	}
-	else if (position.y < extent.Bottom())
-	{
+	if (position.y < extent.Bottom()) {
 		position.y = extent.Bottom();
 	}
+	if (position.y > extent.Top()) {
+		position.y = extent.Top();
+	}
 }
 
-math::TransformMatrix CS230::Camera::GetMatrix()
-{
-	return math::TranslateMatrix(-position); 
+math::TransformMatrix CS230::Camera::GetMatrix() {
+	return math::TranslateMatrix(-position);
 }
-

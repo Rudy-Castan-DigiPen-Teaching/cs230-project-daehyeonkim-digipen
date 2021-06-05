@@ -4,26 +4,21 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
 File Name: Exit.cpp
 Project: CS230
-Author: Daehyeon Kim
-Creation date: 5/17/2021
+Author: Kevin Wright
+Creation date: 2/20/2021
 -----------------------------------------------------------------*/
-#include "Exit.h"
-#include "Screens.h"
-#include "../Engine/Collision.h"
-#include "../Engine/Engine.h"
-#include "../Engine/Rect.h"
 
-Exit::Exit(math::irect2 rect) : GameObject(rect.point1)
-{
-	AddGOComponent(new CS230::RectCollision({{ 0,0 }, rect.Size() }, this));
+#include "..\Engine\Collision.h"
+#include "..\Engine\Engine.h"
+#include "Screens.h"
+#include "Exit.h"
+
+Exit::Exit(math::irect2 rect) : GameObject(static_cast<math::vec2>(rect.point1)) {
+    AddGOComponent(new CS230::RectCollision({ math::ivec2{ 0, 0 }, rect.Size() }, this));
 }
 
-void Exit::ResolveCollision(GameObject* objectA)
-{
-	switch(objectA->GetObjectType())
-	{
-	case GameObjectType::Hero:
-		Engine::GetGameStateManager().SetNextState(static_cast<int>(Screens::MainMenu));
-		break;
-	}
+void Exit::ResolveCollision(GameObject* objectA) {
+    if (objectA->GetObjectType() == GameObjectType::Hero) {
+        Engine::GetGameStateManager().SetNextState(static_cast<int>(Screens::MainMenu));
+    }
 }

@@ -8,24 +8,26 @@ Author: Kevin Wright
 Creation date: 2/11/2021
 -----------------------------------------------------------------*/
 #pragma once
+#include <filesystem>
 #include "../Engine/Component.h"
-#include "..\Engine\Texture.h"
+#include "../Engine/Vec2.h"
 
 namespace CS230 {
     class Camera;
+    class Texture;
 }
 
 class Background : public CS230::Component {
 public:
-    void Add(const std::filesystem::path& texturePath, int level);
-    ~Background();
+    void Add(const std::filesystem::path &texturePath, int level);
+    void Unload();
     void Draw(const CS230::Camera& camera);
+    void Draw(math::ivec2 initPos);
     math::ivec2 Size();
 private:
     struct ParallaxInfo {
-        CS230::Texture* texturePtr;
+        CS230::Texture *texturePtr;
         int level;
     };
     std::vector<ParallaxInfo> backgrounds;
 };
-

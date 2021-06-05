@@ -10,36 +10,30 @@ Creation date: 2/14/2021
 #pragma once
 #include "..\Engine\GameObject.h"
 #include "GameObjectTypes.h"
-namespace math { struct vec2; }
 
 class Ball : public CS230::GameObject {
-private:
-    class State_Bounce : public State {
-    public:
-        void Enter(GameObject* object) override;
-        void Update(GameObject* object, double dt) override;
-        void TestForExit(GameObject* object) override;
-        std::string GetName() override { return "Bounce"; }
-    };
-    class State_Land : public State {
-    public:
-        void Enter(GameObject* object) override;
-        void Update(GameObject* object, double dt) override;
-        void TestForExit(GameObject* object) override;
-        std::string GetName() override { return "Land"; }
-    };
-    State_Bounce stateBounce;
-    State_Land stateLand;
-
-
 public:
-    Ball(math::vec2 startPos);
-    GameObjectType GetObjectType() override { return GameObjectType::Ball; }
-    std::string GetObjectTypeName() override { return "Ball"; }
-    bool CanCollideWith(GameObjectType objectBType) override;
-    void ResolveCollision(GameObject* objectB) override;
+	Ball(math::vec2 startPos);
+	GameObjectType GetObjectType() override { return GameObjectType::Ball; }
+	std::string GetObjectTypeName() override { return "Ball"; }
 
+	bool CanCollideWith(GameObjectType objectBType) override;
+	void ResolveCollision(GameObject* objectB) override;
 private:
-    static constexpr int ballCenterX = 44;
-    static constexpr double bounceVelocity = 750.0;
+	class State_Bounce : public State {
+		void Enter(GameObject* object) override;
+		void Update(GameObject* object, double dt) override;
+		void TestForExit(GameObject* object) override;
+		std::string GetName() override { return "bounce"; }
+	};
+	class State_Land : public State {
+		void Enter(GameObject* object) override;
+		void Update(GameObject* object, double dt) override;
+		void TestForExit(GameObject* object) override;
+		std::string GetName() override { return "land"; }
+	};
+	State_Bounce stateBounce;
+	State_Land stateLand;
+
+	static constexpr double bounceVelocity = 700;
 };

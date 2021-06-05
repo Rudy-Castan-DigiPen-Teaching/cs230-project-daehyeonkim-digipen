@@ -4,23 +4,28 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
 File Name: Animation.cpp
 Project: CS230
-Author: Daehyeon Kim
-Creation date: 4/12/2021
+Author: Kevin Wright
+Creation date: 2/12/2021
 -----------------------------------------------------------------*/
+#include <fstream>	// file input stuff
+#include <filesystem>
+
+#include "Engine.h"	// Engine::GetLogger
 #include "Animation.h"
-#include "Engine.h"
-CS230::Animation::Animation() : Animation("./assets/none.anm") { }
+
+CS230::Animation::Animation() : Animation("./assets/none.anm")  { }
 
 CS230::Animation::Animation(const std::filesystem::path& fileName) : animSequenceIndex(0) {
+	std::ifstream inFile(fileName);
+	std::string label;
+
 	if (fileName.extension() != ".anm") {
 		throw std::runtime_error("Bad Filetype.  " + fileName.generic_string() + " not a sprite info file (.anm)");
 	}
-	std::ifstream inFile(fileName);
 	if (inFile.is_open() == false) {
 		throw std::runtime_error("Failed to load " + fileName.generic_string());
 	}
 
-	std::string label;
 	while (inFile.eof() == false) {
 		inFile >> label;
 		if (label == "PlayFrame") {
@@ -30,16 +35,13 @@ CS230::Animation::Animation(const std::filesystem::path& fileName) : animSequenc
 			inFile >> targetTime;
 
 			animation.push_back(new PlayFrame(frame, targetTime));
-		}
-		else if (label == "Loop") {
-			int loopToFrame;
-			inFile >> loopToFrame;
-			animation.push_back(new Loop(loopToFrame));
-		}
-		else if (label == "End") {
+		} else if (label == "Loop") {
+			int loopToIndex;
+			inFile >> loopToIndex;
+			animation.push_back(new Loop(loopToIndex));
+		} else if (label == "End") {
 			animation.push_back(new End());
-		}
-		else {
+		} else {
 			Engine::GetLogger().LogError("Unknown command " + label + " in anm file " + fileName.generic_string());
 		}
 	}
@@ -60,67 +62,41 @@ void CS230::Animation::Update(double dt) {
 		++animSequenceIndex;
 		if (animation[animSequenceIndex]->GetType() == Command::PlayFrame) {
 			currPlayFrameData = static_cast<PlayFrame*>(animation[animSequenceIndex]);
-		}
-		else if (animation[animSequenceIndex]->GetType() == Command::Loop) {
-			Loop* loopData = static_cast<Loop*>(animation[animSequenceIndex]);
+		} else if (animation[animSequenceIndex]->GetType() == Command::Loop) {
+			Loop *loopData = static_cast<Loop*>(animation[animSequenceIndex]);
 			animSequenceIndex = loopData->GetLoopToIndex();
 			if (animation[animSequenceIndex]->GetType() == Command::PlayFrame) {
 				currPlayFrameData = static_cast<PlayFrame*>(animation[animSequenceIndex]);
-			}
-			else {
+			} else {
 				Engine::GetLogger().LogError("Loop does not go to PlayFrame");
 				ResetAnimation();
-			}
-		}
-		else if (animation[animSequenceIndex]->GetType() == Command::End) {
+			} 
+		} else if (animation[animSequenceIndex]->GetType() == Command::End) {
 			isAnimationDone = true;
 			return;
 		}
 	}
 }
 
-int CS230::Animation::GetDisplayFrame()
-{
+int CS230::Animation::GetDisplayFrame() {
 	return currPlayFrameData->GetFrameNum();
 }
 
-void CS230::Animation::ResetAnimation()
-{
+void CS230::Animation::ResetAnimation() {
 	animSequenceIndex = 0;
-	isAnimationDone = false;
 	currPlayFrameData = static_cast<PlayFrame*>(animation[animSequenceIndex]);
+	isAnimationDone = false;
 }
 
-bool CS230::Animation::IsAnimationDone()
-{
-	return isAnimationDone == true;
+bool CS230::Animation::IsAnimationDone() {
+	return isAnimationDone;
 }
 
-CS230::Animation::PlayFrame::PlayFrame(int frame, double duration) : frame(frame), targetTime(duration), timer(0) {}
-
-void CS230::Animation::PlayFrame::Update(double dt)
-{
-	timer += dt;
-}
-
-bool CS230::Animation::PlayFrame::IsFrameDone()
-{
-	return (timer >= targetTime) == true;
-}
-
-void CS230::Animation::PlayFrame::ResetTime()
-{
-	timer = 0;
-}
-
-int CS230::Animation::PlayFrame::GetFrameNum()
-{
-	return frame;
-}
+CS230::Animation::PlayFrame::PlayFrame(int frame, double targetTime) : frame(frame), targetTime(targetTime), timer(0) {}
+void CS230::Animation::PlayFrame::Update(double dt) { timer += dt; }
+bool CS230::Animation::PlayFrame::IsFrameDone() { return timer >= targetTime; }
+void CS230::Animation::PlayFrame::ResetTime() { timer = 0; }
+int CS230::Animation::PlayFrame::GetFrameNum() { return frame; }
 
 CS230::Animation::Loop::Loop(int loopToIndex) : loopToIndex(loopToIndex) {}
-
-int CS230::Animation::Loop::GetLoopToIndex()
-{
-	return loopToIndex;
-}
+int CS230::Animation::Loop::GetLoopToIndex() {return loopToIndex; }

@@ -9,7 +9,6 @@ Creation date: 2/10/2021
 -----------------------------------------------------------------*/
 #pragma once
 #include <vector>
-
 #include "GameState.h"
 
 namespace CS230 {
@@ -23,6 +22,7 @@ namespace CS230 {
 		void Shutdown();
 		void ReloadState();
 		bool HasGameEnded() { return state == State::EXIT; }
+
 		template<typename T>
 		T* GetGSComponent() { return currGameState->GetGSComponent<T>(); }
 	private:
@@ -41,4 +41,3 @@ namespace CS230 {
 		GameState* nextGameState;
 	};
 }
-

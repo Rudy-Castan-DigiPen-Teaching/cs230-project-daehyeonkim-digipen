@@ -12,7 +12,6 @@ Creation date: 2/10/2021
 #include <string>
 #include "ComponentManager.h"
 
-
 namespace CS230 {
 	class Component;
 
@@ -20,9 +19,10 @@ namespace CS230 {
 	public:
 		virtual void Load() = 0;
 		virtual void Update(double dt) = 0;
+		virtual void Draw() = 0;
 		virtual void Unload() = 0;
 		virtual std::string GetName() = 0;
-		virtual void Draw() = 0;
+
 		template<typename T>
 		T* GetGSComponent() { return components.GetComponent<T>(); }
 	protected:
@@ -31,8 +31,8 @@ namespace CS230 {
 		template<typename T>
 		void RemoveGSComponent() { components.RemoveComponent<T>(); }
 		void ClearGSComponent() { components.Clear(); }
+
 	private:
 		ComponentManager components;
-
 	};
 }

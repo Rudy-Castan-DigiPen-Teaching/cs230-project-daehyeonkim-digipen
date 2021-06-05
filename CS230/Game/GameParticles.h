@@ -7,7 +7,6 @@ Project: CS230
 Author: Kevin Wright
 Creation date: 2/26/2021
 -----------------------------------------------------------------*/
-#pragma once
 #include "../Engine/ParticleEmitter.h"
 #include "GameObjectTypes.h"
 
@@ -49,4 +48,3 @@ private:
     };
     static constexpr int NumParticles = 150;
 };
-

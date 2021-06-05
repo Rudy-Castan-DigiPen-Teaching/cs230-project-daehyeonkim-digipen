@@ -4,15 +4,16 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
 File Name: Level2.h
 Project: CS230
-Author: Daehyeon Kim
-Creation date: 03/08/2021
+Author: Kevin Wright
+Creation date: 2/10/2021
 -----------------------------------------------------------------*/
 #pragma once
-#include "../Engine/GameState.h"
-#include "../Engine/Input.h"
-#include "../Engine/GameObjectManager.h"
-#include "../Engine/TransformMatrix.h"
+#include "..\Engine\GameObjectManager.h"
+#include "..\Engine\GameState.h"
+#include "..\Engine\Input.h"
+
 class Ship;
+
 class Level2 : public CS230::GameState {
 public:
 	Level2();
@@ -20,14 +21,15 @@ public:
 	void Update(double dt) override;
 	void Unload() override;
 	void Draw() override;
+
 	std::string GetName() override { return "Level 2"; }
 private:
 	Ship* shipPtr;
-	
-	CS230::InputKey mainMenu;
+
 	CS230::InputKey levelReload;
-	CS230::GameObjectManager* gameObjectManager;
-	math::TransformMatrix noCamera;
+	CS230::InputKey mainMenu;
+
 	CS230::Texture GameOverTexture;
 	CS230::Texture RestartTexture;
 };
+

@@ -17,4 +17,3 @@ namespace CS230 {
         virtual void Update(double) {};
     };
 }
-

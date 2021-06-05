@@ -7,10 +7,16 @@ enum class GameObjectType {
     TreeStump,
     Meteor,
     Ship,
-	EnemyShip,
     Floor,
     Trigger,
     Laser,
     Particle,
-    Count
+    EnemyShip,
+	Alliance,
+    Footman,
+	Rifleman,
+	Horde,
+	Grunt,
+	Jombie,
+    Count,
 };

@@ -10,6 +10,7 @@ Creation date: 2/16/2021
 #pragma once
 #include <string>
 #include "..\Engine\GameState.h"
+#include "..\Engine\Vec2.h"
 #include "..\Engine\Input.h"
 #include "..\Engine\Texture.h"
 
@@ -18,6 +19,7 @@ public:
 	enum class Options {
 		Level1,
 		Level2,
+		Level3,
 		Quit,
 		Count,
 	};
@@ -47,7 +49,7 @@ private:
 	CS230::InputKey downKey;
 	CS230::InputKey selectKey;
 
-	static const unsigned int offColor = 0x404040FF;
-	static const unsigned int onColor = 0xFFFFFFFF;
+	static constexpr unsigned int offColor = 0x404040FF;
+	static constexpr unsigned int onColor = 0xFFFFFFFF;
 };
 
