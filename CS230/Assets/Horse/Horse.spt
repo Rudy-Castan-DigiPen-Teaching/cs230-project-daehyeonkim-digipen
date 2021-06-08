@@ -1,0 +1,22 @@
+assets/Horse.png
+FrameSize 112 96
+HotSpot 46 1
+Frame 0 0
+Frame 112 0
+Frame 224 0
+Frame 336 0
+Frame 448 0
+Frame 560 0
+Frame 672 0
+Frame 784 0
+Frame 896 0
+Frame 1008 0
+Frame 1120 0
+Frame 1232 0
+Frame 1344 0
+Frame 1456 0
+
+CollisionRect -46 0 46 87
+Anim assets/Horse_walk.anm
+Anim assets/Horse_attack.anm
+Anim assets/Horse_dead.anm
