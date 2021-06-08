@@ -12,7 +12,7 @@ Creation date: 2/19/2021
 #include "..\Engine\GameObject.h"
 
 namespace math {
-    struct rect2;
+    struct irect2;
 }
 
 class Floor : public CS230::GameObject {

@@ -153,6 +153,18 @@
     <ClCompile Include="Game\HPBar.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Bullet.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Knight.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Tauren.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Shaman.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Logger.h">
@@ -342,6 +354,18 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\HPBar.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Bullet.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Knight.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Tauren.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Shaman.h">
       <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>

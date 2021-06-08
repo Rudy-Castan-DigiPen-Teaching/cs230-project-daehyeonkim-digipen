@@ -14,13 +14,19 @@ Creation date: 06/04/2021
 class Horde final : public Level3Object
 {
 private:
-	static constexpr int OrcCost = 20;
-	static constexpr int GunnerCost = 150;
-	static constexpr int HeavyCavalryCost = 300;
+	static constexpr int GruntCost = 20;
+	static constexpr int ShamanCost = 30;
+	static constexpr int TaurenCost = 100;
+	static constexpr int goldIncreasingImproveCost = 50;
+	static constexpr int unitImproveCost = 50;
 
+	int whenEnemyRageHP;
+	
 	int goldIncreasing;
 	int enemyGold;
 	double goldTimer;
+	int unitLevel;
+	
 public:
 	Horde(math::vec2 initPos, int hp, math::vec2 HPBarScale);
 	void UpateGold(int _gold);
@@ -29,21 +35,33 @@ public:
 	std::string GetObjectTypeName() override { return "Horde"; }
 
 private:
-	class State_Wating : public State {
+	class State_EarnGold : public State {
 		void Enter(GameObject* object) override;
 		void Update(GameObject* object, double dt) override;
 		void TestForExit(GameObject* object) override;
-		std::string GetName() override { return "waiting"; }
+		std::string GetName() override { return "earngold"; }
 	};
-	class State_Doing : public State {
+	class State_Produce : public State {
 		void Enter(GameObject* object) override;
 		void Update(GameObject* object, double dt) override;
 		void TestForExit(GameObject* object) override;
-		std::string GetName() override { return "doing"; }
+		std::string GetName() override { return "produce"; }
+		int Behavior = 0;
+		enum class EnemyBehavior
+		{
+			do_nothing = 1,
+			make_unit,
+			upgrade,
+			reProduce,
+			count
+		};
 	};
-	State_Wating stateWating;
-	State_Doing stateDoing;
+	State_EarnGold stateEarnGold;
+	State_Produce stateProduce;
 
-	void MakeOrc();
+	void MakeGrunt();
+	void MakeShaman();
+	void MakeTauren();
 	void improveIncresing();
+	void improveUnitLevel();
 };

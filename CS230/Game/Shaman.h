@@ -2,7 +2,7 @@
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
-File Name: Knight.h
+File Name: Shaman.h
 Project: CS230
 Author: Daehyeon Kim
 Creation date: 06/08/2021
@@ -11,7 +11,7 @@ Creation date: 06/08/2021
 #include "Level3Object.h"
 #include "GameObjectTypes.h"
 
-class Knight final : public Level3Object
+class Shaman final : public Level3Object
 {
 private:
 	Level3Object* AttackWho;
@@ -19,13 +19,10 @@ private:
 	math::vec2 speed;
 	double attackTimer;
 	double attackSpeed;
-
 public:
-	Knight(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed);
-	GameObjectType GetObjectType() override { return GameObjectType::Knight; }
-	std::string GetObjectTypeName() override { return "Knight"; }
-	void ResolveCollision(GameObject* objectA) override;
-	bool CanCollideWith(GameObjectType objectBType) override;
+	Shaman(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed);
+	GameObjectType GetObjectType() override { return GameObjectType::Shaman; }
+	std::string GetObjectTypeName() override { return "Shaman"; }
 private:
 	class State_Walking : public State {
 	public:

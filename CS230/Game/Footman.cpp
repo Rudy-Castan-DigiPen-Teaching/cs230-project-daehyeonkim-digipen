@@ -24,9 +24,13 @@ void Footman::ResolveCollision(GameObject* objectA)
 	AttackWho = static_cast<Level3Object*>(objectA);
 	switch (objectA->GetObjectType())
 	{
+	case GameObjectType::Horde:
+		[[fallthrough]];
 	case GameObjectType::Grunt:
 		[[fallthrough]];
-	case GameObjectType::Horde:
+	case GameObjectType::Shaman:
+		[[fallthrough]];
+	case GameObjectType::Tauren:
 		ChangeState(&stateAttack);
 		break;
 	}
@@ -36,8 +40,13 @@ bool Footman::CanCollideWith(GameObjectType objectBType)
 {
 	switch (objectBType)
 	{
-	case GameObjectType::Grunt:
 	case GameObjectType::Horde:
+		[[fallthrough]];
+	case GameObjectType::Grunt:
+		[[fallthrough]];
+	case GameObjectType::Shaman:
+		[[fallthrough]];
+	case GameObjectType::Tauren:
 		return true;
 	default:
 		return false;

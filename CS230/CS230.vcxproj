@@ -182,6 +182,7 @@ xcopy /d /y Assets\* "$(OutputPath)Assets"</Command>
     <ClCompile Include="Game\Background.cpp" />
     <ClCompile Include="Game\Ball.cpp" />
     <ClCompile Include="Game\Alliance.cpp" />
+    <ClCompile Include="Game\Bullet.cpp" />
     <ClCompile Include="Game\HPBar.cpp" />
     <ClCompile Include="Game\Bunny.cpp" />
     <ClCompile Include="Game\EnemyShip.cpp" />
@@ -190,6 +191,7 @@ xcopy /d /y Assets\* "$(OutputPath)Assets"</Command>
     <ClCompile Include="Game\Gold.cpp" />
     <ClCompile Include="Game\Horde.cpp" />
     <ClCompile Include="Game\Hero.cpp" />
+    <ClCompile Include="Game\Knight.cpp" />
     <ClCompile Include="Game\Level3Object.cpp" />
     <ClCompile Include="Game\Footman.cpp" />
     <ClCompile Include="Game\Laser.cpp" />
@@ -203,8 +205,10 @@ xcopy /d /y Assets\* "$(OutputPath)Assets"</Command>
     <ClCompile Include="Game\Rifleman.cpp" />
     <ClCompile Include="Game\Score.cpp" />
     <ClCompile Include="Game\ScreenWrap.cpp" />
+    <ClCompile Include="Game\Shaman.cpp" />
     <ClCompile Include="Game\Ship.cpp" />
     <ClCompile Include="Game\Splash.cpp" />
+    <ClCompile Include="Game\Tauren.cpp" />
     <ClCompile Include="Game\Timer.cpp" />
     <ClCompile Include="Game\TreeStump.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -237,6 +241,7 @@ xcopy /d /y Assets\* "$(OutputPath)Assets"</Command>
     <ClInclude Include="Game\Ball.h" />
     <ClInclude Include="Game\Ball_Anims.h" />
     <ClInclude Include="Game\Alliance.h" />
+    <ClInclude Include="Game\Bullet.h" />
     <ClInclude Include="Game\HPBar.h" />
     <ClInclude Include="Game\Bunny.h" />
     <ClInclude Include="Game\Bunny_Anims.h" />
@@ -251,9 +256,12 @@ xcopy /d /y Assets\* "$(OutputPath)Assets"</Command>
     <ClInclude Include="Game\Horde.h" />
     <ClInclude Include="Game\Hero.h" />
     <ClInclude Include="Game\Hero_Anims.h" />
+    <ClInclude Include="Game\Knight.h" />
     <ClInclude Include="Game\Level3Object.h" />
     <ClInclude Include="Game\Footman.h" />
     <ClInclude Include="Game\Rifleman.h" />
+    <ClInclude Include="Game\Shaman.h" />
+    <ClInclude Include="Game\Tauren.h" />
     <ClInclude Include="Game\Unit_Anims.h" />
     <ClInclude Include="Game\Laser.h" />
     <ClInclude Include="Game\Level1.h" />

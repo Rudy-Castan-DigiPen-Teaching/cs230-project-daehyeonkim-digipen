@@ -19,7 +19,7 @@ Creation date: 2/16/2021
 MainMenu::OptionData MainMenu::optionsData[static_cast<int>(MainMenu::Options::Count)] = {
 	{"Side Scroller", {0.5, 0.45}, {} },
 	{"Space Shooter", {0.5, 0.35}, {} },
-	{"Knight vs Monster", {0.5,0.25}, {}},
+	{"Alliance vs Horde", {0.5,0.25}, {}},
 	{"Quit", {0.5, 0.15}, {} },
 };
 

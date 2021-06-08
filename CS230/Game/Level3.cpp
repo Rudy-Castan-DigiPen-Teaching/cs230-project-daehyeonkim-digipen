@@ -9,10 +9,12 @@ Creation date: 06/04/2021
 -----------------------------------------------------------------*/
 #include "Level3.h"
 #include "Alliance.h"
+#include "Floor.h"
 #include "Horde.h"
 #include "Score.h"
 #include "Fonts.h"
 #include "Gold.h"
+#include "Gravity.h"
 #include "Screens.h"
 #include "../Engine/Engine.h"
 #include "../Engine/GameObjectManager.h"
@@ -22,6 +24,7 @@ Level3::Level3() : levelReload(CS230::InputKey::Keyboard::R), mainMenu(CS230::In
 
 void Level3::Load()
 {
+	AddGSComponent(new Gravity(1875));
 #ifdef _DEBUG
 	AddGSComponent(new ShowCollision(CS230::InputKey::Keyboard::Tilde));
 #endif
@@ -32,10 +35,12 @@ void Level3::Load()
 	bgPtr->Add("assets/map.png", 1);
 	CS230::GameObjectManager* gom = new CS230::GameObjectManager();
 	AddGSComponent(gom);
-	player = new Alliance({0, floor}, 2000, { 1.5,1.5 });
-	enemy = new Horde({ Engine::GetWindow().GetSize().x - 96., floor }, 2000, {1.5,1.5});
+	player = new Alliance(math::vec2{ 0, floor }, 2000, math::vec2{ 1.5,1.5 }, 25,1,math::vec2{800, 0});
+	enemy = new Horde({ Engine::GetWindow().GetSize().x - 96., floor }, 2000, { 1.5,1.5 });
 	gom->Add(player);
 	gom->Add(enemy);
+	gom->Add(new Floor(math::irect2{{ 0, 0 }, { Engine::GetWindow().GetSize().x, static_cast<int>(Level3::floor) }}));
+
 	
 }
 

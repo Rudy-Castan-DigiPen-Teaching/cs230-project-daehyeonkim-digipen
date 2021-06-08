@@ -23,7 +23,6 @@ public:
 	Rifleman(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed);
 	GameObjectType GetObjectType() override { return GameObjectType::Rifleman; }
 	std::string GetObjectTypeName() override { return "Rifleman"; }
-	bool CanCollideWith(GameObjectType objectBType) override;
 private:
 	class State_Walking : public State {
 	public:
