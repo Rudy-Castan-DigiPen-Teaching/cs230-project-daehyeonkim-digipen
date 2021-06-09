@@ -34,7 +34,6 @@ void Knight::ResolveCollision(GameObject* objectA)
 		{
 			AttackWho = static_cast<Level3Object*>(objectA);
 		}
-		ChangeState(&stateAttack);
 		break;
 	}
 }
@@ -58,71 +57,75 @@ bool Knight::CanCollideWith(GameObjectType objectBType)
 
 void Knight::State_Walking::Enter(GameObject* object)
 {
-	Knight* footman = static_cast<Knight*>(object);
-	footman->SetVelocity(footman->speed);
-	footman->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Unit_Anims::Walk_Anim));
+	Knight* knight = static_cast<Knight*>(object);
+	knight->SetVelocity(knight->speed);
+	knight->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Unit_Anims::Walk_Anim));
 }
 
 void Knight::State_Walking::Update(GameObject*, double) {}
 
 void Knight::State_Walking::TestForExit(GameObject* object)
 {
-	Knight* footman = static_cast<Knight*>(object);
-	if (footman->isDead() == true)
+	Knight* knight = static_cast<Knight*>(object);
+	if (knight->isDead() == true)
 	{
-		footman->ChangeState(&footman->stateDead);
+		knight->ChangeState(&knight->stateDead);
+	}
+	else if (knight->AttackWho->isDead() == false)
+	{
+		knight->ChangeState(&knight->stateAttack);
 	}
 }
 
 void Knight::State_Attack::Enter(GameObject* object)
 {
-	Knight* footman = static_cast<Knight*>(object);
-	footman->SetVelocity({ 0,0 });
-	footman->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Unit_Anims::Attack_Anim));
+	Knight* knight = static_cast<Knight*>(object);
+	knight->SetVelocity({ 0,0 });
+	knight->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Unit_Anims::Attack_Anim));
 }
 
 void Knight::State_Attack::Update(GameObject* object, double dt)
 {
-	Knight* footman = static_cast<Knight*>(object);
-	footman->attackTimer += dt;
-	if (footman->attackTimer >= footman->attackSpeed)
+	Knight* knight = static_cast<Knight*>(object);
+	knight->attackTimer += dt;
+	if (knight->attackTimer >= knight->attackSpeed)
 	{
-		footman->AttackWho->UpdateHP(-footman->attackDamage);
-		footman->attackTimer = 0;
+		knight->AttackWho->UpdateHP(-knight->attackDamage);
+		knight->attackTimer = 0;
 	}
 }
 
 void Knight::State_Attack::TestForExit(GameObject* object)
 {
-	Knight* footman = static_cast<Knight*>(object);
-	if (footman->DoesCollideWith(footman->AttackWho) == false)
+	Knight* knight = static_cast<Knight*>(object);
+	if (knight->DoesCollideWith(knight->AttackWho) == false)
 	{
-		footman->AttackWho = nullptr;
-		footman->ChangeState(&footman->stateWalking);
+		knight->AttackWho = nullptr;
+		knight->ChangeState(&knight->stateWalking);
 	}
-	if (footman->isDead() == true)
+	if (knight->AttackWho != nullptr && knight->isDead() == true)
 	{
-		footman->ChangeState(&footman->stateDead);
+		knight->ChangeState(&knight->stateDead);
 	}
 }
 
 void Knight::State_Dead::Enter(GameObject* object)
 {
-	Knight* footman = static_cast<Knight*>(object);
-	footman->SetVelocity({ 0,0 });
-	footman->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Unit_Anims::Dead_Anim));
-	footman->RemoveGOComponent<CS230::Collision>();
-	footman->RemoveGOComponent<HPBar>();
+	Knight* knight = static_cast<Knight*>(object);
+	knight->SetVelocity({ 0,0 });
+	knight->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Unit_Anims::Dead_Anim));
+	knight->RemoveGOComponent<CS230::Collision>();
+	knight->RemoveGOComponent<HPBar>();
 }
 
 void Knight::State_Dead::Update(GameObject*, double) {}
 
 void Knight::State_Dead::TestForExit(GameObject* object)
 {
-	Knight* footman = static_cast<Knight*>(object);
-	if (footman->GetGOComponent<CS230::Sprite>()->GetCurrentAnim() == static_cast<int>(Unit_Anims::Dead_Anim) && footman->GetGOComponent<CS230::Sprite>()->IsAnimationDone() == true)
+	Knight* knight = static_cast<Knight*>(object);
+	if (knight->GetGOComponent<CS230::Sprite>()->GetCurrentAnim() == static_cast<int>(Unit_Anims::Dead_Anim) && knight->GetGOComponent<CS230::Sprite>()->IsAnimationDone() == true)
 	{
-		footman->Destroy();
+		knight->Destroy();
 	}
 }
 

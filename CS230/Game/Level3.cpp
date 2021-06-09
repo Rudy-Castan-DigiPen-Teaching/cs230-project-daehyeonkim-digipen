@@ -21,7 +21,7 @@ Creation date: 06/04/2021
 #include "../Engine/GameObjectManager.h"
 #include "../Engine/ShowCollision.h"
 
-Level3::Level3() : levelReload(CS230::InputKey::Keyboard::R), mainMenu(CS230::InputKey::Keyboard::Escape), player(nullptr), enemy(nullptr) {}
+Level3::Level3() : levelReload(CS230::InputKey::Keyboard::R), mainMenu(CS230::InputKey::Keyboard::Escape), addGold(CS230::InputKey::Keyboard::Enter),player(nullptr), enemy(nullptr) {}
 
 void Level3::Load()
 {
@@ -55,6 +55,10 @@ void Level3::Update(double dt)
 #ifdef _DEBUG
 	if (levelReload.IsKeyReleased() == true) {
 		Engine::GetGameStateManager().ReloadState();
+	}
+	if (addGold.IsKeyReleased() == true)
+	{
+		GetGSComponent<Gold>()->UpdateGold(1000);
 	}
 #endif
 }

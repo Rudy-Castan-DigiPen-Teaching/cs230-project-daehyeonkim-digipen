@@ -16,8 +16,8 @@ class Horde final : public Level3Object
 private:
 	static constexpr int gruntCost = 10;
 	static constexpr int shamanCost = 15;
-	static constexpr int taurenCost = 50;
-	static constexpr int goldIncreasingImproveCost = 15;
+	static constexpr int taurenCost = 10;
+	static constexpr int goldIncreasingImproveCost = 20;
 	static constexpr int unitImproveCost = 30;
 
 	int whenEnemyFeelDangerHP;

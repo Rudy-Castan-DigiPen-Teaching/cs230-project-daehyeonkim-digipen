@@ -37,7 +37,6 @@ void Grunt::ResolveCollision(GameObject* objectA)
 		{
 			AttackWho = static_cast<Level3Object*>(objectA);
 		}
-		ChangeState(&stateAttack);
 		break;
 	}
 }
@@ -74,6 +73,10 @@ void Grunt::State_Walking::TestForExit(GameObject* object)
 	{
 		grunt->ChangeState(&grunt->stateDead);
 	}
+	else if (grunt->AttackWho->isDead() == false)
+	{
+		grunt->ChangeState(&grunt->stateAttack);
+	}
 }
 
 void Grunt::State_Attack::Enter(GameObject* object)
@@ -81,7 +84,6 @@ void Grunt::State_Attack::Enter(GameObject* object)
 	Grunt* grunt = static_cast<Grunt*>(object);
 	grunt->SetVelocity({ 0,0 });
 	grunt->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Unit_Anims::Attack_Anim));
-	
 }
 
 void Grunt::State_Attack::Update(GameObject* object, double dt)
@@ -103,7 +105,7 @@ void Grunt::State_Attack::TestForExit(GameObject* object)
 		grunt->AttackWho = nullptr;
 		grunt->ChangeState(&grunt->stateWalking);
 	}
-	if (grunt->isDead() == true)
+	if (grunt->AttackWho != nullptr && grunt->isDead() == true)
 	{
 		grunt->ChangeState(&grunt->stateDead);
 	}

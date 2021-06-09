@@ -32,4 +32,5 @@ private:
 	Horde* enemy;
 	CS230::InputKey levelReload;
 	CS230::InputKey mainMenu;
+	CS230::InputKey addGold;
 };

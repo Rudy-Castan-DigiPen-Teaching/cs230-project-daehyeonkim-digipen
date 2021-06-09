@@ -75,7 +75,7 @@ void Horde::improveUnitLevel()
 	}
 }
 
-void Horde::improveIncresing()
+void Horde::improveGoldIncresing()
 {
 	const int goldUpCost = goldIncreasingImproveCost * goldIncreasing;
 	if (enemyGold >= goldUpCost)
@@ -112,17 +112,18 @@ void Horde::State_Produce::Enter(GameObject*)
 void Horde::State_Produce::Update(GameObject* object, double)
  {
 	Horde* horde = static_cast<Horde*>(object);
-	if (Behavior % static_cast<int>(EnemyBehavior::upgrade) == 0)
-	{
-		horde->improveIncresing();
-		horde->improveUnitLevel();
-	}
-	if(Behavior % static_cast<int>(EnemyBehavior::make_unit) == 0)
-	{
-		horde->MakeTauren();
-		horde->MakeShaman();
-		horde->MakeGrunt();
-	}
+	horde->MakeTauren();
+	//if (Behavior % static_cast<int>(EnemyBehavior::upgrade) == 0)
+	//{
+	//	horde->improveGoldIncresing();
+	//	horde->improveUnitLevel();
+	//}
+	//if(Behavior % static_cast<int>(EnemyBehavior::make_unit) == 0)
+	//{
+	//	horde->MakeTauren();
+	//	horde->MakeShaman();
+	//	horde->MakeGrunt();
+	//}
 }
 
 void Horde::State_Produce::TestForExit(GameObject* object)

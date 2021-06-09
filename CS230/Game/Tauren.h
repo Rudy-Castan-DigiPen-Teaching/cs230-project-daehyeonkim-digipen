@@ -9,13 +9,14 @@ Author: Daehyeon Kim
 Creation date: 06/08/2021
 -----------------------------------------------------------------*/
 #pragma once
+#include <list>
 #include "Level3Object.h"
 #include "GameObjectTypes.h"
 
 class Tauren final : public Level3Object
 {
 private:
-	Level3Object* AttackWho;
+	std::list<Level3Object*> AttackWho;
 	int attackDamage;
 	math::vec2 speed;
 	double attackTimer;

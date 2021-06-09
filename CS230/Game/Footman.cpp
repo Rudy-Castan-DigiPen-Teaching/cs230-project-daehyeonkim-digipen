@@ -34,7 +34,6 @@ void Footman::ResolveCollision(GameObject* objectA)
 		{
 			AttackWho = static_cast<Level3Object*>(objectA);
 		}
-		ChangeState(&stateAttack);
 		break;
 	}
 }
@@ -71,6 +70,10 @@ void Footman::State_Walking::TestForExit(GameObject* object)
 	if (footman->isDead() == true)
 	{
 		footman->ChangeState(&footman->stateDead);
+	}
+	else if (footman->AttackWho != nullptr && footman->AttackWho->isDead() == false)
+	{
+		footman->ChangeState(&footman->stateAttack);
 	}
 }
 
