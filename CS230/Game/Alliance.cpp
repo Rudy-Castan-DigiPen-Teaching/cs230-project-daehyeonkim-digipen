@@ -14,13 +14,11 @@ Creation date: 06/04/2021
 #include "HPBar.h"
 #include "Knight.h"
 #include "Rifleman.h"
-#include "../Engine/Collision.h"
 #include "../Engine/Engine.h"
 #include "../Engine/GameObjectManager.h"
-
-Alliance::Alliance(math::vec2 initPos, int hp, math::vec2 HPBarScale, int ad, double attackSpeed, math::vec2 speed) : Level3Object(initPos, hp, HPBarScale), goldIncreasing(1), goldTimer(0),attackSpeed(attackSpeed), attackTimer(0), ad(ad), speed(speed), angle(0), footmanKey(CS230::InputKey::Keyboard::A), riflemanKey(CS230::InputKey::Keyboard::S), knightKey(CS230::InputKey::Keyboard::D), goldEarnKey(CS230::InputKey::Keyboard::G), shootDamageKey(CS230::InputKey::Keyboard::Z), shootSpeedKey(CS230::InputKey::Keyboard::X), bulletSpeedKey(CS230::InputKey::Keyboard::C), shootKey(CS230::InputKey::Keyboard::Space), angleUP(CS230::InputKey::Keyboard::Up), angleDown(CS230::InputKey::Keyboard::Down), upgradeNumberAttackDamage(0), upgradeNumberBulletSpeed(0), upgradeNumberAttackSpeed(0)
+Alliance::Alliance(math::vec2 initPos, int hp, math::vec2 HPBarScale, int ad, double attackSpeed, math::vec2 speed) : Level3Object(initPos, hp, HPBarScale), goldIncreasing(1), goldTimer(0),attackSpeed(attackSpeed), attackTimer(0), ad(ad), speed(speed), angle(0), footmanKey(CS230::InputKey::Keyboard::A), riflemanKey(CS230::InputKey::Keyboard::S), knightKey(CS230::InputKey::Keyboard::D), goldEarnKey(CS230::InputKey::Keyboard::G), shootDamageKey(CS230::InputKey::Keyboard::Z), shootSpeedKey(CS230::InputKey::Keyboard::X), bulletSpeedKey(CS230::InputKey::Keyboard::C), shootKey(CS230::InputKey::Keyboard::Space), angleUP(CS230::InputKey::Keyboard::Up), angleDown(CS230::InputKey::Keyboard::Down), upgradeNumberAttackDamage(0), upgradeNumberBulletSpeed(0), upgradeNumberAttackSpeed(0), Cannon(CS230::Sprite("assets/LEVEL3/cannon.spt", this))
 {
-	AddGOComponent(new CS230::RectCollision({ {0,0}, {96,192} }, this));
+	AddGOComponent(new CS230::Sprite("assets/LEVEL3/Base.spt", this));
 	AddGOComponent(new HPBar(hp, { 2, 2 }));
 }
 
@@ -38,17 +36,17 @@ void Alliance::Update(double dt)
 	const unsigned int adUpCost = adImproveCost * upgradeNumberAttackDamage;
 	const unsigned int attackSpeedUpCost = attackSpeedImproveCost * upgradeNumberAttackSpeed;
 	const unsigned int rangeUpCost = rangeImproveCost * upgradeNumberBulletSpeed;
-	if(footmanKey.IsKeyReleased() == true && gold >= FootmanCost)
+	if(footmanKey.IsKeyReleased() == true && gold >= footmanCost)
 	{
-		MakeFootman(FootmanCost);
+		MakeFootman(footmanCost);
 	}
-	else if(riflemanKey.IsKeyReleased() == true && gold >= RiflemanCost)
+	else if(riflemanKey.IsKeyReleased() == true && gold >= riflemanCost)
 	{
-		MakeRifleman(RiflemanCost);
+		MakeRifleman(riflemanCost);
 	}
-	else if (riflemanKey.IsKeyReleased() == true && gold >= RiflemanCost)
+	else if (knightKey.IsKeyReleased() == true && gold >= knightCost)
 	{
-		MakeKnight(KnightCost);
+		MakeKnight(knightCost);
 	}
 	else if(goldEarnKey.IsKeyReleased() == true && gold >= goldUpCost)
 	{
@@ -71,19 +69,20 @@ void Alliance::Update(double dt)
 		Shoot();
 		attackTimer = 0;
 	}
-	if(angleUP.IsKeyDown() == true)
+	if(angleUP.IsKeyDown() == true && angle <= angleDownLim)
 	{
-		angle += PI / 6 * dt;
+		angle += angleDownLim/2 * dt;
 	}
-	if (angleDown.IsKeyDown() == true)
+	else if (angleDown.IsKeyDown() == true && angle >= angleUpLim)
 	{
-		angle -= PI / 6 * dt;
+		angle += angleUpLim/2 * dt;
 	}
 }
 
 void Alliance::Draw(math::TransformMatrix displayMatrix)
 {
 	Level3Object::Draw(displayMatrix);
+	Cannon.Draw(displayMatrix * GetMatrix() * math::TranslateMatrix(GetGOComponent<CS230::Sprite>()->GetHotSpot(1)) * math::ScaleMatrix({0.7,0.7}) * math::RotateMatrix(angle));
 }
 
 void Alliance::Shoot()

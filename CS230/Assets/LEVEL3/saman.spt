@@ -1,4 +1,4 @@
-Assets/Prince/grunt.png
+Assets/LEVEL3/shaman.png
 FrameSize 120 100
 HotSpot 60 1
 Frame 0 0
@@ -17,7 +17,8 @@ Frame 1200 0
 Frame 1320 0
 
 CollisionRect -20 1 25 72
+CollisionCircle 350
 
-Anim Assets/Prince/grunt_walk.anm
-Anim Assets/Prince/grunt_attack.anm
-Anim Assets/Prince/grunt_dead.anm
+Anim Assets/LEVEL3/shaman_walk.anm
+Anim Assets/LEVEL3/shaman_attack.anm
+Anim Assets/LEVEL3/shaman_dead.anm

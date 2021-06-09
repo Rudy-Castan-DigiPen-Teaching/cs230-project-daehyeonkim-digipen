@@ -1,4 +1,4 @@
-Assets/Prince/rifleman.png
+Assets/LEVEL3/rifleman.png
 FrameSize 96 64
 HotSpot 36 1
 Frame 0 0
@@ -19,6 +19,6 @@ Frame 1248 0
 CollisionRect -11 0 11 64
 CollisionCircle 250
 
-Anim Assets/Prince/rifleman_walk.anm
-Anim Assets/Prince/rifleman_attack.anm
-Anim Assets/Prince/rifleman_dead.anm
+Anim Assets/LEVEL3/rifleman_walk.anm
+Anim Assets/LEVEL3/rifleman_attack.anm
+Anim Assets/LEVEL3/rifleman_dead.anm

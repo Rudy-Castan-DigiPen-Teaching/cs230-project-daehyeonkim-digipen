@@ -14,7 +14,7 @@ Creation date: 06/08/2021
 #include "../Engine/Collision.h"
 Knight::Knight(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed) : Level3Object(position, hp, HPBarScale), ad(ad), speed(movementSpeed), attackSpeed(attackSpeed), attackTimer(0), AttackWho(nullptr)
 {
-	AddGOComponent(new CS230::Sprite("assets/prince/knight.spt", this));
+	AddGOComponent(new CS230::Sprite("assets/LEVEL3/knight.spt", this));
 	ChangeState(&stateWalking);
 }
 

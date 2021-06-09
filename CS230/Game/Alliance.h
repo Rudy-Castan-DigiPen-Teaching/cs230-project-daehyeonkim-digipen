@@ -11,6 +11,7 @@ Creation date: 06/04/2021
 #include "GameObjectTypes.h"
 #include "Level3Object.h"
 #include "../Engine/Input.h"
+#include "../Engine/Sprite.h"
 
 class Alliance final : public Level3Object
 {
@@ -27,15 +28,16 @@ private:
 	CS230::InputKey bulletSpeedKey;
 	CS230::InputKey angleUP;
 	CS230::InputKey angleDown;
-	static constexpr int FootmanCost = 20;
-	static constexpr int RiflemanCost = 30;
-	static constexpr int KnightCost = 100;
+	static constexpr int footmanCost = 20;
+	static constexpr int riflemanCost = 30;
+	static constexpr int knightCost = 100;
 	static constexpr int goldIncreasingImproveCost = 50;
 	static constexpr int adImproveCost = 50;
 	static constexpr int attackSpeedImproveCost = 50;
 	static constexpr int rangeImproveCost = 100;
 	static constexpr double factor = 1.5;
-	
+	static constexpr double angleDownLim = PI / 3.;
+	static constexpr double angleUpLim = -PI / 3.;
 
 	int goldIncreasing;
 	int ad;
@@ -48,6 +50,8 @@ private:
 	double goldTimer;
 	double attackTimer;
 	double angle;
+
+	CS230::Sprite Cannon;
 public:
 	Alliance(math::vec2 initPos, int hp, math::vec2 HPBarScale, int ad, double attackSpeed, math::vec2 speed);
 	void Update(double dt) override;

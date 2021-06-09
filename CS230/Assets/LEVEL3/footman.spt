@@ -1,4 +1,4 @@
-Assets/Prince/footman.png
+Assets/LEVEL3/footman.png
 FrameSize 80 64
 HotSpot 36 1
 Frame 0 0
@@ -18,6 +18,6 @@ Frame 1040 0
 
 CollisionRect -11 0 11 64
 
-Anim Assets/Prince/footman_walk.anm
-Anim Assets/Prince/footman_attack.anm
-Anim Assets/Prince/footman_dead.anm
+Anim Assets/LEVEL3/footman_walk.anm
+Anim Assets/LEVEL3/footman_attack.anm
+Anim Assets/LEVEL3/footman_dead.anm

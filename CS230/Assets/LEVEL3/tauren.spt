@@ -1,4 +1,4 @@
-assets/Tauren.png
+assets/LEVEL3/tauren.png
 FrameSize 144 144
 HotSpot 72 1
 Frame 0 0
@@ -17,6 +17,6 @@ Frame 1584 0
 Frame 1728 0
 
 CollisionRect -32 0 37 96
-Anim assets/Tauren_walk.anm
-Anim assets/Tauren_attack.anm
-Anim assets/Tauren_dead.anm
+Anim assets/LEVEL3/tauren_walk.anm
+Anim assets/LEVEL3/tauren_attack.anm
+Anim assets/LEVEL3/tauren_dead.anm

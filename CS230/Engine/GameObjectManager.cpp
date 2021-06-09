@@ -17,6 +17,11 @@ void CS230::GameObjectManager::Add(GameObject* obj) {
 	gameObjects.push_back(obj);
 }
 
+void CS230::GameObjectManager::AddFront(GameObject* obj)
+{
+	gameObjects.push_front(obj);
+}
+
 CS230::GameObjectManager::~GameObjectManager() {
 	for (GameObject* obj : gameObjects) {
 		delete obj;

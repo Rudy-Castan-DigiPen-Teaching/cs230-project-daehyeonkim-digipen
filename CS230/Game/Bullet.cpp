@@ -19,7 +19,7 @@ Creation date: 2/21/2021
 Bullet::Bullet(math::vec2 pos, double rotation, math::vec2 scale, math::vec2 velocity, int ad) : GameObject(pos, rotation, scale), ad(ad), floor(nullptr)
 {
     SetVelocity(GetMatrix() * velocity);
-    AddGOComponent(new CS230::Sprite("assets/prince/bomb.spt", this));
+    AddGOComponent(new CS230::Sprite("assets/LEVEL3/bomb.spt", this));
     for (GameObject* obj : Engine::GetGSComponent<CS230::GameObjectManager>()->Objects())
     {
     	if(obj->GetObjectType() == GameObjectType::Floor)

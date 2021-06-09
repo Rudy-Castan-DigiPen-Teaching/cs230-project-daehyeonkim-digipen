@@ -1,4 +1,4 @@
-assets/Horse.png
+assets/LEVEL3/knight.png
 FrameSize 112 96
 HotSpot 46 1
 Frame 0 0
@@ -17,6 +17,6 @@ Frame 1344 0
 Frame 1456 0
 
 CollisionRect -46 0 46 87
-Anim assets/Horse_walk.anm
-Anim assets/Horse_attack.anm
-Anim assets/Horse_dead.anm
+Anim assets/LEVEL3/knight_walk.anm
+Anim assets/LEVEL3/knight_attack.anm
+Anim assets/LEVEL3/knight_dead.anm

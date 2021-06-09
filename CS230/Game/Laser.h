@@ -7,9 +7,7 @@ Project: CS230
 Author: Kevin Wright
 Creation date: 2/21/2021
 -----------------------------------------------------------------*/
-
 #pragma once
-
 #include "..\Engine\GameObject.h"
 #include "GameObjectTypes.h"
 

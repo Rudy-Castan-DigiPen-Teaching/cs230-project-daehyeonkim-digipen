@@ -15,8 +15,8 @@ Creation date: 06/05/2021
 
 HPBar::HPBar(int maxHP, math::vec2 scale) : maxHP(maxHP), hp(maxHP), scale(scale)
 {
-	HPoutline = Engine::GetTextureManager().Load("assets/Prince/HPBar_Outline.png");
-	HPfill = Engine::GetTextureManager().Load("assets/Prince/HPBar_Fill.png");
+	HPoutline = Engine::GetTextureManager().Load("assets/LEVEL3/HPBar_Outline.png");
+	HPfill = Engine::GetTextureManager().Load("assets/LEVEL3/HPBar_Fill.png");
 }
 
 void HPBar::UpdateHP(int _hp)
