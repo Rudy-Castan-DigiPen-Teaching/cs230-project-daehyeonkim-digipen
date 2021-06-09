@@ -18,6 +18,7 @@ namespace CS230 {
 	public:
 		~GameObjectManager();
 		void Add(GameObject* obj);
+		void AddFront(GameObject* obj);
 
 		void Update(double dt) override;
 		void DrawAll(math::TransformMatrix& cameraMatrix);

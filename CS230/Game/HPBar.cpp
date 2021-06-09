@@ -30,7 +30,6 @@ void HPBar::UpdateHP(int _hp)
 
 void HPBar::Draw(math::TransformMatrix displayMatrix)
 {
-	math::TransformMatrix barPosition = math::TranslateMatrix(math::vec2{ -initBarSize.x / 2, -initBarSize.y });
 	math::TransformMatrix barMatrix = displayMatrix  * math::ScaleMatrix(scale);
 	math::TransformMatrix barGap = math::TranslateMatrix(math::vec2{ 1,1 });
 	HPoutline->Draw(barMatrix);

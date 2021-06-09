@@ -29,11 +29,7 @@ void Level3Object::Draw(math::TransformMatrix displayMatrix)
 		if(collisionPtr != nullptr)
 		{
 			math::vec2 objSize = collisionPtr->GetWorldCoorRect().Size();
-			barPosition = math::TranslateMatrix(math::vec2{ -(HPBar::initBarSize.x * HPBarScale.x - objSize.x) / 2., (HPBar::initBarSize.y / 2.) * HPBarScale.y + objSize.y });
-			if (GetObjectType() != GameObjectType::Horde && GetObjectType() != GameObjectType::Alliance)
-			{
-				barPosition *= math::TranslateMatrix(math::vec2{ -collisionPtr->GetWorldCoorRect().Size().x / 2, 0 });
-			}
+			barPosition = math::TranslateMatrix(math::vec2{ -(HPBar::initBarSize.x * HPBarScale.x - objSize.x) / 2., (HPBar::initBarSize.y / 2.) * HPBarScale.y + objSize.y }) * math::TranslateMatrix(math::vec2{ -collisionPtr->GetWorldCoorRect().Size().x / 2, 0 });
 		}
 		hpbar->Draw(displayMatrix * GetMatrix() * barPosition);
 	}

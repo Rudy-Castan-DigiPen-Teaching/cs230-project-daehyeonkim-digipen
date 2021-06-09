@@ -9,13 +9,14 @@ Creation date: 06/08/2021
 -----------------------------------------------------------------*/
 #include "Shaman.h"
 #include "HPBar.h"
+#include "Score.h"
 #include "Unit_Anims.h"
 #include "../Engine/Sprite.h"
 #include "../Engine/Collision.h"
 #include "../Engine/Engine.h"
 #include "../Engine/GameObjectManager.h"
 
-Shaman::Shaman(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed) : Level3Object(position, hp, HPBarScale), ad(ad), speed(movementSpeed), attackSpeed(attackSpeed), attackTimer(0), AttackWho(nullptr)
+Shaman::Shaman(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed) : Level3Object(position, hp, HPBarScale), attackDamage(ad), speed(movementSpeed), attackSpeed(attackSpeed), attackTimer(0), AttackWho(nullptr)
 {
 	AddGOComponent(new CS230::Sprite("assets/LEVEL3/shaman.spt", this));
 	ChangeState(&stateWalking);
@@ -23,19 +24,19 @@ Shaman::Shaman(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math:
 
 void Shaman::State_Walking::Enter(GameObject* object)
 {
-	Shaman* rifleman = static_cast<Shaman*>(object);
-	rifleman->SetVelocity(rifleman->speed);
-	rifleman->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Unit_Anims::Walk_Anim));
+	Shaman* shaman = static_cast<Shaman*>(object);
+	shaman->SetVelocity(-shaman->speed);
+	shaman->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Unit_Anims::Walk_Anim));
 }
 
 void Shaman::State_Walking::Update(GameObject*, double) {}
 
 void Shaman::State_Walking::TestForExit(GameObject* object)
 {
-	Shaman* rifleman = static_cast<Shaman*>(object);
-	if (rifleman->isDead() == true)
+	Shaman* shaman = static_cast<Shaman*>(object);
+	if (shaman->isDead() == true)
 	{
-		rifleman->ChangeState(&rifleman->stateDead);
+		shaman->ChangeState(&shaman->stateDead);
 		return;
 	}
 	for (GameObject* obj : Engine::GetGSComponent<CS230::GameObjectManager>()->Objects())
@@ -49,13 +50,13 @@ void Shaman::State_Walking::TestForExit(GameObject* object)
 		case GameObjectType::Rifleman:
 			[[fallthrough]];
 		case GameObjectType::Knight:
-			if (rifleman->GetGOComponent<CS230::CircleCollision>()->DoesCollideWith(obj->GetPosition()) == true && rifleman->AttackWho == nullptr)
+			if (shaman->GetGOComponent<CS230::CircleCollision>()->DoesCollideWith(obj->GetPosition()) == true && (shaman->AttackWho == nullptr || shaman->AttackWho->GetObjectType() == GameObjectType::Alliance))
 			{
 				Level3Object* targetObj = dynamic_cast<Level3Object*>(obj);
 				if (targetObj->isDead() != true)
 				{
-					rifleman->AttackWho = targetObj;
-					rifleman->ChangeState(&rifleman->stateAttack);
+					shaman->AttackWho = targetObj;
+					shaman->ChangeState(&shaman->stateAttack);
 				}
 			}
 			break;
@@ -67,53 +68,54 @@ void Shaman::State_Walking::TestForExit(GameObject* object)
 
 void Shaman::State_Attack::Enter(GameObject* object)
 {
-	Shaman* rifleman = static_cast<Shaman*>(object);
-	rifleman->SetVelocity({ 0,0 });
-	rifleman->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Unit_Anims::Attack_Anim));
+	Shaman* shaman = static_cast<Shaman*>(object);
+	shaman->SetVelocity({ 0,0 });
+	shaman->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Unit_Anims::Attack_Anim));
 }
 
 void Shaman::State_Attack::Update(GameObject* object, double dt)
 {
-	Shaman* rifleman = static_cast<Shaman*>(object);
-	rifleman->attackTimer += dt;
-	if (rifleman->attackTimer >= rifleman->attackSpeed)
+	Shaman* shaman = static_cast<Shaman*>(object);
+	shaman->attackTimer += dt;
+	if (shaman->attackTimer >= shaman->attackSpeed)
 	{
-		rifleman->AttackWho->UpdateHP(-rifleman->ad);
-		rifleman->attackTimer = 0;
+		shaman->AttackWho->UpdateHP(-shaman->attackDamage);
+		shaman->attackTimer = 0;
 	}
 }
 
 void Shaman::State_Attack::TestForExit(GameObject* object)
 {
-	Shaman* rifleman = static_cast<Shaman*>(object);
-	if (rifleman->GetGOComponent<CS230::CircleCollision>()->DoesCollideWith(rifleman->AttackWho->GetPosition()) == false || rifleman->AttackWho->isDead() == true)
+	Shaman* shaman = static_cast<Shaman*>(object);
+	if (shaman->GetGOComponent<CS230::CircleCollision>()->DoesCollideWith(shaman->AttackWho->GetPosition()) == false || shaman->AttackWho->isDead() == true)
 	{
-		rifleman->AttackWho = nullptr;
-		rifleman->ChangeState(&rifleman->stateWalking);
+		shaman->AttackWho = nullptr;
+		shaman->ChangeState(&shaman->stateWalking);
 	}
-	if (rifleman->isDead() == true)
+	if (shaman->isDead() == true)
 	{
-		rifleman->ChangeState(&rifleman->stateDead);
+		shaman->ChangeState(&shaman->stateDead);
 	}
 }
 
 void Shaman::State_Dead::Enter(GameObject* object)
 {
-	Shaman* rifleman = static_cast<Shaman*>(object);
-	rifleman->SetVelocity({ 0,0 });
-	rifleman->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Unit_Anims::Dead_Anim));
-	rifleman->RemoveGOComponent<CS230::Collision>();
-	rifleman->RemoveGOComponent<HPBar>();
+	Shaman* shaman = static_cast<Shaman*>(object);
+	shaman->SetVelocity({ 0,0 });
+	shaman->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Unit_Anims::Dead_Anim));
+	shaman->RemoveGOComponent<CS230::Collision>();
+	shaman->RemoveGOComponent<HPBar>();
+	Engine::GetGSComponent<Score>()->AddScore(100);
 }
 
 void Shaman::State_Dead::Update(GameObject*, double) {}
 
 void Shaman::State_Dead::TestForExit(GameObject* object)
 {
-	Shaman* rifleman = static_cast<Shaman*>(object);
-	if (rifleman->GetGOComponent<CS230::Sprite>()->GetCurrentAnim() == static_cast<int>(Unit_Anims::Dead_Anim) && rifleman->GetGOComponent<CS230::Sprite>()->IsAnimationDone() == true)
+	Shaman* shaman = static_cast<Shaman*>(object);
+	if (shaman->GetGOComponent<CS230::Sprite>()->GetCurrentAnim() == static_cast<int>(Unit_Anims::Dead_Anim) && shaman->GetGOComponent<CS230::Sprite>()->IsAnimationDone() == true)
 	{
-		rifleman->Destroy();
+		shaman->Destroy();
 	}
 }
 

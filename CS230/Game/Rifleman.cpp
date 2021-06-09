@@ -15,7 +15,7 @@ Creation date: 06/04/2021
 #include "../Engine/Engine.h"
 #include "../Engine/GameObjectManager.h"
 
-Rifleman::Rifleman(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed) : Level3Object(position, hp, HPBarScale), ad(ad), speed(movementSpeed), attackSpeed(attackSpeed), attackTimer(0), AttackWho(nullptr)
+Rifleman::Rifleman(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed) : Level3Object(position, hp, HPBarScale), attackDamage(ad), speed(movementSpeed), attackSpeed(attackSpeed), attackTimer(0), AttackWho(nullptr)
 {
 	AddGOComponent(new CS230::Sprite("assets/LEVEL3/rifleman.spt", this));
 	ChangeState(&stateWalking);
@@ -49,7 +49,7 @@ void Rifleman::State_Walking::TestForExit(GameObject* object)
 		case GameObjectType::Shaman:
 			[[fallthrough]];
 		case GameObjectType::Tauren:
-			if (rifleman->GetGOComponent<CS230::CircleCollision>()->DoesCollideWith(obj->GetPosition()) == true &&rifleman->AttackWho == nullptr)
+			if (rifleman->GetGOComponent<CS230::CircleCollision>()->DoesCollideWith(obj->GetPosition()) == true && (rifleman->AttackWho == nullptr || rifleman->AttackWho->GetObjectType() == GameObjectType::Horde))
 			{
 				Level3Object* targetObj = dynamic_cast<Level3Object*>(obj);
 				if(targetObj->isDead() != true)
@@ -78,7 +78,7 @@ void Rifleman::State_Attack::Update(GameObject* object, double dt)
 	rifleman->attackTimer += dt;
 	if (rifleman->attackTimer >= rifleman->attackSpeed)
 	{
-		rifleman->AttackWho->UpdateHP(-rifleman->ad);
+		rifleman->AttackWho->UpdateHP(-rifleman->attackDamage);
 		rifleman->attackTimer = 0;
 	}
 }

@@ -5,7 +5,9 @@ written consent of DigiPen Institute of Technology is prohibited.
 File Name: GameParticles.h
 Project: CS230
 Author: Kevin Wright
+Modifier: Daehyeon Kim
 Creation date: 2/26/2021
+Modification Date : 06/09/2021
 -----------------------------------------------------------------*/
 #include "../Engine/ParticleEmitter.h"
 #include "GameObjectTypes.h"
@@ -47,4 +49,30 @@ private:
         std::string GetObjectTypeName() { return "Meteor Bit Particle"; }
     };
     static constexpr int NumParticles = 150;
+};
+
+class ShootCannonEmitter : public CS230::ParticleEmitter {
+public:
+    ShootCannonEmitter();
+private:
+    class ShootCannon : public CS230::ParticleEmitter::Particle {
+    public:
+        ShootCannon(std::string spriteFile) : CS230::ParticleEmitter::Particle(spriteFile) {}
+        GameObjectType GetObjectType() { return GameObjectType::Particle; }
+        std::string GetObjectTypeName() { return "Shoot Cannon Particle"; }
+    };
+    static constexpr int NumParticles = 30;
+};
+
+class BombBoomEmitter : public CS230::ParticleEmitter {
+public:
+    BombBoomEmitter();
+private:
+    class BombBoom : public CS230::ParticleEmitter::Particle {
+    public:
+        BombBoom(std::string spriteFile) : CS230::ParticleEmitter::Particle(spriteFile) {}
+        GameObjectType GetObjectType() { return GameObjectType::Particle; }
+        std::string GetObjectTypeName() { return "BombB oom Particle"; }
+    };
+    static constexpr int NumParticles = 30;
 };

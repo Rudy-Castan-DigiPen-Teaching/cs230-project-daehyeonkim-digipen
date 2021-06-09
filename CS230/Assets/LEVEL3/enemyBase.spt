@@ -1,4 +1,4 @@
 assets/LEVEL3/enemyBase.png
-HotSpot 0 0
+HotSpot 50 0
 
-CollisionRect 100 200
+CollisionRect -50 0 50 200

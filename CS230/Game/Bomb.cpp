@@ -2,7 +2,7 @@
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
-File Name: Bullet.cpp
+File Name: Bomb.cpp
 Project: CS230
 Author: Kevin Wright
 Creation date: 2/21/2021
@@ -10,15 +10,17 @@ Creation date: 2/21/2021
 
 #include "../Engine/Engine.h"
 #include "../Engine/Sprite.h"
-#include "Bullet.h"
+#include "Bomb.h"
+
+#include "GameParticles.h"
 #include "Gravity.h"
 #include "Level3Object.h"
 #include "../Engine/Collision.h"
 #include "../Engine/GameObjectManager.h"
 
-Bullet::Bullet(math::vec2 pos, double rotation, math::vec2 scale, math::vec2 velocity, int ad) : GameObject(pos, rotation, scale), ad(ad), floor(nullptr)
+Bomb::Bomb(math::vec2 pos, double rotation, math::vec2 scale, math::vec2 velocity, int ad) : GameObject(pos, 0, scale), attackDamage(ad), floor(nullptr)
 {
-    SetVelocity(GetMatrix() * velocity);
+    SetVelocity(math::RotateMatrix(rotation) * velocity);
     AddGOComponent(new CS230::Sprite("assets/LEVEL3/bomb.spt", this));
     for (GameObject* obj : Engine::GetGSComponent<CS230::GameObjectManager>()->Objects())
     {
@@ -30,7 +32,7 @@ Bullet::Bullet(math::vec2 pos, double rotation, math::vec2 scale, math::vec2 vel
 
 }
 
-void Bullet::Update(double dt) {
+void Bomb::Update(double dt) {
     UpdateVelocity({ 0, -Engine::GetGSComponent<Gravity>()->GetValue() * dt });
     GameObject::Update(dt);
     const double radius = GetGOComponent<CS230::CircleCollision>()->GetRadius();
@@ -48,7 +50,7 @@ void Bullet::Update(double dt) {
 	}
 }
 
-void Bullet::ResolveCollision(GameObject*) {
+void Bomb::ResolveCollision(GameObject*) {
 	for (GameObject* obj : Engine::GetGSComponent<CS230::GameObjectManager>()->Objects())
 	{
 		if (GetGOComponent<CS230::CircleCollision>()->DoesCollideWith(obj->GetPosition()) == true)
@@ -56,9 +58,10 @@ void Bullet::ResolveCollision(GameObject*) {
             Level3Object* affectObj = dynamic_cast<Level3Object*>(obj);
 			if(affectObj != nullptr)
 			{
-                affectObj->UpdateHP(-ad);
+                affectObj->UpdateHP(-attackDamage);
 			}
 		}
 	}
+    Engine::GetGameStateManager().GetGSComponent<BombBoomEmitter>()->Emit(1, GetPosition(), { 0, 0 }, { 0,0 }, 0);
 	Destroy();
 }

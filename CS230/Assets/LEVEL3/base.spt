@@ -1,5 +1,5 @@
 assets/LEVEL3/Base.png
-HotSpot 0 0
-HotSpot 50 170
+HotSpot 50 0
+HotSpot 0 160
 
-CollisionRect 100 200
+CollisionRect -50 0 50 200

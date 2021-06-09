@@ -15,7 +15,7 @@ Creation date: 06/04/2021
 #include "../Engine/Engine.h"
 #include "../Engine/GameObjectManager.h"
 #include "../Engine/Sprite.h"
-Horde::Horde(math::vec2 initPos, int hp, math::vec2 HPBarScale) : Level3Object(initPos, hp, HPBarScale), goldIncreasing(1), enemyGold(0), goldTimer(0), unitLevel(0), whenEnemyRageHP(static_cast<int>(hp / 5))
+Horde::Horde(math::vec2 initPos, int hp, math::vec2 HPBarScale) : Level3Object(initPos, hp, HPBarScale), goldIncreasing(1), enemyGold(0), goldTimer(0), unitLevel(1), whenEnemyFeelDangerHP(static_cast<int>(hp / 5))
 {
 	AddGOComponent(new CS230::Sprite("assets/LEVEL3/enemyBase.spt", this));
 	AddGOComponent(new HPBar(hp, { 2, 2}));
@@ -40,28 +40,28 @@ void Horde::Update(double dt)
 
 void Horde::MakeGrunt()
 {
-	if(enemyGold >= GruntCost)
+	if(enemyGold >= gruntCost)
 	{
-		enemyGold -= GruntCost;
-		Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Grunt(GetPosition(), 200, 25 * unitLevel, { 1,1 },{ 50, 0 }, 0.5));
+		enemyGold -= gruntCost;
+		Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Grunt(GetPosition(), 200 * unitLevel, 25 * unitLevel, { 1,1 },{ 70, 0 }, 0.5));
 	}
 }
 
 void Horde::MakeShaman()
 {
-	if (enemyGold >= ShamanCost)
+	if (enemyGold >= shamanCost)
 	{
-		enemyGold -= ShamanCost;
-		Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Shaman(GetPosition(), 160, 50 * unitLevel, { 1,1 }, { 50, 0 }, 2));
+		enemyGold -= shamanCost;
+		Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Shaman(GetPosition(), 160 * unitLevel, 50 * unitLevel, { 1,1 }, { 40, 0 }, 2));
 	}
 }
 
 void Horde::MakeTauren()
 {
-	if (enemyGold >= TaurenCost)
+	if (enemyGold >= taurenCost)
 	{
-		enemyGold -= TaurenCost;
-		Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Tauren(GetPosition(), 400, 100 * unitLevel, { 1,1 }, { 50, 0 }, 3));
+		enemyGold -= taurenCost;
+		Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Tauren(GetPosition(), 400 * unitLevel, 100 * unitLevel, { 1,1 }, { 60, 0 }, 3));
 	}
 }
 
@@ -87,17 +87,18 @@ void Horde::improveIncresing()
 
 void Horde::State_EarnGold::Enter(GameObject*)
 {
+	produceTimer = 0;
 }
 
-void Horde::State_EarnGold::Update(GameObject*, double)
+void Horde::State_EarnGold::Update(GameObject*, double dt)
 {
+	produceTimer += dt;
 }
 
 void Horde::State_EarnGold::TestForExit(GameObject* object)
 {
-	constexpr int dangerHP = 400;
 	Horde* horde = static_cast<Horde*>(object);
-	if(horde->enemyGold % 10 == 0 || horde->GetHP() < dangerHP)
+	if((horde->enemyGold % 10 == 0 && produceTimer >= produceCoolDown)|| horde->GetHP() < horde->whenEnemyFeelDangerHP)
 	{
 		horde->ChangeState(&horde->stateProduce);
 	}
@@ -109,14 +110,14 @@ void Horde::State_Produce::Enter(GameObject*)
 }
 
 void Horde::State_Produce::Update(GameObject* object, double)
-{
+ {
 	Horde* horde = static_cast<Horde*>(object);
-	if (Behavior % static_cast<int>(EnemyBehavior::upgrade))
+	if (Behavior % static_cast<int>(EnemyBehavior::upgrade) == 0)
 	{
 		horde->improveIncresing();
 		horde->improveUnitLevel();
 	}
-	if(Behavior % static_cast<int>(EnemyBehavior::make_unit))
+	if(Behavior % static_cast<int>(EnemyBehavior::make_unit) == 0)
 	{
 		horde->MakeTauren();
 		horde->MakeShaman();
@@ -127,11 +128,11 @@ void Horde::State_Produce::Update(GameObject* object, double)
 void Horde::State_Produce::TestForExit(GameObject* object)
 {
 	Horde* horde = static_cast<Horde*>(object);
-	if (Behavior % static_cast<int>(EnemyBehavior::reProduce) || horde->GetHP() <= horde->whenEnemyRageHP)
-	{
-		horde->ChangeState(&horde->stateEarnGold);
-	} else
+	if (Behavior % static_cast<int>(EnemyBehavior::reProduce) == 0 || horde->GetHP() <= horde->whenEnemyFeelDangerHP)
 	{
 		horde->ChangeState(this);
+	} else
+	{
+		horde->ChangeState(&horde->stateEarnGold);
 	}
 }

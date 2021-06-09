@@ -1,0 +1,12 @@
+assets/LEVEL3/shoot.png
+HotSpot 0 62
+FrameSize 48 128
+Frame 0 0
+Frame 0 128
+Frame 0 256
+Frame 0 384
+Frame 0 512
+Frame 0 640
+Frame 0 768
+Frame 0 896
+Anim assets/LEVEL3/shoot.anm

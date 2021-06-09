@@ -13,6 +13,7 @@ Creation date: 06/04/2021
 #include "Horde.h"
 #include "Score.h"
 #include "Fonts.h"
+#include "GameParticles.h"
 #include "Gold.h"
 #include "Gravity.h"
 #include "Screens.h"
@@ -24,24 +25,25 @@ Level3::Level3() : levelReload(CS230::InputKey::Keyboard::R), mainMenu(CS230::In
 
 void Level3::Load()
 {
-	AddGSComponent(new Gravity(1875));
+	AddGSComponent(new Gravity(1000));
 #ifdef _DEBUG
 	AddGSComponent(new ShowCollision(CS230::InputKey::Keyboard::Tilde));
 #endif
 	AddGSComponent(new Score(0, Fonts::Font1));
-	AddGSComponent(new Gold(1000, Fonts::Font1));
+	AddGSComponent(new Gold(0, Fonts::Font1));
 	Background* bgPtr = new Background();
 	AddGSComponent(bgPtr);
 	bgPtr->Add("assets/map.png", 1);
 	CS230::GameObjectManager* gom = new CS230::GameObjectManager();
 	AddGSComponent(gom);
-	player = new Alliance(math::vec2{ 0, floor }, 2000, math::vec2{ 1.5,1.5 }, 25,1,math::vec2{800, 0});
-	enemy = new Horde({ Engine::GetWindow().GetSize().x - 96., floor }, 2000, { 1.5,1.5 });
+	constexpr double baseSize = 50.;
+	player = new Alliance(math::vec2{ baseSize, floor }, 2000, math::vec2{ 1.5,1.5 }, 25,1,math::vec2{500, 0});
+	enemy = new Horde({ Engine::GetWindow().GetSize().x - baseSize, floor }, 2000, { 1.5,1.5 });
 	gom->Add(player);
 	gom->Add(enemy);
 	gom->Add(new Floor(math::irect2{{ 0, 0 }, { Engine::GetWindow().GetSize().x, static_cast<int>(Level3::floor) }}));
-
-	
+	AddGSComponent(new ShootCannonEmitter());
+	AddGSComponent(new BombBoomEmitter());
 }
 
 void Level3::Update(double dt)

@@ -9,10 +9,13 @@ Creation date: 06/04/2021
 -----------------------------------------------------------------*/
 #include "Grunt.h"
 #include "HPBar.h"
+#include "Score.h"
 #include "Unit_Anims.h"
 #include "../Engine/Sprite.h"
 #include "../Engine/Collision.h"
-Grunt::Grunt(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed) : Level3Object(position, hp, HPBarScale), ad(ad), speed(movementSpeed), attackSpeed(attackSpeed), attackTimer(0), AttackWho(nullptr)
+#include "../Engine/Engine.h"
+
+Grunt::Grunt(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed) : Level3Object(position, hp, HPBarScale), attackDamage(ad), speed(movementSpeed), attackSpeed(attackSpeed), attackTimer(0), AttackWho(nullptr)
 {
 	AddGOComponent(new CS230::Sprite("assets/LEVEL3/grunt.spt", this));
 	ChangeState(&stateWalking);
@@ -21,7 +24,6 @@ Grunt::Grunt(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::v
 
 void Grunt::ResolveCollision(GameObject* objectA)
 {
-	AttackWho = static_cast<Level3Object*>(objectA);
 	switch (objectA->GetObjectType())
 	{
 	case GameObjectType::Alliance:
@@ -31,6 +33,10 @@ void Grunt::ResolveCollision(GameObject* objectA)
 	case GameObjectType::Rifleman:
 		[[fallthrough]];
 	case GameObjectType::Knight:
+		if (AttackWho == nullptr)
+		{
+			AttackWho = static_cast<Level3Object*>(objectA);
+		}
 		ChangeState(&stateAttack);
 		break;
 	}
@@ -84,7 +90,7 @@ void Grunt::State_Attack::Update(GameObject* object, double dt)
 	grunt->attackTimer += dt;
 	if (grunt->attackTimer >= grunt->attackSpeed)
 	{
-		grunt->AttackWho->UpdateHP(-grunt->ad);
+		grunt->AttackWho->UpdateHP(-grunt->attackDamage);
 		grunt->attackTimer = 0;
 	}
 }
@@ -110,6 +116,7 @@ void Grunt::State_Dead::Enter(GameObject* object)
 	grunt->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Unit_Anims::Dead_Anim));
 	grunt->RemoveGOComponent<CS230::Collision>();
 	grunt->RemoveGOComponent<HPBar>();
+	Engine::GetGSComponent<Score>()->AddScore(50);
 }
 
 void Grunt::State_Dead::Update(GameObject*, double) {}

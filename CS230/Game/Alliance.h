@@ -17,35 +17,43 @@ class Alliance final : public Level3Object
 {
 private:
 	static constexpr double PI = 3.141592;
-	static constexpr math::vec2 cannonPosition = {48, 192};
+	
 	CS230::InputKey footmanKey;
-	CS230::InputKey riflemanKey;
+	CS230::InputKey shamanKey;
 	CS230::InputKey knightKey;
 	CS230::InputKey shootKey;
+	CS230::InputKey improveUnitKey;
 	CS230::InputKey goldEarnKey;
 	CS230::InputKey shootDamageKey;
 	CS230::InputKey shootSpeedKey;
 	CS230::InputKey bulletSpeedKey;
 	CS230::InputKey angleUP;
 	CS230::InputKey angleDown;
-	static constexpr int footmanCost = 20;
-	static constexpr int riflemanCost = 30;
-	static constexpr int knightCost = 100;
-	static constexpr int goldIncreasingImproveCost = 50;
-	static constexpr int adImproveCost = 50;
-	static constexpr int attackSpeedImproveCost = 50;
-	static constexpr int rangeImproveCost = 100;
-	static constexpr double factor = 1.5;
+	
+	static constexpr int footmanCost = 10;
+	static constexpr int riflemanCost = 15;
+	static constexpr int knightCost = 30;
+	static constexpr int unitImproveCost = 30;
+	static constexpr int goldIncreasingImproveCost = 20;
+	static constexpr int attackDamageImproveCost = 20;
+	static constexpr int attackSpeedImproveCost = 30;
+	static constexpr int rangeImproveCost = 50;
+	
+	static constexpr double factor = 1.3;
 	static constexpr double angleDownLim = PI / 3.;
 	static constexpr double angleUpLim = -PI / 3.;
 
 	int goldIncreasing;
-	int ad;
-	int upgradeNumberAttackDamage;
-	math::vec2 speed;
-	int upgradeNumberBulletSpeed;
+	int unitLevel;
+	
+	int attackDamage;
+	int attackDamageLevel;
+	
 	double attackSpeed;
-	int upgradeNumberAttackSpeed;
+	int attackSpeedLevel;
+	
+	math::vec2 speed;
+	int rangeLevel;
 	
 	double goldTimer;
 	double attackTimer;
@@ -63,7 +71,8 @@ private:
 	void MakeFootman(int cost);
 	void MakeRifleman(int cost);
 	void MakeKnight(int cost);
-	void improveIncresing(int cost);
+	void improveUnitLevel(int cost);
+	void improveGoldIncresing(int cost);
 	void improveAD(int cost);
 	void inproveAttackSpeed(int cost);
 	void inproveRange(int cost);

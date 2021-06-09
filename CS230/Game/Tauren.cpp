@@ -9,10 +9,13 @@ Creation date: 06/08/2021
 -----------------------------------------------------------------*/
 #include "Tauren.h"
 #include "HPBar.h"
+#include "Score.h"
 #include "Unit_Anims.h"
 #include "../Engine/Sprite.h"
 #include "../Engine/Collision.h"
-Tauren::Tauren(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed) : Level3Object(position, hp, HPBarScale), ad(ad), speed(movementSpeed), attackSpeed(attackSpeed), attackTimer(0), AttackWho(nullptr)
+#include "../Engine/Engine.h"
+
+Tauren::Tauren(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed) : Level3Object(position, hp, HPBarScale), attackDamage(ad), speed(movementSpeed), attackSpeed(attackSpeed), attackTimer(0), AttackWho(nullptr)
 {
 	AddGOComponent(new CS230::Sprite("assets/LEVEL3/tauren.spt", this));
 	ChangeState(&stateWalking);
@@ -21,7 +24,6 @@ Tauren::Tauren(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math:
 
 void Tauren::ResolveCollision(GameObject* objectA)
 {
-	AttackWho = static_cast<Level3Object*>(objectA);
 	switch (objectA->GetObjectType())
 	{
 	case GameObjectType::Alliance:
@@ -31,6 +33,10 @@ void Tauren::ResolveCollision(GameObject* objectA)
 	case GameObjectType::Rifleman:
 		[[fallthrough]];
 	case GameObjectType::Knight:
+		if (AttackWho == nullptr)
+		{
+			AttackWho = static_cast<Level3Object*>(objectA);
+		}
 		ChangeState(&stateAttack);
 		break;
 	}
@@ -54,72 +60,73 @@ bool Tauren::CanCollideWith(GameObjectType objectBType)
 }
 void Tauren::State_Walking::Enter(GameObject* object)
 {
-	Tauren* grunt = static_cast<Tauren*>(object);
-	grunt->SetVelocity(-grunt->speed);
-	grunt->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Unit_Anims::Walk_Anim));
+	Tauren* tauren = static_cast<Tauren*>(object);
+	tauren->SetVelocity(-tauren->speed);
+	tauren->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Unit_Anims::Walk_Anim));
 }
 
 void Tauren::State_Walking::Update(GameObject*, double) {}
 
 void Tauren::State_Walking::TestForExit(GameObject* object)
 {
-	Tauren* grunt = static_cast<Tauren*>(object);
-	if (grunt->isDead() == true)
+	Tauren* tauren = static_cast<Tauren*>(object);
+	if (tauren->isDead() == true)
 	{
-		grunt->ChangeState(&grunt->stateDead);
+		tauren->ChangeState(&tauren->stateDead);
 	}
 }
 
 void Tauren::State_Attack::Enter(GameObject* object)
 {
-	Tauren* grunt = static_cast<Tauren*>(object);
-	grunt->SetVelocity({ 0,0 });
-	grunt->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Unit_Anims::Attack_Anim));
+	Tauren* tauren = static_cast<Tauren*>(object);
+	tauren->SetVelocity({ 0,0 });
+	tauren->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Unit_Anims::Attack_Anim));
 
 }
 
 void Tauren::State_Attack::Update(GameObject* object, double dt)
 {
-	Tauren* grunt = static_cast<Tauren*>(object);
-	grunt->attackTimer += dt;
-	if (grunt->attackTimer >= grunt->attackSpeed)
+	Tauren* tauren = static_cast<Tauren*>(object);
+	tauren->attackTimer += dt;
+	if (tauren->attackTimer >= tauren->attackSpeed)
 	{
-		grunt->AttackWho->UpdateHP(-grunt->ad);
-		grunt->attackTimer = 0;
+		tauren->AttackWho->UpdateHP(-tauren->attackDamage);
+		tauren->attackTimer = 0;
 	}
 }
 
 void Tauren::State_Attack::TestForExit(GameObject* object)
 {
-	Tauren* grunt = static_cast<Tauren*>(object);
-	if (grunt->DoesCollideWith(grunt->AttackWho) == false)
+	Tauren* tauren = static_cast<Tauren*>(object);
+	if (tauren->DoesCollideWith(tauren->AttackWho) == false)
 	{
-		grunt->AttackWho = nullptr;
-		grunt->ChangeState(&grunt->stateWalking);
+		tauren->AttackWho = nullptr;
+		tauren->ChangeState(&tauren->stateWalking);
 	}
-	if (grunt->isDead() == true)
+	if (tauren->isDead() == true)
 	{
-		grunt->ChangeState(&grunt->stateDead);
+		tauren->ChangeState(&tauren->stateDead);
 	}
 }
 
 void Tauren::State_Dead::Enter(GameObject* object)
 {
-	Tauren* grunt = static_cast<Tauren*>(object);
-	grunt->SetVelocity({ 0,0 });
-	grunt->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Unit_Anims::Dead_Anim));
-	grunt->RemoveGOComponent<CS230::Collision>();
-	grunt->RemoveGOComponent<HPBar>();
+	Tauren* tauren = static_cast<Tauren*>(object);
+	tauren->SetVelocity({ 0,0 });
+	tauren->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Unit_Anims::Dead_Anim));
+	tauren->RemoveGOComponent<CS230::Collision>();
+	tauren->RemoveGOComponent<HPBar>();
+	Engine::GetGSComponent<Score>()->AddScore(300);
 }
 
 void Tauren::State_Dead::Update(GameObject*, double) {}
 
 void Tauren::State_Dead::TestForExit(GameObject* object)
 {
-	Tauren* grunt = static_cast<Tauren*>(object);
-	if (grunt->GetGOComponent<CS230::Sprite>()->GetCurrentAnim() == static_cast<int>(Unit_Anims::Dead_Anim) && grunt->GetGOComponent<CS230::Sprite>()->IsAnimationDone() == true)
+	Tauren* tauren = static_cast<Tauren*>(object);
+	if (tauren->GetGOComponent<CS230::Sprite>()->GetCurrentAnim() == static_cast<int>(Unit_Anims::Dead_Anim) && tauren->GetGOComponent<CS230::Sprite>()->IsAnimationDone() == true)
 	{
-		grunt->Destroy();
+		tauren->Destroy();
 	}
 }
 

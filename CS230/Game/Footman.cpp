@@ -12,7 +12,7 @@ Creation date: 06/04/2021
 #include "Unit_Anims.h"
 #include "../Engine/Sprite.h"
 #include "../Engine/Collision.h"
-Footman::Footman(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed) : Level3Object(position, hp, HPBarScale), ad(ad), speed(movementSpeed), attackSpeed(attackSpeed), attackTimer(0), AttackWho(nullptr)
+Footman::Footman(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed) : Level3Object(position, hp, HPBarScale), attackDamage(ad), speed(movementSpeed), attackSpeed(attackSpeed), attackTimer(0), AttackWho(nullptr)
 {
 	AddGOComponent(new CS230::Sprite("assets/LEVEL3/footman.spt", this));
 	ChangeState(&stateWalking);
@@ -21,7 +21,6 @@ Footman::Footman(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, mat
 
 void Footman::ResolveCollision(GameObject* objectA)
 {
-	AttackWho = static_cast<Level3Object*>(objectA);
 	switch (objectA->GetObjectType())
 	{
 	case GameObjectType::Horde:
@@ -31,6 +30,10 @@ void Footman::ResolveCollision(GameObject* objectA)
 	case GameObjectType::Shaman:
 		[[fallthrough]];
 	case GameObjectType::Tauren:
+		if (AttackWho == nullptr)
+		{
+			AttackWho = static_cast<Level3Object*>(objectA);
+		}
 		ChangeState(&stateAttack);
 		break;
 	}
@@ -84,7 +87,7 @@ void Footman::State_Attack::Update(GameObject* object, double dt)
 	footman->attackTimer += dt;
 	if(footman->attackTimer >= footman->attackSpeed)
 	{
-		footman->AttackWho->UpdateHP(-footman->ad);
+		footman->AttackWho->UpdateHP(-footman->attackDamage);
 		footman->attackTimer = 0;
 	}
 }

@@ -14,19 +14,18 @@ Creation date: 06/04/2021
 class Horde final : public Level3Object
 {
 private:
-	static constexpr int GruntCost = 20;
-	static constexpr int ShamanCost = 30;
-	static constexpr int TaurenCost = 100;
-	static constexpr int goldIncreasingImproveCost = 50;
-	static constexpr int unitImproveCost = 50;
+	static constexpr int gruntCost = 10;
+	static constexpr int shamanCost = 15;
+	static constexpr int taurenCost = 50;
+	static constexpr int goldIncreasingImproveCost = 15;
+	static constexpr int unitImproveCost = 30;
 
-	int whenEnemyRageHP;
+	int whenEnemyFeelDangerHP;
 	
 	int goldIncreasing;
 	int enemyGold;
 	double goldTimer;
 	int unitLevel;
-	
 public:
 	Horde(math::vec2 initPos, int hp, math::vec2 HPBarScale);
 	void UpateGold(int _gold);
@@ -40,16 +39,18 @@ private:
 		void Update(GameObject* object, double dt) override;
 		void TestForExit(GameObject* object) override;
 		std::string GetName() override { return "earngold"; }
+		static constexpr double produceCoolDown = 3;
+		double produceTimer;
 	};
 	class State_Produce : public State {
 		void Enter(GameObject* object) override;
 		void Update(GameObject* object, double dt) override;
 		void TestForExit(GameObject* object) override;
 		std::string GetName() override { return "produce"; }
-		int Behavior = 0;
+		int Behavior;
 		enum class EnemyBehavior
 		{
-			do_nothing = 1,
+			do_nothing = 2,
 			make_unit,
 			upgrade,
 			reProduce,
@@ -62,6 +63,6 @@ private:
 	void MakeGrunt();
 	void MakeShaman();
 	void MakeTauren();
-	void improveIncresing();
+	void improveGoldIncresing();
 	void improveUnitLevel();
 };

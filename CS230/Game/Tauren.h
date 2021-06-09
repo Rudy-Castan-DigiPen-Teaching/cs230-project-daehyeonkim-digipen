@@ -16,7 +16,7 @@ class Tauren final : public Level3Object
 {
 private:
 	Level3Object* AttackWho;
-	int ad;
+	int attackDamage;
 	math::vec2 speed;
 	double attackTimer;
 	double attackSpeed;

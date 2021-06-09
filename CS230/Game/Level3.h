@@ -26,7 +26,7 @@ public:
 
 	std::string GetName() override { return "Level 3"; }
 private:
-	static constexpr double floor = 130.0f;
+	static constexpr double floor = 230.0f;
 
 	Alliance* player;
 	Horde* enemy;
