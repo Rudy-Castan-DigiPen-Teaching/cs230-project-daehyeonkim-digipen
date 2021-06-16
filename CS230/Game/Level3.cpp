@@ -44,6 +44,14 @@ void Level3::Load()
 	gom->Add(new Floor(math::irect2{{ 0, 0 }, { Engine::GetWindow().GetSize().x, static_cast<int>(Level3::floor) }}));
 	AddGSComponent(new ShootCannonEmitter());
 	AddGSComponent(new BombBoomEmitter());
+
+	constexpr int initLevel = 1;
+	CS230::SpriteFont& font = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1));
+	GoldUpLevelTexture = font.DrawTextToTexture("Gold Up Level: " + std::to_string(initLevel), 0xFFFFFFFF, true);
+	UnitLevelTexture = font.DrawTextToTexture("Unit Level: " + std::to_string(initLevel), 0xFFFFFFFF, true);
+	DamageLevelTexture = font.DrawTextToTexture("Bomb Damage Level: " + std::to_string(initLevel), 0xFFFFFFFF, true);
+	SpeedLevelTexture = font.DrawTextToTexture("Shoot Speed Level: " + std::to_string(initLevel), 0xFFFFFFFF, true);
+	RangeLevelTexture = font.DrawTextToTexture("Bomb Range Level: " + std::to_string(initLevel), 0xFFFFFFFF, true);
 }
 
 void Level3::Update(double dt)

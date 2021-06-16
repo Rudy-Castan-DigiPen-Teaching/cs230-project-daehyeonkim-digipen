@@ -66,15 +66,22 @@ public:
 	void Draw(math::TransformMatrix displayMatrix) override;
 	GameObjectType GetObjectType() override { return GameObjectType::Alliance; }
 	std::string GetObjectTypeName() override { return "Alliance"; }
+
+	int GetGoldUpLevel() const { return goldIncreasing; }
+	int GetUnitLevel() const { return unitLevel; }
+	int GetDamageLevel() const { return attackDamageLevel; }
+	int GetAttackSpeedLevel() const { return attackSpeedLevel; }
+	int GetAttackRangeLevel() const { return rangeLevel; }
 private:
 	void Shoot();
 	void MakeFootman(int cost);
 	void MakeRifleman(int cost);
 	void MakeKnight(int cost);
-	void improveUnitLevel(int cost);
-	void improveGoldIncresing(int cost);
-	void improveAD(int cost);
-	void inproveAttackSpeed(int cost);
-	void inproveRange(int cost);
+	void ImproveUnitLevel(int cost);
+	void ImproveGoldIncresing(int cost);
+	void ImproveDamage(int cost);
+	void ImproveAttackSpeed(int cost);
+	void ImproveRange(int cost);
 
-};
+		
+};														  

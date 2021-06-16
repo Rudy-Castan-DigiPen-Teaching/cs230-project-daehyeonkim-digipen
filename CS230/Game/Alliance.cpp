@@ -52,23 +52,23 @@ void Alliance::Update(double dt)
 	}
 	else if(improveUnitKey.IsKeyReleased() == true && gold >= unitUpCost)
 	{
-		improveUnitLevel(unitUpCost);
+		ImproveUnitLevel(unitUpCost);
 	}
 	else if(goldEarnKey.IsKeyReleased() == true && gold >= goldUpCost)
 	{
-		improveGoldIncresing(goldUpCost);
+		ImproveGoldIncresing(goldUpCost);
 	}
 	else if (shootDamageKey.IsKeyReleased() == true && gold >= attackDamageUpCost)
 	{
-		improveAD(attackDamageUpCost);
+		ImproveDamage(attackDamageUpCost);
 	}
 	else if (shootSpeedKey.IsKeyReleased() == true && gold >= attackSpeedUpCost)
 	{
-		inproveAttackSpeed(attackSpeedUpCost);
+		ImproveAttackSpeed(attackSpeedUpCost);
 	}
 	else if (bulletSpeedKey.IsKeyReleased() == true && gold >= rangeUpCost)
 	{
-		inproveRange(rangeUpCost);
+		ImproveRange(rangeUpCost);
 	}
 	else if(shootKey.IsKeyDown() == true && attackTimer >= (1. / attackSpeed))
 	{
@@ -116,31 +116,31 @@ void Alliance::MakeKnight(int cost)
 	Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Knight(GetPosition(), 250 * unitLevel, 25 * unitLevel, { 1,1 }, { 100, 0 }, 0.3));
 }
 
-void Alliance::improveUnitLevel(int cost)
+void Alliance::ImproveUnitLevel(int cost)
 {
 	Engine::GetGSComponent<Gold>()->UpdateGold(-cost);
 	unitLevel++;
 }
 
-void Alliance::improveGoldIncresing(int cost)
+void Alliance::ImproveGoldIncresing(int cost)
 {
 	Engine::GetGSComponent<Gold>()->UpdateGold(-cost);
 	goldIncreasing++;
 }
 
-void Alliance::improveAD(int cost)
+void Alliance::ImproveDamage(int cost)
 {
 	Engine::GetGSComponent<Gold>()->UpdateGold(-cost);
 	attackDamage = static_cast<int>(attackDamage * factor);
 }
 
-void Alliance::inproveAttackSpeed(int cost)
+void Alliance::ImproveAttackSpeed(int cost)
 {
 	Engine::GetGSComponent<Gold>()->UpdateGold(-cost);
 	attackSpeed *= factor;
 }
 
-void Alliance::inproveRange(int cost)
+void Alliance::ImproveRange(int cost)
 {
 	Engine::GetGSComponent<Gold>()->UpdateGold(-cost);
 	speed *= factor;
