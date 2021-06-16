@@ -71,7 +71,7 @@ void Knight::State_Walking::TestForExit(GameObject* object)
 	{
 		knight->ChangeState(&knight->stateDead);
 	}
-	else if (knight->AttackWho->isDead() == false)
+	else if (knight->AttackWho != nullptr && knight->AttackWho->isDead() == false)
 	{
 		knight->ChangeState(&knight->stateAttack);
 	}
