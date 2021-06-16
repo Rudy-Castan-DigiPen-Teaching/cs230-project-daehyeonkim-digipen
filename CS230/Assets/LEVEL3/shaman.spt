@@ -1,6 +1,7 @@
 Assets/LEVEL3/shaman.png
 FrameSize 120 100
 HotSpot 60 1
+HotSpot -31 57
 Frame 0 0
 Frame 120 0
 Frame 240 0 

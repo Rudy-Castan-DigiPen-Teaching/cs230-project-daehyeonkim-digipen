@@ -1,6 +1,7 @@
 assets/LEVEL3/tauren.png
 FrameSize 144 144
 HotSpot 72 1
+HotSpot -31 71
 Frame 0 0
 Frame 144 0
 Frame 288 0

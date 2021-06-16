@@ -1,6 +1,7 @@
 assets/LEVEL3/knight.png
 FrameSize 112 96
 HotSpot 46 1
+HotSpot 10 79
 Frame 0 0
 Frame 112 0
 Frame 224 0
