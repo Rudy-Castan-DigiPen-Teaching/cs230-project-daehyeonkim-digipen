@@ -16,7 +16,7 @@ Creation date: 06/08/2021
 class Tauren final : public Level3Object
 {
 private:
-	std::list<Level3Object*> AttackWho;
+	std::list<Level3Object*> AttackWhos;
 	int attackDamage;
 	math::vec2 speed;
 	double attackTimer;

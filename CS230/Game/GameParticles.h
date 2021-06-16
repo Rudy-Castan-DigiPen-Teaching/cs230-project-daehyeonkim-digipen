@@ -76,3 +76,16 @@ private:
     };
     static constexpr int NumParticles = 30;
 };
+
+class UnitHurtEmitter : public CS230::ParticleEmitter {
+public:
+    UnitHurtEmitter();
+private:
+    class UnitHurt : public CS230::ParticleEmitter::Particle {
+    public:
+        UnitHurt(std::string spriteFile) : CS230::ParticleEmitter::Particle(spriteFile) {}
+        GameObjectType GetObjectType() { return GameObjectType::Particle; }
+        std::string GetObjectTypeName() { return "Unit Hurt Particle"; }
+    };
+    static constexpr int NumParticles = 200;
+};

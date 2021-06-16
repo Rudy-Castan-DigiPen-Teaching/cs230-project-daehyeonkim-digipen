@@ -43,3 +43,10 @@ BombBoomEmitter::BombBoomEmitter() : CS230::ParticleEmitter(1.0)
 		AddParticle(new BombBoom("assets/LEVEL3/Boom.spt"));
 	}
 }
+
+UnitHurtEmitter::UnitHurtEmitter() : CS230::ParticleEmitter(3)
+{
+	for (int i = 0; i < UnitHurtEmitter::NumParticles; i++) {
+		AddParticle(new UnitHurt("assets/LEVEL3/Blood.spt"));
+	}
+}

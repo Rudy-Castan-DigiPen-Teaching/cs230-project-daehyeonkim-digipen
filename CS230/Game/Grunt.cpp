@@ -105,7 +105,7 @@ void Grunt::State_Attack::TestForExit(GameObject* object)
 		grunt->AttackWho = nullptr;
 		grunt->ChangeState(&grunt->stateWalking);
 	}
-	if (grunt->AttackWho != nullptr && grunt->isDead() == true)
+	if (grunt->isDead() == true)
 	{
 		grunt->ChangeState(&grunt->stateDead);
 	}

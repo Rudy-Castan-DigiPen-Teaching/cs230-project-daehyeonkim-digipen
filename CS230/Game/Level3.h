@@ -11,7 +11,7 @@ Creation date: 06/04/2021
 #include "..\Engine\GameState.h"
 #include "..\Engine\Input.h"
 #include "Background.h"
-#include "..\Engine\texture.h"
+
 class Horde;
 class Alliance;
 
@@ -33,10 +33,4 @@ private:
 	CS230::InputKey levelReload;
 	CS230::InputKey mainMenu;
 	CS230::InputKey addGold;
-
-	CS230::Texture GoldUpLevelTexture;
-	CS230::Texture UnitLevelTexture;
-	CS230::Texture DamageLevelTexture;
-	CS230::Texture SpeedLevelTexture;
-	CS230::Texture RangeLevelTexture;
 };

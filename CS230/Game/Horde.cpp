@@ -112,7 +112,8 @@ void Horde::State_Produce::Enter(GameObject*)
 void Horde::State_Produce::Update(GameObject* object, double)
  {
 	Horde* horde = static_cast<Horde*>(object);
-	if (Behavior % static_cast<int>(EnemyBehavior::upgrade) == 0)
+	horde->MakeTauren();
+	/*if (Behavior % static_cast<int>(EnemyBehavior::upgrade) == 0)
 	{
 		horde->improveGoldIncresing();
 		horde->improveUnitLevel();
@@ -122,7 +123,7 @@ void Horde::State_Produce::Update(GameObject* object, double)
 		horde->MakeTauren();
 		horde->MakeShaman();
 		horde->MakeGrunt();
-	}
+	}*/
 }
 
 void Horde::State_Produce::TestForExit(GameObject* object)

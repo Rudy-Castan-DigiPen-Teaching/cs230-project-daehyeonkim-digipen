@@ -1,6 +1,6 @@
-PlayFrame 0 .075
-PlayFrame 1 .075
-PlayFrame 2 .075
-PlayFrame 3 .075
-PlayFrame 4 .075
+PlayFrame 0 .5
+PlayFrame 1 .5
+PlayFrame 2 .5
+PlayFrame 3 .5
+PlayFrame 4 10
 End

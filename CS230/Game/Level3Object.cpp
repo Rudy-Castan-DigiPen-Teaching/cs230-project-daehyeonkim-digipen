@@ -9,8 +9,10 @@ Creation date: 06/05/2021
 -----------------------------------------------------------------*/
 #include "Level3Object.h"
 #include "GameObjectTypes.h"
+#include "GameParticles.h"
 #include "../Engine/Collision.h"
 #include "HPBar.h"
+#include "../Engine/Engine.h"
 #include "../Engine/Sprite.h"
 
 Level3Object::Level3Object(math::vec2 initPos, int hp, math::vec2 HPBarScale) : GameObject(initPos), hp(hp), HPBarScale(HPBarScale)
@@ -44,6 +46,22 @@ void Level3Object::UpdateHP(int _hp)
 		hpbar->UpdateHP(_hp);
 	}
 	this->hp += _hp;
+	if(_hp < 0)
+	{
+		double direction = 1;
+		constexpr double PI = 3.141592;
+		switch(GetObjectType())
+		{
+		case GameObjectType::Grunt:
+			[[fallthrough]];
+		case GameObjectType::Shaman:
+			[[fallthrough]];
+		case GameObjectType::Tauren:
+			direction = -1;
+			break;
+		}
+		Engine::GetGameStateManager().GetGSComponent<UnitHurtEmitter>()->Emit(3, GetPosition() + math::vec2(GetGOComponent<CS230::Sprite>()->GetHotSpot(1)), { 0, 0 }, { direction,1 }, PI/6, 0);
+	}
 }
 
 int Level3Object::GetHP()

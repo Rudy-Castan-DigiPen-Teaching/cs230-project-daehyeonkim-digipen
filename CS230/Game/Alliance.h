@@ -12,6 +12,7 @@ Creation date: 06/04/2021
 #include "Level3Object.h"
 #include "../Engine/Input.h"
 #include "../Engine/Sprite.h"
+#include "..\Engine\texture.h"
 
 class Alliance final : public Level3Object
 {
@@ -66,12 +67,6 @@ public:
 	void Draw(math::TransformMatrix displayMatrix) override;
 	GameObjectType GetObjectType() override { return GameObjectType::Alliance; }
 	std::string GetObjectTypeName() override { return "Alliance"; }
-
-	int GetGoldUpLevel() const { return goldIncreasing; }
-	int GetUnitLevel() const { return unitLevel; }
-	int GetDamageLevel() const { return attackDamageLevel; }
-	int GetAttackSpeedLevel() const { return attackSpeedLevel; }
-	int GetAttackRangeLevel() const { return rangeLevel; }
 private:
 	void Shoot();
 	void MakeFootman(int cost);
@@ -83,5 +78,11 @@ private:
 	void ImproveAttackSpeed(int cost);
 	void ImproveRange(int cost);
 
-		
+	CS230::Texture GoldUpLevelTexture;
+	CS230::Texture UnitLevelTexture;
+	CS230::Texture DamageLevelTexture;
+	CS230::Texture SpeedLevelTexture;
+	CS230::Texture RangeLevelTexture;
+
+	CS230::SpriteFont& font;
 };														  
