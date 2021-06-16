@@ -46,21 +46,26 @@ void Level3Object::UpdateHP(int _hp)
 		hpbar->UpdateHP(_hp);
 	}
 	this->hp += _hp;
-	if(_hp < 0)
+	if(_hp < 0 && hp > 0)
 	{
-		double direction = 1;
 		constexpr double PI = 3.141592;
 		switch(GetObjectType())
 		{
+		case GameObjectType::Footman:
+			[[fallthrough]];
+		case GameObjectType::Rifleman:
+			[[fallthrough]];
+		case GameObjectType::Knight:
+			Engine::GetGameStateManager().GetGSComponent<UnitHurtEmitter>()->Emit(3, GetPosition() + math::vec2(GetGOComponent<CS230::Sprite>()->GetHotSpot(1)), { GetVelocity() }, { 1,1 }, PI / 6);
+			break;
 		case GameObjectType::Grunt:
 			[[fallthrough]];
 		case GameObjectType::Shaman:
 			[[fallthrough]];
 		case GameObjectType::Tauren:
-			direction = -1;
+			Engine::GetGameStateManager().GetGSComponent<UnitHurtEmitter>()->Emit(3, GetPosition() + math::vec2(GetGOComponent<CS230::Sprite>()->GetHotSpot(1)), { GetVelocity() }, { 1,1 }, PI / 6, {-1, 1});
 			break;
 		}
-		Engine::GetGameStateManager().GetGSComponent<UnitHurtEmitter>()->Emit(3, GetPosition() + math::vec2(GetGOComponent<CS230::Sprite>()->GetHotSpot(1)), { 0, 0 }, { direction,1 }, PI/6, 0);
 	}
 }
 

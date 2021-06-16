@@ -37,14 +37,14 @@ ShootCannonEmitter::ShootCannonEmitter() : CS230::ParticleEmitter(0.5)
 	}
 }
 
-BombBoomEmitter::BombBoomEmitter() : CS230::ParticleEmitter(1.0)
+BombBoomEmitter::BombBoomEmitter() : CS230::ParticleEmitter(0.5)
 {
 	for (int i = 0; i < BombBoomEmitter::NumParticles; i++) {
 		AddParticle(new BombBoom("assets/LEVEL3/Boom.spt"));
 	}
 }
 
-UnitHurtEmitter::UnitHurtEmitter() : CS230::ParticleEmitter(3)
+UnitHurtEmitter::UnitHurtEmitter() : CS230::ParticleEmitter(0.5)
 {
 	for (int i = 0; i < UnitHurtEmitter::NumParticles; i++) {
 		AddParticle(new UnitHurt("assets/LEVEL3/Blood.spt"));

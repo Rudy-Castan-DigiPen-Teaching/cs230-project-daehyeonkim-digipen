@@ -111,7 +111,7 @@ void Alliance::Shoot()
 {
 	const math::vec2 shootPosition = GetPosition() + math::vec2(GetGOComponent<CS230::Sprite>()->GetHotSpot(1)) + math::RotateMatrix(angle) * math::vec2(Cannon.GetHotSpot(1));
 	Engine::GetGSComponent<CS230::GameObjectManager>()->AddFront(new Bomb(shootPosition, angle, { 1,1 }, speed, attackDamage));
-	Engine::GetGameStateManager().GetGSComponent<ShootCannonEmitter>()->Emit(1, shootPosition, { 0, 0 }, { 0,0 }, 0,angle);
+	Engine::GetGameStateManager().GetGSComponent<ShootCannonEmitter>()->Emit(1, shootPosition, { 0, 0 }, { 0,0 }, 0, {1,1}, angle);
 }
 
 void Alliance::MakeFootman(int cost)

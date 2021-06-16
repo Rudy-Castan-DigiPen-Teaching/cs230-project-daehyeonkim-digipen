@@ -20,7 +20,7 @@ namespace CS230 {
         class Particle : public GameObject {
         public:
             Particle(std::string spriteFile);
-            void Revive(math::vec2 position, math::vec2 velocity, double life, double rotate);
+            void Revive(math::vec2 position, math::vec2 velocity, double life, math::vec2 scale, double rotate);
             void Update(double dt) override;
             void Draw(math::TransformMatrix matrix) override;
             bool IsAlive() { return life > 0; }
@@ -31,7 +31,7 @@ namespace CS230 {
         ParticleEmitter(double lifetime);
         virtual ~ParticleEmitter();
         void AddParticle(Particle* particleData);
-        void Emit(int number, math::vec2 position, math::vec2 emitterVelocity, math::vec2 emitVector, double spread, double rotate = 0);
+        void Emit(int number, math::vec2 position, math::vec2 emitterVelocity, math::vec2 emitVector, double spread, math::vec2 scale = {1,1}, double rotate = 0);
     private:
 
         std::vector<Particle *> particleMemoryPool;
