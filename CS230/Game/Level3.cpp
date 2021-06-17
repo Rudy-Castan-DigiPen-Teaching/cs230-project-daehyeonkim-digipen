@@ -48,7 +48,7 @@ void Level3::Load()
 	AddGSComponent(new ShootCannonEmitter());
 	AddGSComponent(new BombBoomEmitter());
 	AddGSComponent(new UnitHurtEmitter());
-	CS230::SpriteFont& font = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1));
+	CS230::SpriteFont& font = Engine::GetSpriteFont(static_cast<int>(Fonts::Font2));
 	winTexture = font.DrawTextToTexture("Win!!", 0xFFFFFFFF, true);
 	loseTexture = font.DrawTextToTexture("Lose...", 0xFFFFFFFF, true);
 }
@@ -105,10 +105,10 @@ void Level3::Draw()
 	}
 	if (player->GetHP() <= 0)
 	{
-		loseTexture.Draw(math::TranslateMatrix(winSize / 2 - loseTexture.GetSize() / 2) * math::ScaleMatrix({2, 2}));
+		loseTexture.Draw(math::TranslateMatrix(winSize / 2 - loseTexture.GetSize() / 2) * math::ScaleMatrix({3, 3}));
 	}
 	else if (enemy->GetHP() <= 0)
 	{
-		winTexture.Draw(math::TranslateMatrix(winSize / 2 - winTexture.GetSize() / 2) * math::ScaleMatrix({ 2, 2 }));
+		winTexture.Draw(math::TranslateMatrix(winSize / 2 - winTexture.GetSize() / 2) * math::ScaleMatrix({ 3, 3 }));
 	}
 }
