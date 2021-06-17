@@ -18,7 +18,7 @@ private:
 	static constexpr int shamanCost = 15;
 	static constexpr int taurenCost = 30;
 	static constexpr int goldIncreasingImproveCost = 20;
-	static constexpr int unitImproveCost = 30;
+	static constexpr int unitImproveCost = 20;
 	
 	static constexpr int levelLimit = 7;
 	

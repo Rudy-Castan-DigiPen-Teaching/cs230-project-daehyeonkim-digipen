@@ -100,14 +100,14 @@ void Alliance::Draw(math::TransformMatrix displayMatrix)
 {
 	Cannon.Draw(displayMatrix * GetMatrix() * math::TranslateMatrix(GetGOComponent<CS230::Sprite>()->GetHotSpot(1)) * math::RotateMatrix(angle));
 	math::ivec2 winSize = Engine::GetWindow().GetSize();
-	math::vec2 textInitPosition = math::vec2{ 20 ,static_cast<double>(winSize.y)};
-	math::vec2 textInterval = math::vec2{ 0, winSize.y * 0.1 };
+	math::vec2 textInitPosition = math::vec2{ 20 ,static_cast<double>(winSize.y/2)};
+	math::vec2 textInterval = math::vec2{ 0, winSize.y * 0.05 };
 	math::TransformMatrix textScale = math::ScaleMatrix({ 0.5, 0.5 });
-	GoldUpLevelTexture.Draw(textScale * math::TranslateMatrix(textInitPosition + textInterval * 5 + math::vec2{0, static_cast<double>(GoldUpLevelTexture.GetSize().y)}));
-	UnitLevelTexture.Draw(textScale * math::TranslateMatrix(textInitPosition + textInterval * 4 + math::vec2{ 0, static_cast<double>(GoldUpLevelTexture.GetSize().y) }));
-	DamageLevelTexture.Draw(textScale * math::TranslateMatrix(textInitPosition + textInterval * 3 + math::vec2{ 0,static_cast<double>(GoldUpLevelTexture.GetSize().y) }));
-	SpeedLevelTexture.Draw(textScale * math::TranslateMatrix(textInitPosition + textInterval * 2 + math::vec2{ 0, static_cast<double>(GoldUpLevelTexture.GetSize().y)}));
-	RangeLevelTexture.Draw(textScale * math::TranslateMatrix(textInitPosition + textInterval * 1 + math::vec2{ 0, static_cast<double>(GoldUpLevelTexture.GetSize().y)}));
+	GoldUpLevelTexture.Draw(math::TranslateMatrix(textInitPosition + textInterval * 5 + math::vec2{0, static_cast<double>(GoldUpLevelTexture.GetSize().y)}) * textScale);
+	UnitLevelTexture.Draw(math::TranslateMatrix(textInitPosition + textInterval * 4 + math::vec2{ 0, static_cast<double>(GoldUpLevelTexture.GetSize().y)}) * textScale);
+	DamageLevelTexture.Draw(math::TranslateMatrix(textInitPosition + textInterval * 3 + math::vec2{ 0,static_cast<double>(GoldUpLevelTexture.GetSize().y)}) * textScale);
+	SpeedLevelTexture.Draw(math::TranslateMatrix(textInitPosition + textInterval * 2 + math::vec2{ 0, static_cast<double>(GoldUpLevelTexture.GetSize().y)}) * textScale);
+	RangeLevelTexture.Draw(math::TranslateMatrix(textInitPosition + textInterval * 1 + math::vec2{ 0, static_cast<double>(GoldUpLevelTexture.GetSize().y)}) * textScale);
 	Level3Object::Draw(displayMatrix);
 }
 
@@ -121,7 +121,7 @@ void Alliance::Shoot()
 void Alliance::MakeFootman(int cost)
 {
 	Engine::GetGSComponent<Gold>()->UpdateGold(-cost);
-	Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Footman(GetPosition(), 100 * unitLevel, 10 * unitLevel, {0.7,0.7}, { 50, 0 }, 0.5));
+	Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Footman(GetPosition(), 100 * unitLevel, 10 * unitLevel, {0.7,0.7}, { 60, 0 }, 0.5));
 	Engine::GetGSComponent<UnitAmount>()->UpdateUnitAmount(1, 0);
 }
 

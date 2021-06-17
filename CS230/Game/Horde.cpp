@@ -45,7 +45,7 @@ void Horde::MakeGrunt()
 	if(enemyGold >= gruntCost && currentUnitAmount->GetEnemyUnitAmount() <= UnitAmount::unitLimit)
 	{
 		enemyGold -= gruntCost;
-		Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Grunt(GetPosition(), 200 * unitLevel, 25 * unitLevel, { 1,1 },{ 70, 0 }, 0.5));
+		Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Grunt(GetPosition(), 150 * unitLevel, 15 * unitLevel, { 1,1 },{ 70, 0 }, 0.5));
 		currentUnitAmount->UpdateUnitAmount(0, 1);
 	}
 }
@@ -56,7 +56,7 @@ void Horde::MakeShaman()
 	if (enemyGold >= shamanCost && currentUnitAmount->GetEnemyUnitAmount() <= UnitAmount::unitLimit)
 	{
 		enemyGold -= shamanCost;
-		Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Shaman(GetPosition(), 160 * unitLevel, 50 * unitLevel, { 1,1 }, { 40, 0 }, 2));
+		Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Shaman(GetPosition(), 120 * unitLevel, 50 * unitLevel, { 1,1 }, { 40, 0 }, 2));
 		currentUnitAmount->UpdateUnitAmount(0, 1);
 	}
 }
@@ -67,7 +67,7 @@ void Horde::MakeTauren()
 	if (enemyGold >= taurenCost && currentUnitAmount->GetEnemyUnitAmount() <= UnitAmount::unitLimit)
 	{
 		enemyGold -= taurenCost;
-		Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Tauren(GetPosition(), 400 * unitLevel, 100 * unitLevel, { 1,1 }, { 60, 0 }, 3));
+		Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Tauren(GetPosition(), 340 * unitLevel, 100 * unitLevel, { 1,1 }, { 60, 0 }, 1));
 		currentUnitAmount->UpdateUnitAmount(0, 1);
 	}
 }

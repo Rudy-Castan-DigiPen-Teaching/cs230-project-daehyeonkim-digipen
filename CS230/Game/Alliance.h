@@ -35,11 +35,11 @@ private:
 	static constexpr int footmanCost = 10;
 	static constexpr int riflemanCost = 15;
 	static constexpr int knightCost = 30;
-	static constexpr int unitImproveCost = 30;
+	static constexpr int unitImproveCost = 20;
 	static constexpr int goldIncreasingImproveCost = 20;
 	static constexpr int attackDamageImproveCost = 20;
 	static constexpr int attackSpeedImproveCost = 30;
-	static constexpr int rangeImproveCost = 50;
+	static constexpr int rangeImproveCost = 20;
 	static constexpr int levelLimit = 5;
 
 	static constexpr double factor = 1.3;

@@ -104,12 +104,13 @@ void Level3::Draw()
 	{
 		GetGSComponent<UnitAmount>()->Draw({10, static_cast<int>(winSize.y * 0.7)});
 	}
+	constexpr int scaleSize = 3;
 	if (player->GetHP() <= 0)
 	{
-		loseTexture.Draw(math::TranslateMatrix(winSize / 2 - loseTexture.GetSize() / 2) * math::ScaleMatrix({3, 3}));
+		loseTexture.Draw(math::TranslateMatrix(winSize / 2 - scaleSize * loseTexture.GetSize() / 2) * math::ScaleMatrix({ scaleSize, scaleSize }));
 	}
 	else if (enemy->GetHP() <= 0)
 	{
-		winTexture.Draw(math::TranslateMatrix(winSize / 2 - winTexture.GetSize() / 2) * math::ScaleMatrix({ 3, 3 }));
+		winTexture.Draw(math::TranslateMatrix(winSize / 2 - scaleSize * winTexture.GetSize() / 2) * math::ScaleMatrix({ scaleSize, scaleSize }));
 	}
 }
