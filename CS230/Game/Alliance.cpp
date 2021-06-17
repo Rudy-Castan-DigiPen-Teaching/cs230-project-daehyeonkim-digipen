@@ -59,23 +59,23 @@ void Alliance::Update(double dt)
 	{
 		MakeKnight(knightCost);
 	}
-	else if(improveUnitKey.IsKeyReleased() == true && gold >= unitUpCost)
+	else if(improveUnitKey.IsKeyReleased() == true && gold >= unitUpCost && unitLevel != levelLimit)
 	{
 		ImproveUnitLevel(unitUpCost);
 	}
-	else if(goldEarnKey.IsKeyReleased() == true && gold >= goldUpCost)
+	else if(goldEarnKey.IsKeyReleased() == true && gold >= goldUpCost && goldIncreasing != levelLimit)
 	{
 		ImproveGoldIncresing(goldUpCost);
 	}
-	else if (shootDamageKey.IsKeyReleased() == true && gold >= attackDamageUpCost)
+	else if (shootDamageKey.IsKeyReleased() == true && gold >= attackDamageUpCost && attackDamageLevel != levelLimit)
 	{
 		ImproveDamage(attackDamageUpCost);
 	}
-	else if (shootSpeedKey.IsKeyReleased() == true && gold >= attackSpeedUpCost)
+	else if (shootSpeedKey.IsKeyReleased() == true && gold >= attackSpeedUpCost && attackSpeedLevel != levelLimit)
 	{
 		ImproveAttackSpeed(attackSpeedUpCost);
 	}
-	else if (bulletSpeedKey.IsKeyReleased() == true && gold >= rangeUpCost)
+	else if (bulletSpeedKey.IsKeyReleased() == true && gold >= rangeUpCost && rangeLevel != levelLimit)
 	{
 		ImproveRange(rangeUpCost);
 	}
@@ -119,22 +119,22 @@ void Alliance::Shoot()
 void Alliance::MakeFootman(int cost)
 {
 	Engine::GetGSComponent<Gold>()->UpdateGold(-cost);
-	Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Footman(unitIdentityCode, GetPosition(), 100 * unitLevel, 10 * unitLevel, {0.7,0.7}, { 50, 0 }, 0.5));
+	Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Footman(Level3::objIDAdress, GetPosition(), 100 * unitLevel, 10 * unitLevel, {0.7,0.7}, { 50, 0 }, 0.5));
 	Level3::objIDAdress++;
 }
 
 void Alliance::MakeRifleman(int cost)
 {
 	Engine::GetGSComponent<Gold>()->UpdateGold(-cost);
-	Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Rifleman(unitIdentityCode, GetPosition(), 100 * unitLevel, 30 * unitLevel, { 0.7,0.7 }, { 50, 0 }, 1.5));
-	unitIdentityCode++;
+	Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Rifleman(Level3::objIDAdress, GetPosition(), 100 * unitLevel, 30 * unitLevel, { 0.7,0.7 }, { 50, 0 }, 1.5));
+	Level3::objIDAdress++;
 }
 
 void Alliance::MakeKnight(int cost)
 {
 	Engine::GetGSComponent<Gold>()->UpdateGold(-cost);
-	Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Knight(unitIdentityCode, GetPosition(), 250 * unitLevel, 25 * unitLevel, { 1,1 }, { 100, 0 }, 0.3));
-	unitIdentityCode++;
+	Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Knight(Level3::objIDAdress, GetPosition(), 250 * unitLevel, 25 * unitLevel, { 1,1 }, { 100, 0 }, 0.3));
+	Level3::objIDAdress++;
 }
 
 void Alliance::ImproveUnitLevel(int cost)
