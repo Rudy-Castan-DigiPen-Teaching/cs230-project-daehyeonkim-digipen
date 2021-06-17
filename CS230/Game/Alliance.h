@@ -43,7 +43,7 @@ private:
 	static constexpr double factor = 1.3;
 	static constexpr double angleDownLim = PI / 3.;
 	static constexpr double angleUpLim = -PI / 3.;
-
+	
 	int goldIncreasing;
 	int unitLevel;
 	

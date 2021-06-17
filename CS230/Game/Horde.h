@@ -20,6 +20,8 @@ private:
 	static constexpr int goldIncreasingImproveCost = 20;
 	static constexpr int unitImproveCost = 30;
 
+	int UnitAmount;
+	
 	int whenEnemyFeelDangerHP;
 	
 	int goldIncreasing;
@@ -32,13 +34,13 @@ public:
 	void Update(double dt) override;
 	GameObjectType GetObjectType() override { return GameObjectType::Horde; }
 	std::string GetObjectTypeName() override { return "Horde"; }
-
+	void UpdateUnitAmount(int input);
 private:
 	class State_EarnGold : public State {
 		void Enter(GameObject* object) override;
 		void Update(GameObject* object, double dt) override;
 		void TestForExit(GameObject* object) override;
-		std::string GetName() override { return "earngold"; }
+		std::string GetName() override { return "Earn gold"; }
 		static constexpr double produceCoolDown = 3;
 		double produceTimer;
 	};
@@ -46,7 +48,7 @@ private:
 		void Enter(GameObject* object) override;
 		void Update(GameObject* object, double dt) override;
 		void TestForExit(GameObject* object) override;
-		std::string GetName() override { return "produce"; }
+		std::string GetName() override { return "Produce"; }
 		int Behavior;
 		enum class EnemyBehavior
 		{

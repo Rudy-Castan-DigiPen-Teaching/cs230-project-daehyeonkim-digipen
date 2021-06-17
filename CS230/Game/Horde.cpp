@@ -15,7 +15,7 @@ Creation date: 06/04/2021
 #include "../Engine/Engine.h"
 #include "../Engine/GameObjectManager.h"
 #include "../Engine/Sprite.h"
-Horde::Horde(math::vec2 initPos, int hp, math::vec2 HPBarScale) : Level3Object(initPos, hp, HPBarScale), goldIncreasing(1), enemyGold(0), goldTimer(0), unitLevel(1), whenEnemyFeelDangerHP(static_cast<int>(hp / 5))
+Horde::Horde(math::vec2 initPos, int hp, math::vec2 HPBarScale) : Level3Object(initPos, hp, HPBarScale), UnitAmount(0), goldIncreasing(1), enemyGold(0), goldTimer(0), unitLevel(1), whenEnemyFeelDangerHP(static_cast<int>(hp / 5))
 {
 	AddGOComponent(new CS230::Sprite("assets/LEVEL3/enemyBase.spt", this));
 	AddGOComponent(new HPBar(hp, { 2, 2}));
