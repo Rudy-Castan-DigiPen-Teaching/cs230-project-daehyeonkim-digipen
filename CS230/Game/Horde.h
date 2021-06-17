@@ -19,10 +19,9 @@ private:
 	static constexpr int taurenCost = 30;
 	static constexpr int goldIncreasingImproveCost = 20;
 	static constexpr int unitImproveCost = 30;
-	static constexpr int unitAmountLimit = 20;
-	static constexpr int levelLimit = 7;
 	
-	int unitAmount;
+	static constexpr int levelLimit = 7;
+
 	
 	int whenEnemyFeelDangerHP;
 	
@@ -36,7 +35,6 @@ public:
 	void Update(double dt) override;
 	GameObjectType GetObjectType() override { return GameObjectType::Horde; }
 	std::string GetObjectTypeName() override { return "Horde"; }
-	void UpdateUnitAmount(int input);
 private:
 	class State_EarnGold : public State {
 		void Enter(GameObject* object) override;
