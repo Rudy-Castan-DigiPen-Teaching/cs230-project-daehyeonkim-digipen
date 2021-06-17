@@ -1,6 +1,6 @@
 assets/LEVEL3/boom.png
-HotSpot 50 50
-FrameSize 100 100
+HotSpot 50 0
+FrameSize 100 50
 Frame 0 0
 Frame 100 0
 Frame 200 0
