@@ -106,6 +106,7 @@ void Tauren::State_Attack::TestForExit(GameObject* object)
 	Tauren* tauren = static_cast<Tauren*>(object);
 	if (tauren->DoesCollideWith(tauren->AttackWho) == false)
 	{
+		tauren->AttackWho = nullptr;
 		tauren->ChangeState(&tauren->stateWalking);
 	}
 	if (tauren->isDead() == true)

@@ -16,7 +16,7 @@ Creation date: 06/04/2021
 #include "../Engine/Engine.h"
 #include "../Engine/GameObjectManager.h"
 #include "../Engine/Sprite.h"
-Horde::Horde(math::vec2 initPos, int hp, math::vec2 HPBarScale) : Level3Object(initPos, hp, HPBarScale), goldIncreasing(1), enemyGold(0), goldTimer(0), unitLevel(1), whenEnemyFeelDangerHP(static_cast<int>(hp / 5))
+Horde::Horde(math::vec2 initPos, int hp, math::vec2 HPBarScale) : Level3Object(initPos, hp, HPBarScale), goldIncreasing(1), enemyGold(0), goldTimer(0), unitLevel(1)
 {
 	AddGOComponent(new CS230::Sprite("assets/LEVEL3/enemyBase.spt", this));
 	AddGOComponent(new HPBar(hp, { 2, 2}));
@@ -105,7 +105,7 @@ void Horde::State_EarnGold::Update(GameObject*, double dt)
 void Horde::State_EarnGold::TestForExit(GameObject* object)
 {
 	Horde* horde = static_cast<Horde*>(object);
-	if((horde->enemyGold % 10 == 0 && produceTimer >= produceCoolDown)|| horde->GetHP() < horde->whenEnemyFeelDangerHP)
+	if(horde->enemyGold % 10 == 0 && produceTimer >= produceCoolDown)
 	{
 		horde->ChangeState(&horde->stateProduce);
 	}
@@ -119,7 +119,6 @@ void Horde::State_Produce::Enter(GameObject*)
 void Horde::State_Produce::Update(GameObject* object, double)
  {
 	Horde* horde = static_cast<Horde*>(object);
-	//horde->MakeTauren();
 	if (Behavior % static_cast<int>(EnemyBehavior::upgrade) == 0)
 	{
 		horde->improveGoldIncresing();
@@ -136,7 +135,7 @@ void Horde::State_Produce::Update(GameObject* object, double)
 void Horde::State_Produce::TestForExit(GameObject* object)
 {
 	Horde* horde = static_cast<Horde*>(object);
-	if (Behavior % static_cast<int>(EnemyBehavior::reProduce) == 0 || horde->GetHP() <= horde->whenEnemyFeelDangerHP)
+	if (Behavior % static_cast<int>(EnemyBehavior::reProduce) == 0)
 	{
 		horde->ChangeState(this);
 	} else

@@ -64,6 +64,7 @@ void Level3::Update(double dt)
 		timer += dt;
 	}
 	if (mainMenu.IsKeyReleased() == true || timer > 2) {
+		timer = 0;
 		Engine::GetGameStateManager().SetNextState(static_cast<int>(Screens::MainMenu));
 	}
 #ifdef _DEBUG

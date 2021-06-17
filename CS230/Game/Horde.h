@@ -21,9 +21,6 @@ private:
 	static constexpr int unitImproveCost = 30;
 	
 	static constexpr int levelLimit = 7;
-
-	
-	int whenEnemyFeelDangerHP;
 	
 	int goldIncreasing;
 	int enemyGold;
