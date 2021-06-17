@@ -9,6 +9,7 @@ Creation date: 06/04/2021
 -----------------------------------------------------------------*/
 #include "Level3.h"
 #include "Alliance.h"
+#include "Background.h"
 #include "Floor.h"
 #include "Horde.h"
 #include "Score.h"
@@ -22,7 +23,7 @@ Creation date: 06/04/2021
 #include "../Engine/GameObjectManager.h"
 #include "../Engine/ShowCollision.h"
 
-Level3::Level3() : levelReload(CS230::InputKey::Keyboard::R), mainMenu(CS230::InputKey::Keyboard::Escape), addGold(CS230::InputKey::Keyboard::Enter),player(nullptr), enemy(nullptr) {}
+Level3::Level3() : levelReload(CS230::InputKey::Keyboard::R), mainMenu(CS230::InputKey::Keyboard::Escape), addGold(CS230::InputKey::Keyboard::Enter),player(nullptr), enemy(nullptr), timer(0) {}
 
 void Level3::Load()
 {
@@ -47,12 +48,22 @@ void Level3::Load()
 	AddGSComponent(new ShootCannonEmitter());
 	AddGSComponent(new BombBoomEmitter());
 	AddGSComponent(new UnitHurtEmitter());
+	CS230::SpriteFont& font = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1));
+	winTexture = font.DrawTextToTexture("Win!!", 0xFFFFFFFF, true);
+	loseTexture = font.DrawTextToTexture("Lose...", 0xFFFFFFFF, true);
 }
 
 void Level3::Update(double dt)
 {
 	UpdateGSComponents(dt);
-	if (mainMenu.IsKeyReleased() == true) {
+	if(player->GetHP() <= 0)
+	{
+		timer += dt;
+	} else if(enemy->GetHP() <= 0)
+	{
+		timer += dt;
+	}
+	if (mainMenu.IsKeyReleased() == true || timer > 2) {
 		Engine::GetGameStateManager().SetNextState(static_cast<int>(Screens::MainMenu));
 	}
 #ifdef _DEBUG
@@ -70,6 +81,7 @@ void Level3::Unload()
 {
 	ClearGSComponent();
 	player = nullptr;
+	enemy = nullptr;
 }
 
 void Level3::Draw()
@@ -90,5 +102,13 @@ void Level3::Draw()
 	if (GetGSComponent<UnitAmount>() != nullptr)
 	{
 		GetGSComponent<UnitAmount>()->Draw({10, static_cast<int>(winSize.y * 0.7)});
+	}
+	if (player->GetHP() <= 0)
+	{
+		loseTexture.Draw(math::TranslateMatrix(winSize / 2 - loseTexture.GetSize() / 2) * math::ScaleMatrix({2, 2}));
+	}
+	else if (enemy->GetHP() <= 0)
+	{
+		winTexture.Draw(math::TranslateMatrix(winSize / 2 - winTexture.GetSize() / 2) * math::ScaleMatrix({ 2, 2 }));
 	}
 }

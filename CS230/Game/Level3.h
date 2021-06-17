@@ -10,7 +10,7 @@ Creation date: 06/04/2021
 #pragma once
 #include "..\Engine\GameState.h"
 #include "..\Engine\Input.h"
-#include "Background.h"
+#include "../Engine/Texture.h"
 
 class Horde;
 class Alliance;
@@ -32,4 +32,9 @@ private:
 	CS230::InputKey levelReload;
 	CS230::InputKey mainMenu;
 	CS230::InputKey addGold;
+
+	CS230::Texture winTexture;
+	CS230::Texture loseTexture;
+
+	double timer;
 };
