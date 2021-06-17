@@ -33,7 +33,7 @@ void Level3::Load()
 #endif
 	AddGSComponent(new Score(0, Fonts::Font1));
 	AddGSComponent(new Gold(0, Fonts::Font1));
-	AddGSComponent(new UnitAmount(0, 0, Fonts::Font1));
+	AddGSComponent(new UnitAmount(0, 0, Fonts::Font2));
 	Background* bgPtr = new Background();
 	AddGSComponent(bgPtr);
 	bgPtr->Add("assets/map.png", 1);
