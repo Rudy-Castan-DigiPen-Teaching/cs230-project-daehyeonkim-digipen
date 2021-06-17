@@ -10,6 +10,7 @@ Creation date: 06/08/2021
 #include "Tauren.h"
 #include "HPBar.h"
 #include "Score.h"
+#include "UnitAmount.h"
 #include "Unit_Anims.h"
 #include "../Engine/Sprite.h"
 #include "../Engine/Collision.h"
@@ -121,6 +122,7 @@ void Tauren::State_Dead::Enter(GameObject* object)
 	tauren->RemoveGOComponent<CS230::Collision>();
 	tauren->RemoveGOComponent<HPBar>();
 	Engine::GetGSComponent<Score>()->AddScore(300);
+	Engine::GetGSComponent<UnitAmount>()->UpdateUnitAmount(0, -1);
 }
 
 void Tauren::State_Dead::Update(GameObject*, double) {}

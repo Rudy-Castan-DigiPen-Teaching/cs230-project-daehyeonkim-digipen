@@ -12,6 +12,7 @@ Creation date: 06/04/2021
 #include "Horde.h"
 #include "HPBar.h"
 #include "Score.h"
+#include "UnitAmount.h"
 #include "Unit_Anims.h"
 #include "../Engine/Sprite.h"
 #include "../Engine/Collision.h"
@@ -121,6 +122,7 @@ void Grunt::State_Dead::Enter(GameObject* object)
 	grunt->RemoveGOComponent<CS230::Collision>();
 	grunt->RemoveGOComponent<HPBar>();
 	Engine::GetGSComponent<Score>()->AddScore(50);
+	Engine::GetGSComponent<UnitAmount>()->UpdateUnitAmount(0, -1);
 }
 
 void Grunt::State_Dead::Update(GameObject*, double) {}

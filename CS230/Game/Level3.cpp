@@ -17,6 +17,7 @@ Creation date: 06/04/2021
 #include "Gold.h"
 #include "Gravity.h"
 #include "Screens.h"
+#include "UnitAmount.h"
 #include "../Engine/Engine.h"
 #include "../Engine/GameObjectManager.h"
 #include "../Engine/ShowCollision.h"
@@ -31,6 +32,7 @@ void Level3::Load()
 #endif
 	AddGSComponent(new Score(0, Fonts::Font1));
 	AddGSComponent(new Gold(0, Fonts::Font1));
+	AddGSComponent(new UnitAmount(0, 0, Fonts::Font1));
 	Background* bgPtr = new Background();
 	AddGSComponent(bgPtr);
 	bgPtr->Add("assets/map.png", 1);
@@ -77,10 +79,16 @@ void Level3::Draw()
 	math::TransformMatrix camera;
 	GetGSComponent<CS230::GameObjectManager>()->DrawAll(camera);
 	math::ivec2 winSize = Engine::GetWindow().GetSize();
-	if (GetGSComponent<Score>() != nullptr) {
+	if (GetGSComponent<Score>() != nullptr) 
+	{
 		GetGSComponent<Score>()->Draw({ 10, winSize.y - 5 });
 	}
-	if (GetGSComponent<Gold>() != nullptr) {
+	if (GetGSComponent<Gold>() != nullptr) 
+	{
 		GetGSComponent<Gold>()->Draw({ winSize.x / 2, winSize.y - 5 });
+	}
+	if (GetGSComponent<UnitAmount>() != nullptr)
+	{
+		GetGSComponent<UnitAmount>()->Draw({10, static_cast<int>(winSize.y * 0.7)});
 	}
 }

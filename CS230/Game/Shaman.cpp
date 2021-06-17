@@ -10,6 +10,7 @@ Creation date: 06/08/2021
 #include "Shaman.h"
 #include "HPBar.h"
 #include "Score.h"
+#include "UnitAmount.h"
 #include "Unit_Anims.h"
 #include "../Engine/Sprite.h"
 #include "../Engine/Collision.h"
@@ -106,6 +107,7 @@ void Shaman::State_Dead::Enter(GameObject* object)
 	shaman->RemoveGOComponent<CS230::Collision>();
 	shaman->RemoveGOComponent<HPBar>();
 	Engine::GetGSComponent<Score>()->AddScore(100);
+	Engine::GetGSComponent<UnitAmount>()->UpdateUnitAmount(0, -1);
 }
 
 void Shaman::State_Dead::Update(GameObject*, double) {}

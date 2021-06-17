@@ -9,9 +9,12 @@ Creation date: 06/08/2021
 -----------------------------------------------------------------*/
 #include "Knight.h"
 #include "HPBar.h"
+#include "UnitAmount.h"
 #include "Unit_Anims.h"
 #include "../Engine/Sprite.h"
 #include "../Engine/Collision.h"
+#include "../Engine/Engine.h"
+
 Knight::Knight( math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed) : Level3Object(position, hp, HPBarScale), attackDamage(ad), speed(movementSpeed), attackSpeed(attackSpeed), attackTimer(0), AttackWho(nullptr)
 {
 	AddGOComponent(new CS230::Sprite("assets/LEVEL3/knight.spt", this));
@@ -116,6 +119,7 @@ void Knight::State_Dead::Enter(GameObject* object)
 	knight->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Unit_Anims::Dead_Anim));
 	knight->RemoveGOComponent<CS230::Collision>();
 	knight->RemoveGOComponent<HPBar>();
+	Engine::GetGSComponent<UnitAmount>()->UpdateUnitAmount(-1, 0);
 }
 
 void Knight::State_Dead::Update(GameObject*, double) {}

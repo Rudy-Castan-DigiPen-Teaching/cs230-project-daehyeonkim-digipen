@@ -9,6 +9,7 @@ Creation date: 06/04/2021
 -----------------------------------------------------------------*/
 #include "Rifleman.h"
 #include "HPBar.h"
+#include "UnitAmount.h"
 #include "Unit_Anims.h"
 #include "../Engine/Sprite.h"
 #include "../Engine/Collision.h"
@@ -104,6 +105,7 @@ void Rifleman::State_Dead::Enter(GameObject* object)
 	rifleman->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Unit_Anims::Dead_Anim));
 	rifleman->RemoveGOComponent<CS230::Collision>();
 	rifleman->RemoveGOComponent<HPBar>();
+	Engine::GetGSComponent<UnitAmount>()->UpdateUnitAmount(-1, 0);
 }
 
 void Rifleman::State_Dead::Update(GameObject*, double) {}

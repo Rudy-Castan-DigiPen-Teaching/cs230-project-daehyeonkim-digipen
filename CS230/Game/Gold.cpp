@@ -9,9 +9,7 @@ Creation date: 06/04/2021
 -----------------------------------------------------------------*/
 #include "../Engine/Engine.h"		//DrawTextToTexture
 #include "../Engine/TransformMatrix.h"
-#include "../Engine/Vec2.h"
 #include "Gold.h"
-#include "Fonts.h"
 
 Gold::Gold(int startingGold, Fonts fontToUse) : fontToUse(fontToUse), gold(startingGold) {
 	RenderText();
@@ -27,6 +25,6 @@ void Gold::Draw(math::ivec2 location) {
 }
 
 void Gold::RenderText() {
-	std::string scoreString = "Gold: " + std::to_string(gold);
-	goldTexture = Engine::GetSpriteFont(static_cast<int>(fontToUse)).DrawTextToTexture(scoreString, 0xFFFFFFFF, true);
+	std::string goldString = "Gold: " + std::to_string(gold);
+	goldTexture = Engine::GetSpriteFont(static_cast<int>(fontToUse)).DrawTextToTexture(goldString, 0xFFFFFFFF, true);
 }
