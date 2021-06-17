@@ -17,7 +17,7 @@ class Alliance;
 
 class Level3 : public CS230::GameState {
 public:
-
+	static inline int objIDAdress = 0;
 	Level3();
 	void Load() override;
 	void Update(double dt) override;

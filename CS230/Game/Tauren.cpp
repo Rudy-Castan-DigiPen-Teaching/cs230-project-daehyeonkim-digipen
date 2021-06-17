@@ -14,8 +14,9 @@ Creation date: 06/08/2021
 #include "../Engine/Sprite.h"
 #include "../Engine/Collision.h"
 #include "../Engine/Engine.h"
+#include "../Engine/GameObjectManager.h"
 
-Tauren::Tauren(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed) : Level3Object(position, hp, HPBarScale), attackDamage(ad), speed(movementSpeed), attackSpeed(attackSpeed), attackTimer(0)
+Tauren::Tauren(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed) : Level3Object(position, hp, HPBarScale),attackDamage(ad), speed(movementSpeed), attackSpeed(attackSpeed), attackTimer(0)
 {
 	AddGOComponent(new CS230::Sprite("assets/LEVEL3/tauren.spt", this));
 	ChangeState(&stateWalking);
@@ -24,8 +25,8 @@ Tauren::Tauren(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math:
 
 void Tauren::ResolveCollision(GameObject* objectA)
 {
-	const std::list<Level3Object*>::iterator attackListFirst = std::begin(AttackWhos);
-	const std::list<Level3Object*>::iterator attackListLast = std::end(AttackWhos);
+	const std::list<int>::iterator attackListFirst = std::begin(AttackWhos);
+	const std::list<int>::iterator attackListLast = std::end(AttackWhos);
 	switch (objectA->GetObjectType())
 	{
 	case GameObjectType::Alliance:
@@ -35,12 +36,13 @@ void Tauren::ResolveCollision(GameObject* objectA)
 	case GameObjectType::Rifleman:
 		[[fallthrough]];
 	case GameObjectType::Knight:
-		if (std::find(attackListFirst, attackListLast, objectA) == attackListLast)
+		Level3Object* affectObject = dynamic_cast<Level3Object*>(objectA);
+		int targetID = affectObject->GetIdentityID();
+		if (std::find(attackListFirst, attackListLast, targetID) == attackListLast)
 		{
-			Level3Object* affectObject = dynamic_cast<Level3Object*>(objectA);
 			if(affectObject != nullptr && affectObject->isDead() == false)
 			{
-				AttackWhos.push_back(affectObject);
+				AttackWhos.push_back(targetID);
 			}
 		}
 		break;
@@ -99,19 +101,22 @@ void Tauren::State_Attack::Update(GameObject* object, double dt)
 	tauren->attackTimer += dt;
 	if (tauren->attackTimer >= tauren->attackSpeed)
 	{
-		std::list<Level3Object*> removeWhoList;
-		for(Level3Object* affectObject : tauren->AttackWhos)
+		std::list<int> removeList;
+		for(GameObject* allObj : Engine::GetGSComponent<CS230::GameObjectManager>()->Objects())
 		{
-			if(affectObject != nullptr && affectObject->isDead() == false)
+			for (int affectObjID : tauren->AttackWhos)
 			{
-				affectObject->UpdateHP(-tauren->attackDamage);
-			}
-			if (affectObject != nullptr && affectObject->ShouldDestroy() == true)
-			{
-				removeWhoList.push_back(affectObject);
+				Level3Object* targetObj = dynamic_cast<Level3Object*>(allObj);
+				if (targetObj != nullptr && affectObjID == targetObj->GetIdentityID() && targetObj->isDead() == false)
+				{
+					targetObj->UpdateHP(-tauren->attackDamage);
+				} else
+				{
+					removeList.push_back(affectObjID);
+				}
 			}
 		}
-		for(Level3Object* removeWho : removeWhoList)
+		for(int removeWho : removeList)
 		{
 			tauren->AttackWhos.remove(removeWho);
 		}

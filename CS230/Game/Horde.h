@@ -19,8 +19,10 @@ private:
 	static constexpr int taurenCost = 30;
 	static constexpr int goldIncreasingImproveCost = 20;
 	static constexpr int unitImproveCost = 30;
-
-	int UnitAmount;
+	static constexpr int unitAmountLimit = 20;
+	static constexpr int levelLimit = 7;
+	
+	int unitAmount;
 	
 	int whenEnemyFeelDangerHP;
 	
@@ -42,14 +44,14 @@ private:
 		void TestForExit(GameObject* object) override;
 		std::string GetName() override { return "Earn gold"; }
 		static constexpr double produceCoolDown = 3;
-		double produceTimer;
+		double produceTimer = 0;
 	};
 	class State_Produce : public State {
 		void Enter(GameObject* object) override;
 		void Update(GameObject* object, double dt) override;
 		void TestForExit(GameObject* object) override;
 		std::string GetName() override { return "Produce"; }
-		int Behavior;
+		int Behavior = 0;
 		enum class EnemyBehavior
 		{
 			do_nothing = 2,

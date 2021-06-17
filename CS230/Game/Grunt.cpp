@@ -8,6 +8,8 @@ Author: Daehyeon Kim
 Creation date: 06/04/2021
 -----------------------------------------------------------------*/
 #include "Grunt.h"
+
+#include "Horde.h"
 #include "HPBar.h"
 #include "Score.h"
 #include "Unit_Anims.h"

@@ -19,13 +19,13 @@ private:
 	math::vec2 speed;
 	double attackTimer;
 	double attackSpeed;
-
 public:
-	Footman(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed);
+	Footman(int identityCode, math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed);
 	GameObjectType GetObjectType() override { return GameObjectType::Footman; }
 	std::string GetObjectTypeName() override { return "Footman"; }
 	void ResolveCollision(GameObject* objectA) override;
 	bool CanCollideWith(GameObjectType objectBType) override;
+    
 private:
 	class State_Walking : public State {
 	public:

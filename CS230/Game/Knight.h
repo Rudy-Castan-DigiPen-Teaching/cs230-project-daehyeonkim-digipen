@@ -19,9 +19,8 @@ private:
 	math::vec2 speed;
 	double attackTimer;
 	double attackSpeed;
-
 public:
-	Knight(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed);
+	Knight(int identityCode, math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed);
 	GameObjectType GetObjectType() override { return GameObjectType::Knight; }
 	std::string GetObjectTypeName() override { return "Knight"; }
 	void ResolveCollision(GameObject* objectA) override;

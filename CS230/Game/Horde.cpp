@@ -15,7 +15,7 @@ Creation date: 06/04/2021
 #include "../Engine/Engine.h"
 #include "../Engine/GameObjectManager.h"
 #include "../Engine/Sprite.h"
-Horde::Horde(math::vec2 initPos, int hp, math::vec2 HPBarScale) : Level3Object(initPos, hp, HPBarScale), UnitAmount(0), goldIncreasing(1), enemyGold(0), goldTimer(0), unitLevel(1), whenEnemyFeelDangerHP(static_cast<int>(hp / 5))
+Horde::Horde(math::vec2 initPos, int hp, math::vec2 HPBarScale) : Level3Object(initPos, hp, HPBarScale, 101), unitAmount(0), goldIncreasing(1), enemyGold(0), goldTimer(0), unitLevel(1), whenEnemyFeelDangerHP(static_cast<int>(hp / 5))
 {
 	AddGOComponent(new CS230::Sprite("assets/LEVEL3/enemyBase.spt", this));
 	AddGOComponent(new HPBar(hp, { 2, 2}));
@@ -38,37 +38,45 @@ void Horde::Update(double dt)
 	GameObject::Update(dt);
 }
 
+void Horde::UpdateUnitAmount(int input)
+{
+	unitAmount += input;
+}
+
 void Horde::MakeGrunt()
 {
-	if(enemyGold >= gruntCost)
+	if(enemyGold >= gruntCost && unitAmount <= unitAmountLimit)
 	{
 		enemyGold -= gruntCost;
 		Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Grunt(GetPosition(), 200 * unitLevel, 25 * unitLevel, { 1,1 },{ 70, 0 }, 0.5));
+		unitAmount++;
 	}
 }
 
 void Horde::MakeShaman()
 {
-	if (enemyGold >= shamanCost)
+	if (enemyGold >= shamanCost && unitAmount <= unitAmountLimit)
 	{
 		enemyGold -= shamanCost;
 		Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Shaman(GetPosition(), 160 * unitLevel, 50 * unitLevel, { 1,1 }, { 40, 0 }, 2));
+		unitAmount++;
 	}
 }
 
 void Horde::MakeTauren()
 {
-	if (enemyGold >= taurenCost)
+	if (enemyGold >= taurenCost && unitAmount <= unitAmountLimit)
 	{
 		enemyGold -= taurenCost;
 		Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Tauren(GetPosition(), 400 * unitLevel, 100 * unitLevel, { 1,1 }, { 60, 0 }, 3));
+		unitAmount++;
 	}
 }
 
 void Horde::improveUnitLevel()
 {
 	const int unitLevelUpcost = unitImproveCost * unitLevel;
-	if (enemyGold >= unitLevelUpcost)
+	if (enemyGold >= unitLevelUpcost && unitLevel <= levelLimit)
 	{
 		enemyGold -= unitLevelUpcost;
 		unitLevel++;
@@ -78,7 +86,7 @@ void Horde::improveUnitLevel()
 void Horde::improveGoldIncresing()
 {
 	const int goldUpCost = goldIncreasingImproveCost * goldIncreasing;
-	if (enemyGold >= goldUpCost)
+	if (enemyGold >= goldUpCost && goldIncreasing <= levelLimit)
 	{
 		enemyGold -= goldUpCost;
 		goldIncreasing++;

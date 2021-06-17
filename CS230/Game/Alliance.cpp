@@ -18,7 +18,9 @@ Creation date: 06/04/2021
 #include "../Engine/Engine.h"
 #include "../Engine/GameObjectManager.h"
 #include "Fonts.h"
-Alliance::Alliance(math::vec2 initPos, int hp, math::vec2 HPBarScale, int ad, double attackSpeed, math::vec2 speed) : Level3Object(initPos, hp, HPBarScale), unitAmount(0), goldIncreasing(1), goldTimer(0), attackSpeed(attackSpeed), attackTimer(0), attackDamage(ad), speed(speed), angle(0), footmanKey(CS230::InputKey::Keyboard::A), shamanKey(CS230::InputKey::Keyboard::S), knightKey(CS230::InputKey::Keyboard::D), improveUnitKey(CS230::InputKey::Keyboard::F), goldEarnKey(CS230::InputKey::Keyboard::G), shootDamageKey(CS230::InputKey::Keyboard::Z), shootSpeedKey(CS230::InputKey::Keyboard::X), bulletSpeedKey(CS230::InputKey::Keyboard::C), shootKey(CS230::InputKey::Keyboard::Space), angleUP(CS230::InputKey::Keyboard::Up), angleDown(CS230::InputKey::Keyboard::Down), unitLevel(1), attackDamageLevel(1), rangeLevel(1), attackSpeedLevel(1), Cannon(CS230::Sprite("assets/LEVEL3/cannon.spt", this)), font(Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)))
+#include "Level3.h"
+
+Alliance::Alliance(math::vec2 initPos, int hp, math::vec2 HPBarScale, int ad, double attackSpeed, math::vec2 speed) : Level3Object(initPos, hp, HPBarScale, 100), goldIncreasing(1), goldTimer(0), attackSpeed(attackSpeed), attackTimer(0), attackDamage(ad), speed(speed), angle(0), footmanKey(CS230::InputKey::Keyboard::A), shamanKey(CS230::InputKey::Keyboard::S), knightKey(CS230::InputKey::Keyboard::D), improveUnitKey(CS230::InputKey::Keyboard::F), goldEarnKey(CS230::InputKey::Keyboard::G), shootDamageKey(CS230::InputKey::Keyboard::Z), shootSpeedKey(CS230::InputKey::Keyboard::X), bulletSpeedKey(CS230::InputKey::Keyboard::C), shootKey(CS230::InputKey::Keyboard::Space), angleUP(CS230::InputKey::Keyboard::Up), angleDown(CS230::InputKey::Keyboard::Down), unitLevel(1), attackDamageLevel(1), rangeLevel(1), attackSpeedLevel(1), Cannon(CS230::Sprite("assets/LEVEL3/cannon.spt", this)), font(Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)))
 {
 	AddGOComponent(new CS230::Sprite("assets/LEVEL3/Base.spt", this));
 	AddGOComponent(new HPBar(hp, { 2, 2 }));
@@ -117,19 +119,22 @@ void Alliance::Shoot()
 void Alliance::MakeFootman(int cost)
 {
 	Engine::GetGSComponent<Gold>()->UpdateGold(-cost);
-	Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Footman(GetPosition(), 100 * unitLevel, 10 * unitLevel, {0.7,0.7}, { 50, 0 }, 0.5));
+	Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Footman(unitIdentityCode, GetPosition(), 100 * unitLevel, 10 * unitLevel, {0.7,0.7}, { 50, 0 }, 0.5));
+	Level3::objIDAdress++;
 }
 
 void Alliance::MakeRifleman(int cost)
 {
 	Engine::GetGSComponent<Gold>()->UpdateGold(-cost);
-	Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Rifleman(GetPosition(), 100 * unitLevel, 30 * unitLevel, { 0.7,0.7 }, { 50, 0 }, 1.5));
+	Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Rifleman(unitIdentityCode, GetPosition(), 100 * unitLevel, 30 * unitLevel, { 0.7,0.7 }, { 50, 0 }, 1.5));
+	unitIdentityCode++;
 }
 
 void Alliance::MakeKnight(int cost)
 {
 	Engine::GetGSComponent<Gold>()->UpdateGold(-cost);
-	Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Knight(GetPosition(), 250 * unitLevel, 25 * unitLevel, { 1,1 }, { 100, 0 }, 0.3));
+	Engine::GetGSComponent<CS230::GameObjectManager>()->Add(new Knight(unitIdentityCode, GetPosition(), 250 * unitLevel, 25 * unitLevel, { 1,1 }, { 100, 0 }, 0.3));
+	unitIdentityCode++;
 }
 
 void Alliance::ImproveUnitLevel(int cost)

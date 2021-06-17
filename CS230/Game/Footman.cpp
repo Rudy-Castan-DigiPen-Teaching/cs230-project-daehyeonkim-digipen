@@ -12,7 +12,7 @@ Creation date: 06/04/2021
 #include "Unit_Anims.h"
 #include "../Engine/Sprite.h"
 #include "../Engine/Collision.h"
-Footman::Footman(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed) : Level3Object(position, hp, HPBarScale), attackDamage(ad), speed(movementSpeed), attackSpeed(attackSpeed), attackTimer(0), AttackWho(nullptr)
+Footman::Footman(int identityCode, math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed) : Level3Object(position, hp, HPBarScale, identityCode), attackDamage(ad), speed(movementSpeed), attackSpeed(attackSpeed), attackTimer(0), AttackWho(nullptr)
 {
 	AddGOComponent(new CS230::Sprite("assets/LEVEL3/footman.spt", this));
 	ChangeState(&stateWalking);

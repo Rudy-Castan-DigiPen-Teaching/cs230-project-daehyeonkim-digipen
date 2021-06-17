@@ -8,6 +8,7 @@ Author: Daehyeon Kim
 Creation date: 06/04/2021
 -----------------------------------------------------------------*/
 #pragma once
+#include "Footman.h"
 #include "GameObjectTypes.h"
 #include "Level3Object.h"
 #include "../Engine/Input.h"
@@ -43,6 +44,7 @@ private:
 	static constexpr double factor = 1.3;
 	static constexpr double angleDownLim = PI / 3.;
 	static constexpr double angleUpLim = -PI / 3.;
+
 	
 	int goldIncreasing;
 	int unitLevel;
@@ -85,4 +87,5 @@ private:
 	CS230::Texture RangeLevelTexture;
 
 	CS230::SpriteFont& font;
+
 };														  
