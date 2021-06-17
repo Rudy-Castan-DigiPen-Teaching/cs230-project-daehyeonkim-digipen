@@ -1,6 +1,7 @@
 Assets/LEVEL3/rifleman.png
 FrameSize 96 64
 HotSpot 36 1
+HotSpot 25 48
 Frame 0 0
 Frame 96 0
 Frame 192 0 
