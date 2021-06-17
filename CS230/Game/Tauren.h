@@ -16,18 +16,17 @@ Creation date: 06/08/2021
 class Tauren final : public Level3Object
 {
 private:
-	std::list<int> AttackWhos;
+	Level3Object* AttackWho;
 	int attackDamage;
 	math::vec2 speed;
 	double attackTimer;
 	double attackSpeed;
 public:
-	Tauren(Level3Object* side, math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed);
+	Tauren(math::vec2 position, int hp, int ad, math::vec2 HPBarScale, math::vec2 movementSpeed, double attackSpeed);
 	GameObjectType GetObjectType() override { return GameObjectType::Tauren; }
 	std::string GetObjectTypeName() override { return "Tauren"; }
 	void ResolveCollision(GameObject* objectA) override;
 	bool CanCollideWith(GameObjectType objectBType) override;
-	//void Update(double dt) override;
 private:
 	class State_Walking : public State {
 	public:

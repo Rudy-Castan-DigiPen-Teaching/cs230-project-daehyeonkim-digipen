@@ -15,7 +15,7 @@ Creation date: 06/05/2021
 #include "../Engine/Engine.h"
 #include "../Engine/Sprite.h"
 
-Level3Object::Level3Object(math::vec2 initPos, int hp, math::vec2 HPBarScale, int identityCode) : GameObject(initPos), hp(hp), HPBarScale(HPBarScale), identityCode(identityCode)
+Level3Object::Level3Object(math::vec2 initPos, int hp, math::vec2 HPBarScale) : GameObject(initPos), hp(hp), HPBarScale(HPBarScale)
 {
 	AddGOComponent(new HPBar(hp, HPBarScale));
 }

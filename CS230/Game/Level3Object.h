@@ -13,13 +13,11 @@ class Level3Object : public CS230::GameObject
 {
 private:
 	int hp;
-	int identityCode;
 	math::vec2 HPBarScale;
 public:
-	Level3Object(math::vec2 initPos, int hp, math::vec2 HPBarScale, int identityCode);
+	Level3Object(math::vec2 initPos, int hp, math::vec2 HPBarScale);
 	void Draw(math::TransformMatrix displayMatrix) override;
 	void UpdateHP(int _hp);
 	int GetHP();
 	bool isDead();
-	int GetIdentityID() const { return identityCode; }
 };
