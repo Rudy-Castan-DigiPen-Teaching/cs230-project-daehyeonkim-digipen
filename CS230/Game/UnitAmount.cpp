@@ -25,9 +25,10 @@ void UnitAmount::UpdateUnitAmount(int playerUpdate, int enemyUpdate)
 
 void UnitAmount::Draw(math::ivec2 location)
 {
-	math::TransformMatrix textScale = math::ScaleMatrix({0.35, 0.35});
-	playerUnitAmountTexture.Draw(textScale * math::TranslateMatrix(location));
-	enemyUnitAmountTexture.Draw(textScale * math::TranslateMatrix(location + (math::ivec2{ Engine::GetWindow().GetSize().x - enemyUnitAmountTexture.GetSize().x, 0 })*3));
+	constexpr double scaleSize = 0.4;
+	math::TransformMatrix textScale = math::ScaleMatrix({ scaleSize, scaleSize });
+	playerUnitAmountTexture.Draw(math::TranslateMatrix(location + math::ivec2{10,0}) * textScale);
+	enemyUnitAmountTexture.Draw(math::TranslateMatrix(location + math::ivec2{ -10,0 } + (math::ivec2{ Engine::GetWindow().GetSize().x - static_cast<int>(enemyUnitAmountTexture.GetSize().x * scaleSize), 0 })) * textScale);
 }
 
 void UnitAmount::RenderText()

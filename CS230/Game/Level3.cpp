@@ -102,7 +102,7 @@ void Level3::Draw()
 	}
 	if (GetGSComponent<UnitAmount>() != nullptr)
 	{
-		GetGSComponent<UnitAmount>()->Draw({10, static_cast<int>(winSize.y * 0.7)});
+		GetGSComponent<UnitAmount>()->Draw({0, static_cast<int>(winSize.y * 0.24)});
 	}
 	constexpr int scaleSize = 3;
 	if (player->GetHP() <= 0)
