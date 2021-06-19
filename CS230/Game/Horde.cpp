@@ -30,6 +30,7 @@ void Horde::UpateGold(int _gold)
 
 void Horde::Update(double dt)
 {
+	goldTimer += dt;
 	if (goldTimer >= (1. / goldIncreasing))
 	{
 		enemyGold++;
@@ -86,7 +87,7 @@ void Horde::improveGoldIncresing()
 	const int goldUpCost = goldIncreasingImproveCost * goldIncreasing;
 	if (enemyGold >= goldUpCost && goldIncreasing <= levelLimit)
 	{
-		enemyGold -= goldUpCost;
+		enemyGold -= goldUpCost/2;
 		goldIncreasing++;
 	}
 }
