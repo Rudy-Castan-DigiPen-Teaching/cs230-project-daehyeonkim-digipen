@@ -30,8 +30,7 @@ void Horde::UpateGold(int _gold)
 
 void Horde::Update(double dt)
 {
-	goldTimer += dt;
-	if (goldTimer >= (1 / goldIncreasing))
+	if (goldTimer >= (1. / goldIncreasing))
 	{
 		enemyGold++;
 		goldTimer = 0;
