@@ -87,7 +87,7 @@ void Horde::improveGoldIncresing()
 	const int goldUpCost = goldIncreasingImproveCost * goldIncreasing;
 	if (enemyGold >= goldUpCost && goldIncreasing <= levelLimit)
 	{
-		enemyGold -= goldUpCost/2;
+		enemyGold -= goldUpCost/2; 
 		goldIncreasing++;
 	}
 }
